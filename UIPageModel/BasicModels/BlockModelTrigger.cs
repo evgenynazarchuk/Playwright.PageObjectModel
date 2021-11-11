@@ -22,26 +22,44 @@
  * SOFTWARE.
  */
 
-using Microsoft.Playwright;
-
 namespace UIPageModel;
 
 public abstract partial class BlockModel<TPageModel>
     where TPageModel : PageModel
 {
-    public BlockModel(TPageModel pageModel, string selector)
-    {
-        this.CurrentPageModel = pageModel;
-        this.CurrentTag = this.CurrentPageModel.FindElement(selector);
-    }
+    protected virtual void Before() { }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
-    {
-        this.CurrentPageModel = parentBlockModel.CurrentPageModel;
-        this.CurrentTag = parentBlockModel.FindElement(selector);
-    }
+    protected virtual void After() { }
 
-    protected readonly TPageModel CurrentPageModel;
+    protected virtual void BeforeFindElement() { }
 
-    protected readonly IElementHandle CurrentTag;
+    protected virtual void BeforeFindElements() { }
+
+    protected virtual void BeforeClick() { }
+
+    protected virtual void AfterClick() { }
+
+    protected virtual void BeforeType() { }
+
+    protected virtual void AfterType() { }
+
+    protected virtual void BeforeFill() { }
+
+    protected virtual void AfterFill() { }
+
+    protected virtual void BeforeDbClick() { }
+
+    protected virtual void AfterDbClick() { }
+
+    protected virtual void BeforeHower() { }
+
+    protected virtual void AfterHower() { }
+
+    protected virtual void BeforeCheck() { }
+
+    protected virtual void AfterCheck() { }
+
+    protected virtual void BeforeUncheck() { }
+
+    protected virtual void AfterUncheck() { }
 }

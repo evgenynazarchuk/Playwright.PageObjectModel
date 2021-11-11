@@ -22,26 +22,16 @@
  * SOFTWARE.
  */
 
-using Microsoft.Playwright;
+using System;
 
-namespace UIPageModel;
+namespace UIPageModel.BasicModels;
 
-public abstract partial class BlockModel<TPageModel>
-    where TPageModel : PageModel
+public static class BlockModelExtension
 {
-    public BlockModel(TPageModel pageModel, string selector)
+    public static TBlockModel VerifyThat<TBlockModel>(this TBlockModel blockModel, Action<TBlockModel> action)
+        where TBlockModel : BlockModel<PageModel>
     {
-        this.CurrentPageModel = pageModel;
-        this.CurrentTag = this.CurrentPageModel.FindElement(selector);
+        action(blockModel);
+        return blockModel;
     }
-
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
-    {
-        this.CurrentPageModel = parentBlockModel.CurrentPageModel;
-        this.CurrentTag = parentBlockModel.FindElement(selector);
-    }
-
-    protected readonly TPageModel CurrentPageModel;
-
-    protected readonly IElementHandle CurrentTag;
 }
