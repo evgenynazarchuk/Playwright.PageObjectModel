@@ -57,6 +57,22 @@ public abstract partial class BlockModel<TPageModel>
         return element;
     }
 
+    public virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
+        where TBlockModel : BlockModel<PageModel>
+    {
+        var generic = typeof(TBlockModel);
+        var genericArgs = new[] { typeof(TPageModel) };
+        var genericType = generic.MakeGenericType(genericArgs);
+
+        var ctorArgs = new[] { this.GetType(), typeof(string) };
+        var ctor = genericType.GetConstructor(ctorArgs);
+        if (ctor is null) throw new ApplicationException("Block Model not found");
+
+        var block = ctor.Invoke(new[] { this, (object)selector });
+
+        return (TBlockModel?)block;
+    }
+
     protected virtual IReadOnlyList<IElementHandle> FindElements(string selector)
     {
         this.CurrentPageModel.Wait();
@@ -65,6 +81,30 @@ public abstract partial class BlockModel<TPageModel>
 
         var elements = this.CurrentTag.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         return elements;
+    }
+
+    public virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
+        where TBlockModel : BlockModel<PageModel>
+    {
+        var elements = this.CurrentTag.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+        var blocks = new List<TBlockModel>();
+
+        foreach (var element in elements)
+        {
+            var generic = typeof(TBlockModel);
+            var genericArgs = new[] { typeof(TPageModel) };
+            var genericType = generic.MakeGenericType(genericArgs);
+
+            var ctorArgs = new[] { this.GetType(), typeof(IElementHandle) };
+            var ctor = genericType.GetConstructor(ctorArgs);
+            if (ctor is null) throw new ApplicationException("Block Model not found");
+
+            var block = ctor.Invoke(new[] { this, (object)element });
+
+            blocks.Add((TBlockModel)block);
+        }
+
+        return blocks;
     }
 
     protected virtual void Click(string? selector = null, ElementHandleClickOptions? options = null)

@@ -35,10 +35,22 @@ public abstract partial class BlockModel<TPageModel>
         this.CurrentTag = this.CurrentPageModel.FindElement(selector);
     }
 
+    public BlockModel(TPageModel pageModel, IElementHandle element)
+    {
+        this.CurrentPageModel = pageModel;
+        this.CurrentTag = element;
+    }
+
     public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
     {
         this.CurrentPageModel = parentBlockModel.CurrentPageModel;
         this.CurrentTag = parentBlockModel.FindElement(selector);
+    }
+
+    public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
+    {
+        this.CurrentPageModel = parentBlockModel.CurrentPageModel;
+        this.CurrentTag = element;
     }
 
     protected readonly TPageModel CurrentPageModel;
