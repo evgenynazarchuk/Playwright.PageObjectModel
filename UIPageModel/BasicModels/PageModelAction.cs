@@ -175,23 +175,12 @@ public partial class PageModel
     public virtual TPageModel ReloadPage<TPageModel>(PageReloadOptions? options = null)
         where TPageModel : PageModel
     {
-        this.Wait();
-
         this.Page.ReloadAsync(options).GetAwaiter().GetResult();
 
-        this.Wait();
+        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
+        if (ctor is null) throw new ApplicationException("Page Model not found");
+        var returnPage = ctor.Invoke(new[] { this.Page });
 
-        return (TPageModel)this;
-    }
-
-    public virtual PageModel ReloadPage(PageReloadOptions? options = null)
-    {
-        this.Wait();
-
-        this.Page.ReloadAsync(options).GetAwaiter().GetResult();
-
-        this.Wait();
-
-        return this;
+        return (TPageModel)returnPage;
     }
 }
