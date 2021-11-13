@@ -128,7 +128,7 @@ public abstract partial class BlockModel<TPageModel>
         this.AfterClick();
     }
 
-    protected virtual TReturnPage Click<TReturnPage>(string? selector = null, ElementHandleClickOptions? options = null)
+    protected virtual TReturnPage ClickAndGetPage<TReturnPage>(string? selector = null, ElementHandleClickOptions? options = null)
         where TReturnPage : PageModel
     {
         this.Click(selector, options);
@@ -138,6 +138,12 @@ public abstract partial class BlockModel<TPageModel>
 
         var returnPage = ctor.Invoke(new[] { this.PageModel.Page });
         return (TReturnPage)returnPage;
+    }
+
+    protected virtual TReturnBlock ClickAndGetBlock<TReturnBlock>(string? selector = null, ElementHandleClickOptions? options = null)
+        where TReturnBlock : BlockModel<TPageModel>
+    {
+        throw new ApplicationException("Not implement");
     }
 
     protected virtual void DbClick(string? selector = null, ElementHandleDblClickOptions? options = null)
@@ -159,6 +165,12 @@ public abstract partial class BlockModel<TPageModel>
         this.PageModel.Wait();
         this.After();
         this.AfterDbClick();
+    }
+
+    protected virtual void DbClickAndGetBlock<TReturnBlock>(string? selector = null, ElementHandleDblClickOptions? options = null)
+        where TReturnBlock : BlockModel<TPageModel>
+    {
+        throw new ApplicationException("Not implement");
     }
 
     protected virtual void Hower(string? selector = null, ElementHandleHoverOptions? options = null)

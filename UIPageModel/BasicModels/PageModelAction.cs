@@ -104,6 +104,29 @@ public abstract partial class PageModel
         this.Wait();
     }
 
+    public virtual TReturnPage ClickAndGetPage<TReturnPage>(string? selector = null, PageClickOptions? options = null)
+        where TReturnPage : PageModel
+    {
+        throw new ApplicationException("Not implement");
+    }
+
+    public virtual TReturnBlock ClickAndGetBlock<TReturnBlock>(string? selector = null, PageClickOptions? options = null)
+        where TReturnBlock : BlockModel<PageModel>
+    {
+        throw new ApplicationException("Not implement");
+    }
+
+    protected virtual void DbClick(string? selector = null, PageDblClickOptions? options = null)
+    {
+        throw new ApplicationException("Not implement");
+    }
+
+    protected virtual void DbClickAndGetBlock<TReturnBlock>(string? selector = null, PageDblClickOptions? options = null)
+        where TReturnBlock : BlockModel<PageModel>
+    {
+        throw new ApplicationException("Not implement");
+    }
+
     public virtual void Type(string selector, string value, PageTypeOptions? options = null)
     {
         this.Wait();
