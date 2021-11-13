@@ -29,10 +29,10 @@ namespace UIPageModel;
 public partial class BlockModel<TPageModel>
     where TPageModel : PageModel
 {
-    public BlockModel(TPageModel pageModel, string selector)
+    public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
     {
         this.PageModel = pageModel;
-        this.HtmlBlock = this.PageModel.FindElement(selector);
+        this.HtmlBlock = this.PageModel.FindElement(selector, options);
     }
 
     public BlockModel(TPageModel pageModel, IElementHandle element)

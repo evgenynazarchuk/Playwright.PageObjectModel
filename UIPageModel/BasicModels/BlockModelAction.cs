@@ -57,6 +57,31 @@ public partial class BlockModel<TPageModel>
         return element;
     }
 
+    protected virtual IReadOnlyList<IElementHandle> FindElements(string selector)
+    {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeFindElements();
+
+        var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+        return elements;
+    }
+
+    protected virtual TBlockModel FindBlock<TBlockModel>(string selector)
+        where TBlockModel : class
+    {
+        var blockType = typeof(TBlockModel);
+        var ctorArgs = new[] { typeof(BlockModel<TPageModel>), typeof(string) };
+
+        var ctor = blockType.GetConstructor(ctorArgs);
+        if (ctor is null) throw new ApplicationException("Block Model not found");
+
+        var block = ctor.Invoke(new[] { this, (object)selector });
+        if (block is null) throw new ApplicationException("Block Model not created");
+
+        return (TBlockModel)block;
+    }
+
     protected virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
         where TBlockModel : class
     {
@@ -73,29 +98,6 @@ public partial class BlockModel<TPageModel>
         catch { }
         
         return (TBlockModel?)block;
-    }
-
-    protected virtual TBlockModel FindBlock<TBlockModel>(string selector)
-        where TBlockModel : class
-    {
-        var blockType = typeof(TBlockModel);
-        var ctorArgs = new[] { typeof(BlockModel<TPageModel>), typeof(string) };
-        var ctor = blockType.GetConstructor(ctorArgs);
-        if (ctor is null) throw new ApplicationException("Block Model not found");
-        var block = ctor.Invoke(new[] { this, (object)selector });
-        if (block is null) throw new ApplicationException("Block Model not created");
-
-        return (TBlockModel)block;
-    }
-
-    protected virtual IReadOnlyList<IElementHandle> FindElements(string selector)
-    {
-        this.PageModel.Wait();
-        this.Before();
-        this.BeforeFindElements();
-
-        var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
-        return elements;
     }
 
     protected virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
@@ -140,7 +142,7 @@ public partial class BlockModel<TPageModel>
         this.AfterClick();
     }
 
-    protected virtual TReturnPage ClickAndGetPage<TReturnPage>(string? selector = null, ElementHandleClickOptions? options = null)
+    protected virtual TReturnPage Click<TReturnPage>(string? selector = null, ElementHandleClickOptions? options = null)
         where TReturnPage : PageModel
     {
         this.Click(selector, options);
@@ -150,12 +152,6 @@ public partial class BlockModel<TPageModel>
 
         var returnPage = ctor.Invoke(new[] { this.PageModel.Page });
         return (TReturnPage)returnPage;
-    }
-
-    protected virtual TReturnBlock ClickAndGetBlock<TReturnBlock>(string? selector = null, ElementHandleClickOptions? options = null)
-        where TReturnBlock : BlockModel<TPageModel>
-    {
-        throw new ApplicationException("Not implement");
     }
 
     protected virtual void DbClick(string? selector = null, ElementHandleDblClickOptions? options = null)
@@ -177,12 +173,6 @@ public partial class BlockModel<TPageModel>
         this.PageModel.Wait();
         this.After();
         this.AfterDbClick();
-    }
-
-    protected virtual void DbClickAndGetBlock<TReturnBlock>(string? selector = null, ElementHandleDblClickOptions? options = null)
-        where TReturnBlock : BlockModel<TPageModel>
-    {
-        throw new ApplicationException("Not implement");
     }
 
     protected virtual void Hower(string? selector = null, ElementHandleHoverOptions? options = null)
