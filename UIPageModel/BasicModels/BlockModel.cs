@@ -31,29 +31,29 @@ public abstract partial class BlockModel<TPageModel>
 {
     public BlockModel(TPageModel pageModel, string selector)
     {
-        this.CurrentPageModel = pageModel;
-        this.CurrentTag = this.CurrentPageModel.FindElement(selector);
+        this.PageModel = pageModel;
+        this.HtmlBlock = this.PageModel.FindElement(selector);
     }
 
     public BlockModel(TPageModel pageModel, IElementHandle element)
     {
-        this.CurrentPageModel = pageModel;
-        this.CurrentTag = element;
+        this.PageModel = pageModel;
+        this.HtmlBlock = element;
     }
 
     public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
     {
-        this.CurrentPageModel = parentBlockModel.CurrentPageModel;
-        this.CurrentTag = parentBlockModel.FindElement(selector);
+        this.PageModel = parentBlockModel.PageModel;
+        this.HtmlBlock = parentBlockModel.FindElement(selector);
     }
 
     public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
     {
-        this.CurrentPageModel = parentBlockModel.CurrentPageModel;
-        this.CurrentTag = element;
+        this.PageModel = parentBlockModel.PageModel;
+        this.HtmlBlock = element;
     }
 
-    protected readonly TPageModel CurrentPageModel;
+    protected readonly TPageModel PageModel;
 
-    protected readonly IElementHandle CurrentTag;
+    protected readonly IElementHandle HtmlBlock;
 }

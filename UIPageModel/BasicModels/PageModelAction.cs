@@ -38,14 +38,14 @@ public abstract partial class PageModel
         PageQuerySelectorOptions? options = null,
         string exceptionMessage = "Element not found")
     {
-        var element = this.SourcePage.QuerySelectorAsync(selector, options).GetAwaiter().GetResult();
+        var element = this.Page.QuerySelectorAsync(selector, options).GetAwaiter().GetResult();
         if (element is null) throw new ApplicationException(exceptionMessage);
         else return element;
     }
 
     public virtual IElementHandle? FindElementOrNull(string selector, PageQuerySelectorOptions? options = null)
     {
-        var element = this.SourcePage.QuerySelectorAsync(selector, options).GetAwaiter().GetResult();
+        var element = this.Page.QuerySelectorAsync(selector, options).GetAwaiter().GetResult();
         return element;
     }
 
@@ -67,14 +67,14 @@ public abstract partial class PageModel
 
     public virtual IReadOnlyCollection<IElementHandle> FindElements(string selector)
     {
-        var elements = this.SourcePage.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+        var elements = this.Page.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         return elements;
     }
 
     public virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
         where TBlockModel : BlockModel<PageModel>
     {
-        var elements = this.SourcePage.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+        var elements = this.Page.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         var blocks = new List<TBlockModel>();
 
         foreach (var element in elements)
@@ -99,7 +99,7 @@ public abstract partial class PageModel
     {
         this.Wait();
 
-        this.SourcePage.ClickAsync(selector, options).GetAwaiter().GetResult();
+        this.Page.ClickAsync(selector, options).GetAwaiter().GetResult();
 
         this.Wait();
     }
@@ -108,7 +108,7 @@ public abstract partial class PageModel
     {
         this.Wait();
 
-        this.SourcePage.TypeAsync(selector, value, options).GetAwaiter().GetResult();
+        this.Page.TypeAsync(selector, value, options).GetAwaiter().GetResult();
 
         this.Wait();
     }
@@ -118,7 +118,7 @@ public abstract partial class PageModel
     {
         this.Wait();
 
-        this.SourcePage.ReloadAsync(options).GetAwaiter().GetResult();
+        this.Page.ReloadAsync(options).GetAwaiter().GetResult();
 
         this.Wait();
 
@@ -129,7 +129,7 @@ public abstract partial class PageModel
     {
         this.Wait();
 
-        this.SourcePage.ReloadAsync(options).GetAwaiter().GetResult();
+        this.Page.ReloadAsync(options).GetAwaiter().GetResult();
 
         this.Wait();
 

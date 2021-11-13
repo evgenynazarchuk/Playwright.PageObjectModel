@@ -33,27 +33,27 @@ public abstract partial class BlockModel<TPageModel>
 {
     public TPageModel UpToPage()
     {
-        return this.CurrentPageModel;
+        return this.PageModel;
     }
 
     protected virtual IElementHandle FindElement(string selector, string exceptionMessage = "Element not found")
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeFindElement();
 
-        var element = this.CurrentTag.QuerySelectorAsync(selector).GetAwaiter().GetResult();
+        var element = this.HtmlBlock.QuerySelectorAsync(selector).GetAwaiter().GetResult();
         if (element is null) throw new ApplicationException(exceptionMessage);
         else return element;
     }
 
     protected virtual IElementHandle? FindElementOrNull(string selector)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeFindElement();
 
-        var element = this.CurrentTag.QuerySelectorAsync(selector).GetAwaiter().GetResult();
+        var element = this.HtmlBlock.QuerySelectorAsync(selector).GetAwaiter().GetResult();
         return element;
     }
 
@@ -75,18 +75,18 @@ public abstract partial class BlockModel<TPageModel>
 
     protected virtual IReadOnlyList<IElementHandle> FindElements(string selector)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeFindElements();
 
-        var elements = this.CurrentTag.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+        var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         return elements;
     }
 
     public virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
         where TBlockModel : BlockModel<PageModel>
     {
-        var elements = this.CurrentTag.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+        var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         var blocks = new List<TBlockModel>();
 
         foreach (var element in elements)
@@ -109,7 +109,7 @@ public abstract partial class BlockModel<TPageModel>
 
     protected virtual void Click(string? selector = null, ElementHandleClickOptions? options = null)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeClick();
 
@@ -120,10 +120,10 @@ public abstract partial class BlockModel<TPageModel>
         }
         else
         {
-            this.CurrentTag.ClickAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.ClickAsync(options).GetAwaiter().GetResult();
         }
 
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.After();
         this.AfterClick();
     }
@@ -136,13 +136,13 @@ public abstract partial class BlockModel<TPageModel>
         var ctor = typeof(TReturnPage).GetConstructor(new[] { typeof(IPage) });
         if (ctor is null) throw new ApplicationException("Page Model not found");
 
-        var returnPage = ctor.Invoke(new[] { this.CurrentPageModel.SourcePage });
+        var returnPage = ctor.Invoke(new[] { this.PageModel.Page });
         return (TReturnPage)returnPage;
     }
 
     protected virtual void DbClick(string? selector = null, ElementHandleDblClickOptions? options = null)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeDbClick();
 
@@ -153,17 +153,17 @@ public abstract partial class BlockModel<TPageModel>
         }
         else
         {
-            this.CurrentTag.DblClickAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.DblClickAsync(options).GetAwaiter().GetResult();
         }
 
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.After();
         this.AfterDbClick();
     }
 
     protected virtual void Hower(string? selector = null, ElementHandleHoverOptions? options = null)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeHower();
 
@@ -174,17 +174,17 @@ public abstract partial class BlockModel<TPageModel>
         }
         else
         {
-            this.CurrentTag.HoverAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.HoverAsync(options).GetAwaiter().GetResult();
         }
 
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.After();
         this.AfterHower();
     }
 
     protected virtual void Type(string? selector = null, string value = "", ElementHandleTypeOptions? options = null)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeType();
 
@@ -195,17 +195,17 @@ public abstract partial class BlockModel<TPageModel>
         }
         else
         {
-            this.CurrentTag.TypeAsync(value, options).GetAwaiter().GetResult();
+            this.HtmlBlock.TypeAsync(value, options).GetAwaiter().GetResult();
         }
 
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.After();
         this.AfterType();
     }
 
     protected virtual void Fill(string? selector = null, string value = "", ElementHandleFillOptions? options = null)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeFill();
 
@@ -216,17 +216,17 @@ public abstract partial class BlockModel<TPageModel>
         }
         else
         {
-            this.CurrentTag.FillAsync(value, options).GetAwaiter().GetResult();
+            this.HtmlBlock.FillAsync(value, options).GetAwaiter().GetResult();
         }
 
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.After();
         this.AfterFill();
     }
 
     protected virtual void Check(string? selector = null, ElementHandleCheckOptions? options = null)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeCheck();
 
@@ -237,17 +237,17 @@ public abstract partial class BlockModel<TPageModel>
         }
         else
         {
-            this.CurrentTag.CheckAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.CheckAsync(options).GetAwaiter().GetResult();
         }
 
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.After();
         this.AfterCheck();
     }
 
     protected virtual void Uncheck(string? selector = null, ElementHandleUncheckOptions? options = null)
     {
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.Before();
         this.BeforeUncheck();
 
@@ -258,10 +258,10 @@ public abstract partial class BlockModel<TPageModel>
         }
         else
         {
-            this.CurrentTag.UncheckAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.UncheckAsync(options).GetAwaiter().GetResult();
         }
 
-        this.CurrentPageModel.Wait();
+        this.PageModel.Wait();
         this.After();
         this.AfterUncheck();
     }

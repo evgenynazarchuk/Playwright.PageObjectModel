@@ -30,8 +30,8 @@ public abstract partial class PageModel
 {
     public PageModel(IPage page)
     {
-        this.SourcePage = page;
+        this.Page = page;
     }
 
-    public readonly IPage SourcePage;
+    public readonly IPage Page;
 }
