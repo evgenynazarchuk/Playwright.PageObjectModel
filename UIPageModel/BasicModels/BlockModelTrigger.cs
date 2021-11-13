@@ -31,9 +31,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void After() { }
 
-    protected virtual void BeforeFindElement() { }
-
-    protected virtual void BeforeFindElements() { }
+    protected virtual void BeforeFind() { }
 
     protected virtual void BeforeClick() { }
 

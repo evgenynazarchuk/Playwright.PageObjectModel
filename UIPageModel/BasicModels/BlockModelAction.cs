@@ -40,7 +40,7 @@ public partial class BlockModel<TPageModel>
     {
         this.PageModel.Wait();
         this.Before();
-        this.BeforeFindElement();
+        this.BeforeFind();
 
         var element = this.HtmlBlock.QuerySelectorAsync(selector).GetAwaiter().GetResult();
         if (element is null) throw new ApplicationException(exceptionMessage);
@@ -51,7 +51,7 @@ public partial class BlockModel<TPageModel>
     {
         this.PageModel.Wait();
         this.Before();
-        this.BeforeFindElement();
+        this.BeforeFind();
 
         var element = this.HtmlBlock.QuerySelectorAsync(selector).GetAwaiter().GetResult();
         return element;
@@ -61,7 +61,7 @@ public partial class BlockModel<TPageModel>
     {
         this.PageModel.Wait();
         this.Before();
-        this.BeforeFindElements();
+        this.BeforeFind();
 
         var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         return elements;
@@ -70,6 +70,10 @@ public partial class BlockModel<TPageModel>
     protected virtual TBlockModel FindBlock<TBlockModel>(string selector)
         where TBlockModel : class
     {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeFind();
+
         var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { typeof(BlockModel<TPageModel>), typeof(string) };
 
@@ -85,6 +89,10 @@ public partial class BlockModel<TPageModel>
     protected virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
         where TBlockModel : class
     {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeFind();
+
         var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
         var ctor = blockType.GetConstructor(ctorArgs);
@@ -103,6 +111,10 @@ public partial class BlockModel<TPageModel>
     protected virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
         where TBlockModel : class
     {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeFind();
+
         var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         var blocks = new List<TBlockModel>();
 

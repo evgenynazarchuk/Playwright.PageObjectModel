@@ -24,7 +24,7 @@ public class FindBlockOrNullTest : PageTest
         var block1 = test.FindBlock1WhenNotNull();
 
         // Assert
-        block1.Text.Should().Contain("Test text");
+        block1!.Text.Should().Contain("Test text");
     }
 
     [TestMethod]
@@ -49,10 +49,10 @@ public class FindBlockOrNullTest : PageTest
         test.Open(this.Path);
 
         // Act
-        var block = test.FindBlock1WhenNotNull().FindBlock2WhenNotNull();
+        var block = test.FindBlock1WhenNotNull()!.FindBlock2WhenNotNull();
 
         // Assert
-        block.Text.Contains("Test text");
+        block!.Text.Contains("Test text");
     }
 
     [TestMethod]
@@ -63,7 +63,7 @@ public class FindBlockOrNullTest : PageTest
         test.Open(this.Path);
 
         // Act
-        var block = test.FindBlock1WhenNotNull().FindBlock2WhenNull();
+        var block = test.FindBlock1WhenNotNull()!.FindBlock2WhenNull();
 
         // Assert
         block.Should().BeNull();

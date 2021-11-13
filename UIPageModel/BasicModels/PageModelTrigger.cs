@@ -30,7 +30,7 @@ public partial class PageModel
 
     protected virtual void After() { }
 
-    protected virtual void BeforeFindElement() { }
+    protected virtual void BeforeFind() { }
 
     protected virtual void BeforeFindElements() { }
 

@@ -31,24 +31,28 @@ public partial class BlockModel<TPageModel>
 {
     public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
     {
+        pageModel.Wait();
         this.PageModel = pageModel;
         this.HtmlBlock = this.PageModel.FindElement(selector, options);
     }
 
     public BlockModel(TPageModel pageModel, IElementHandle element)
     {
+        pageModel.Wait();
         this.PageModel = pageModel;
         this.HtmlBlock = element;
     }
 
     public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
     {
+        parentBlockModel.PageModel.Wait();
         this.PageModel = parentBlockModel.PageModel;
         this.HtmlBlock = parentBlockModel.FindElement(selector);
     }
 
     public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
     {
+        parentBlockModel.PageModel.Wait();
         this.PageModel = parentBlockModel.PageModel;
         this.HtmlBlock = element;
     }
