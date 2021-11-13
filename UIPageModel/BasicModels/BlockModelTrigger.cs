@@ -24,7 +24,7 @@
 
 namespace UIPageModel;
 
-public abstract partial class BlockModel<TPageModel>
+public partial class BlockModel<TPageModel>
     where TPageModel : PageModel
 {
     protected virtual void Before() { }

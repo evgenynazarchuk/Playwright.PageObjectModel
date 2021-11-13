@@ -24,7 +24,7 @@
 
 namespace UIPageModel;
 
-public abstract partial class PageModel
+public partial class PageModel
 {
     protected virtual void Before() { }
 

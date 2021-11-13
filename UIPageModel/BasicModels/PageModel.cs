@@ -26,7 +26,7 @@ using Microsoft.Playwright;
 
 namespace UIPageModel;
 
-public abstract partial class PageModel
+public partial class PageModel
 {
     public PageModel(IPage page)
     {

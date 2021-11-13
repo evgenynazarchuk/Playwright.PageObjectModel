@@ -26,7 +26,7 @@ using Microsoft.Playwright;
 
 namespace UIPageModel;
 
-public abstract partial class BlockModel<TPageModel>
+public partial class BlockModel<TPageModel>
     where TPageModel : PageModel
 {
     public BlockModel(TPageModel pageModel, string selector)

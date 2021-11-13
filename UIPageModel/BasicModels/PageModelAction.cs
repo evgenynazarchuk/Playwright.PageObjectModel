@@ -29,8 +29,13 @@ using System.Linq;
 
 namespace UIPageModel;
 
-public abstract partial class PageModel
+public partial class PageModel
 {
+    public virtual void Open(string url, PageGotoOptions? options = null)
+    {
+        this.Page.GotoAsync(url, options).GetAwaiter().GetResult();
+    }
+
     public virtual void Wait() { }
 
     public virtual IElementHandle FindElement(
@@ -50,19 +55,38 @@ public abstract partial class PageModel
     }
 
     public virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : class
     {
-        var generic = typeof(TBlockModel);
-        var genericArgs = new[] { this.GetType() };
-        var genericType = generic.MakeGenericType(genericArgs);
-
+        var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
-        var ctor = genericType.GetConstructor(ctorArgs);
+
+        var ctor = blockType.GetConstructor(ctorArgs);
+        if (ctor is null) throw new ApplicationException("Block Model not found");
+
+        object? block = null;
+        try
+        {
+            block = ctor.Invoke(new[] { this, (object)selector });
+        }
+        catch
+        { }
+        
+        return (TBlockModel?)block;
+    }
+
+    public virtual TBlockModel FindBlock<TBlockModel>(string selector)
+        where TBlockModel : class
+    {
+        var blockType = typeof(TBlockModel);
+        var ctorArgs = new[] { this.GetType(), typeof(string) };
+
+        var ctor = blockType.GetConstructor(ctorArgs);
         if (ctor is null) throw new ApplicationException("Block Model not found");
 
         var block = ctor.Invoke(new[] { this, (object)selector });
+        if (block is null) throw new ApplicationException("Block Model not created");
 
-        return (TBlockModel?)block;
+        return (TBlockModel)block;
     }
 
     public virtual IReadOnlyCollection<IElementHandle> FindElements(string selector)
@@ -72,22 +96,19 @@ public abstract partial class PageModel
     }
 
     public virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : class
     {
         var elements = this.Page.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         var blocks = new List<TBlockModel>();
 
         foreach (var element in elements)
         {
-            var generic = typeof(TBlockModel);
-            var genericArgs = new[] { this.GetType() };
-            var genericType = generic.MakeGenericType(genericArgs);
-
-            var ctorArgs = new[] { this.GetType(), typeof(IElementHandle) };
-            var ctor = genericType.GetConstructor(ctorArgs);
+            var blockType = typeof(TBlockModel);
+            var ctorArgs = new[] { this.GetType(), typeof(string) };
+            var ctor = blockType.GetConstructor(ctorArgs);
             if (ctor is null) throw new ApplicationException("Block Model not found");
 
-            var block = ctor.Invoke(new[] { this, (object)element });
+            var block = ctor.Invoke(new[] { this, (object)selector });
 
             blocks.Add((TBlockModel)block);
         }
@@ -116,12 +137,12 @@ public abstract partial class PageModel
         throw new ApplicationException("Not implement");
     }
 
-    protected virtual void DbClick(string? selector = null, PageDblClickOptions? options = null)
+    public virtual void DbClick(string? selector = null, PageDblClickOptions? options = null)
     {
         throw new ApplicationException("Not implement");
     }
 
-    protected virtual void DbClickAndGetBlock<TReturnBlock>(string? selector = null, PageDblClickOptions? options = null)
+    public virtual void DbClickAndGetBlock<TReturnBlock>(string? selector = null, PageDblClickOptions? options = null)
         where TReturnBlock : BlockModel<PageModel>
     {
         throw new ApplicationException("Not implement");

@@ -28,7 +28,7 @@ using Microsoft.Playwright;
 
 namespace UIPageModel;
 
-public abstract partial class BlockModel<TPageModel>
+public partial class BlockModel<TPageModel>
     where TPageModel : PageModel
 {
     public TPageModel UpToPage()
@@ -57,20 +57,35 @@ public abstract partial class BlockModel<TPageModel>
         return element;
     }
 
-    public virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
-        where TBlockModel : BlockModel<PageModel>
+    protected virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
+        where TBlockModel : class
     {
-        var generic = typeof(TBlockModel);
-        var genericArgs = new[] { typeof(TPageModel) };
-        var genericType = generic.MakeGenericType(genericArgs);
-
+        var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
-        var ctor = genericType.GetConstructor(ctorArgs);
+        var ctor = blockType.GetConstructor(ctorArgs);
         if (ctor is null) throw new ApplicationException("Block Model not found");
 
-        var block = ctor.Invoke(new[] { this, (object)selector });
-
+        object? block = null;
+        try
+        {
+            block = ctor.Invoke(new[] { this, (object)selector });
+        }
+        catch { }
+        
         return (TBlockModel?)block;
+    }
+
+    protected virtual TBlockModel FindBlock<TBlockModel>(string selector)
+        where TBlockModel : class
+    {
+        var blockType = typeof(TBlockModel);
+        var ctorArgs = new[] { typeof(BlockModel<TPageModel>), typeof(string) };
+        var ctor = blockType.GetConstructor(ctorArgs);
+        if (ctor is null) throw new ApplicationException("Block Model not found");
+        var block = ctor.Invoke(new[] { this, (object)selector });
+        if (block is null) throw new ApplicationException("Block Model not created");
+
+        return (TBlockModel)block;
     }
 
     protected virtual IReadOnlyList<IElementHandle> FindElements(string selector)
@@ -83,23 +98,20 @@ public abstract partial class BlockModel<TPageModel>
         return elements;
     }
 
-    public virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
-        where TBlockModel : BlockModel<PageModel>
+    protected virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
+        where TBlockModel : class
     {
         var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
         var blocks = new List<TBlockModel>();
 
         foreach (var element in elements)
         {
-            var generic = typeof(TBlockModel);
-            var genericArgs = new[] { typeof(TPageModel) };
-            var genericType = generic.MakeGenericType(genericArgs);
-
-            var ctorArgs = new[] { this.GetType(), typeof(IElementHandle) };
-            var ctor = genericType.GetConstructor(ctorArgs);
+            var blockType = typeof(TBlockModel);
+            var ctorArgs = new[] { this.GetType(), typeof(string) };
+            var ctor = blockType.GetConstructor(ctorArgs);
             if (ctor is null) throw new ApplicationException("Block Model not found");
 
-            var block = ctor.Invoke(new[] { this, (object)element });
+            var block = ctor.Invoke(new[] { this, (object)selector });
 
             blocks.Add((TBlockModel)block);
         }
@@ -276,5 +288,20 @@ public abstract partial class BlockModel<TPageModel>
         this.PageModel.Wait();
         this.After();
         this.AfterUncheck();
+    }
+
+    protected virtual string TextContent()
+    {
+        return HtmlBlock.TextContentAsync().GetAwaiter().GetResult() ?? "";
+    }
+
+    protected virtual string InnerText()
+    {
+        return HtmlBlock.InnerTextAsync().GetAwaiter().GetResult();
+    }
+
+    protected virtual string InnerHTML()
+    {
+        return HtmlBlock.InnerHTMLAsync().GetAwaiter().GetResult();
     }
 }
