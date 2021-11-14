@@ -162,20 +162,30 @@ public partial class PageModel
         return (TReturnPage)returnPage;
     }
 
-    public virtual void DbClick(string? selector = null, PageDblClickOptions? options = null)
+    public virtual void DbClick(string selector, PageDblClickOptions? options = null)
     {
-        throw new ApplicationException("Not implement");
+        this.Wait();
+        this.Before();
+        this.BeforeDbClick();
+
+        this.Page.DblClickAsync(selector, options).GetAwaiter().GetResult();
+
+        this.Wait();
+        this.After();
+        this.AfterDbClick();
     }
 
     public virtual void Type(string selector, string value, PageTypeOptions? options = null)
     {
         this.Wait();
         this.Before();
+        this.BeforeType();
 
         this.Page.TypeAsync(selector, value, options).GetAwaiter().GetResult();
 
         this.Wait();
         this.After();
+        this.AfterType();
     }
 
     public virtual void SetInputFiles(string selector, string files, PageSetInputFilesOptions? options = null)
