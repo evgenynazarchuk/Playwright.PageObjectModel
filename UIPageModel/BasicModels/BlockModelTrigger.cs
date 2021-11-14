@@ -49,9 +49,9 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void AfterDbClick() { }
 
-    protected virtual void BeforeHower() { }
+    protected virtual void BeforeHover() { }
 
-    protected virtual void AfterHower() { }
+    protected virtual void AfterHover() { }
 
     protected virtual void BeforeCheck() { }
 

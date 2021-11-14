@@ -187,11 +187,11 @@ public partial class BlockModel<TPageModel>
         this.AfterDbClick();
     }
 
-    protected virtual void Hower(string? selector = null, ElementHandleHoverOptions? options = null)
+    protected virtual void Hover(string? selector = null, ElementHandleHoverOptions? options = null)
     {
         this.PageModel.Wait();
         this.Before();
-        this.BeforeHower();
+        this.BeforeHover();
 
         if (selector is not null)
         {
@@ -205,7 +205,7 @@ public partial class BlockModel<TPageModel>
 
         this.PageModel.Wait();
         this.After();
-        this.AfterHower();
+        this.AfterHover();
     }
 
     protected virtual void Type(string? selector = null, string value = "", ElementHandleTypeOptions? options = null)
