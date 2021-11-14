@@ -29,8 +29,7 @@ public class UITestMethodAttribute : TestMethodAttribute
             for (int i = 0; i < retryOnError.Value; i++)
             {
                 result = base.Execute(testMethod);
-                if (result[0].Outcome != UnitTestOutcome.Passed) continue;
-                else return result;
+                if (result[0].Outcome == UnitTestOutcome.Passed) return result;
             }
 
             return result!;
