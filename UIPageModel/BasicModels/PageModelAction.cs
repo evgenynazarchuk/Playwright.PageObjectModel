@@ -140,10 +140,14 @@ public partial class PageModel
     public virtual void Click(string selector, PageClickOptions? options = null)
     {
         this.Wait();
+        this.Before();
+        this.BeforeClick();
 
         this.Page.ClickAsync(selector, options).GetAwaiter().GetResult();
 
         this.Wait();
+        this.After();
+        this.AfterClick();
     }
 
     public virtual TReturnPage Click<TReturnPage>(string selector, PageClickOptions? options = null)
@@ -166,10 +170,69 @@ public partial class PageModel
     public virtual void Type(string selector, string value, PageTypeOptions? options = null)
     {
         this.Wait();
+        this.Before();
 
         this.Page.TypeAsync(selector, value, options).GetAwaiter().GetResult();
 
         this.Wait();
+        this.After();
+    }
+
+    public virtual void SetInputFiles(string selector, string files, PageSetInputFilesOptions? options = null)
+    {
+        this.Wait();
+        this.Before();
+
+        this.Page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
+
+        this.Wait();
+        this.After();
+    }
+
+    public virtual void SetInputFiles(string selector, FilePayload files, PageSetInputFilesOptions? options = null)
+    {
+        this.Wait();
+        this.Before();
+
+        this.Page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
+
+        this.Wait();
+        this.After();
+    }
+
+    public virtual void SetInputFiles(string selector, IEnumerable<string> files, PageSetInputFilesOptions? options = null)
+    {
+        this.Wait();
+        this.Before();
+
+        this.Page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
+
+        this.Wait();
+        this.After();
+    }
+
+    public virtual void SetInputFiles(string selector, IEnumerable<FilePayload> files, PageSetInputFilesOptions? options = null)
+    {
+        this.Wait();
+        this.Before();
+
+        this.Page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
+
+        this.Wait();
+        this.After();
+    }
+
+    protected virtual void Screenshot(PageScreenshotOptions? options = null)
+    {
+        this.Wait();
+        this.Before();
+        this.BeforeScreenshot();
+
+        this.Page.ScreenshotAsync(options).GetAwaiter().GetResult();
+
+        this.Wait();
+        this.After();
+        this.AfterScreenshot();
     }
 
     public virtual TPageModel ReloadPage<TPageModel>(PageReloadOptions? options = null)

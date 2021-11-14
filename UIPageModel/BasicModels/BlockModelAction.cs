@@ -292,6 +292,111 @@ public partial class BlockModel<TPageModel>
         this.AfterUncheck();
     }
 
+    protected virtual void SetInputFiles(string files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
+    {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeSetInputFile();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+        }
+        else
+        {
+            this.HtmlBlock.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+        }
+
+        this.PageModel.Wait();
+        this.After();
+        this.AfterSetInputFile();
+    }
+
+    protected virtual void SetInputFiles(FilePayload files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
+    {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeSetInputFile();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+        }
+        else
+        {
+            this.HtmlBlock.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+        }
+
+        this.PageModel.Wait();
+        this.After();
+        this.AfterSetInputFile();
+    }
+
+    protected virtual void SetInputFiles(IEnumerable<string> files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
+    {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeSetInputFile();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+        }
+        else
+        {
+            this.HtmlBlock.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+        }
+
+        this.PageModel.Wait();
+        this.After();
+        this.AfterSetInputFile();
+    }
+
+    protected virtual void SetInputFiles(IEnumerable<FilePayload> files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
+    {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeSetInputFile();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+        }
+        else
+        {
+            this.HtmlBlock.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+        }
+
+        this.PageModel.Wait();
+        this.After();
+        this.AfterSetInputFile();
+    }
+
+    protected virtual void Screenshot(string? selector = null, ElementHandleScreenshotOptions? options = null)
+    {
+        this.PageModel.Wait();
+        this.Before();
+        this.BeforeScreenshot();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.ScreenshotAsync(options).GetAwaiter().GetResult();
+        }
+        else
+        {
+            this.HtmlBlock.ScreenshotAsync(options).GetAwaiter().GetResult();
+        }
+
+        this.PageModel.Wait();
+        this.After();
+        this.AfterScreenshot();
+    }
+
     protected virtual string TextContent()
     {
         return HtmlBlock.TextContentAsync().GetAwaiter().GetResult() ?? "";

@@ -61,4 +61,12 @@ public partial class PageModel
     protected virtual void BeforeUncheck() { }
 
     protected virtual void AfterUncheck() { }
+
+    protected virtual void BeforeSetInputFile() { }
+
+    protected virtual void AfterSetInputFile() { }
+
+    protected virtual void BeforeScreenshot() { }
+
+    protected virtual void AfterScreenshot() { }
 }
