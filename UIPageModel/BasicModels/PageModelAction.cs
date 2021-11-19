@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using UIPageModel.Sync;
+using UITesting.Page.Sync;
 
 namespace UIPageModel;
 

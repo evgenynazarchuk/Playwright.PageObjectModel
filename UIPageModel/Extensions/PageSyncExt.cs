@@ -28,9 +28,9 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace UIPageModel.Sync;
+namespace UITesting.Page.Sync;
 
-public static class PageModelSyncExt
+public static class PageSyncExt
 {
     public static void Click(this IPage page, string selector, PageClickOptions? options = null)
     {
