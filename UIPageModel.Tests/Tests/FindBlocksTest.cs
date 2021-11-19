@@ -1,10 +1,9 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
-using UIPageModel;
-using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using FluentAssertions;
+using System.IO;
 
 namespace UIPageModel.Tests;
 
@@ -22,7 +21,7 @@ public class FindBlocksTest : PageTest
 
         // Act
         var blocks = test.FindBlocks();
-        
+
         // Assert
         blocks.Should().HaveCount(3);
     }
@@ -36,7 +35,7 @@ public class FindBlocksTest : PageTest
 
         // Act
         var blocks = test.FindBlockCollection().FindBlocks();
-        
+
         // Assert
         blocks.Should().HaveCount(3);
     }
@@ -52,10 +51,10 @@ public class FindBlocksTest : PageTest
 
     class Block<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
-    { 
-        public Block(TPageModel pageModel, string selector) 
-            : base(pageModel, selector) {  }
-        
+    {
+        public Block(TPageModel pageModel, string selector)
+            : base(pageModel, selector) { }
+
         public Block(BlockModel<TPageModel> parentBlock, string selector)
             : base(parentBlock, selector) { }
     }

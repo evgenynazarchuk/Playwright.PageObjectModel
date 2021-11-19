@@ -1,10 +1,9 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
-using UIPageModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using FluentAssertions;
 
 namespace UIPageModel.Tests;
 

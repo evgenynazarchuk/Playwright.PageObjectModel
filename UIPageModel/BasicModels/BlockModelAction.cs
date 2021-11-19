@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
-using Microsoft.Playwright;
 
 namespace UIPageModel;
 
@@ -104,7 +104,7 @@ public partial class BlockModel<TPageModel>
             block = ctor.Invoke(new[] { this, (object)selector });
         }
         catch { }
-        
+
         return (TBlockModel?)block;
     }
 

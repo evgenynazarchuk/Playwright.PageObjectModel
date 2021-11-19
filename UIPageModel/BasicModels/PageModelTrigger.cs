@@ -69,4 +69,29 @@ public partial class PageModel
     protected virtual void BeforeScreenshot() { }
 
     protected virtual void AfterScreenshot() { }
+
+    protected virtual void BeforeSetInputFiles() { }
+
+    protected virtual void AfterSetInputFiles() { }
+
+    protected virtual void BeforeDragAndDrop() { }
+
+    protected virtual void AfterHover() { }
+
+    protected virtual void BeforeHover() { }
+
+    protected virtual void AfterDragAndDrop() { }
+
+    protected virtual void BeforeInputValue() { }
+
+    protected virtual void AfterInputValue() { }
+
+    protected virtual void BeforePress() { }
+
+    protected virtual void AfterPress() { }
+
+    protected virtual void BeforeSelectOption() { }
+
+    protected virtual void AfterSelectOption() { }
+
 }

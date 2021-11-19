@@ -1,10 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Playwright;
+﻿using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
-using UIPageModel;
-using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using FluentAssertions;
 
 namespace UIPageModel.Tests.Tests;
 
@@ -22,7 +19,7 @@ public class ClickTest : PageTest
 
         // Act
         test.ClickToPage2().ClickToPage1();
-        
+
         // Assert
     }
 
@@ -40,7 +37,7 @@ public class ClickTest : PageTest
     }
 
     class PageTesting1 : PageModel
-    { 
+    {
         public PageTesting1(IPage page) : base(page) { }
 
         public PageTesting2 ClickToPage2() => this.Click<PageTesting2>(".link");
@@ -60,10 +57,10 @@ public class ClickTest : PageTest
     class Page1Block<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
-        public Page1Block(TPageModel pageModel, string selector) 
+        public Page1Block(TPageModel pageModel, string selector)
             : base(pageModel, selector) { }
 
-        public Page1Block(BlockModel<TPageModel> parentBlockModel, string selector) 
+        public Page1Block(BlockModel<TPageModel> parentBlockModel, string selector)
             : base(parentBlockModel, selector) { }
 
         public PageTesting2 ToPage2() => this.Click<PageTesting2>(".block-link");

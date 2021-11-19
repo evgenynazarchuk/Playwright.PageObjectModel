@@ -1,8 +1,7 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Threading.Tasks;
 
 namespace UIPageModel.SampleRunTests;
 
@@ -13,7 +12,7 @@ public class UnitTest3 : PageTest
 
     [UITestMethod]
     [RetryOnError(2)]
-    
+
     public void TestMethod1()
     {
         Task.Delay(5000).GetAwaiter().GetResult();
