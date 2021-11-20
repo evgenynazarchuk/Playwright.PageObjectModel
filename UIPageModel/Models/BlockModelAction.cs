@@ -25,6 +25,8 @@
 using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
+using UITesting.Page.Sync;
+using System.Text.Json;
 
 namespace UIPageModel;
 
@@ -42,7 +44,7 @@ public partial class BlockModel<TPageModel>
         this.Before();
         this.BeforeFind();
 
-        var element = this.HtmlBlock.QuerySelectorAsync(selector).GetAwaiter().GetResult();
+        var element = this.HtmlBlock.QuerySelector(selector);
         if (element is null) throw new ApplicationException(exceptionMessage);
         else return element;
     }
@@ -53,7 +55,7 @@ public partial class BlockModel<TPageModel>
         this.Before();
         this.BeforeFind();
 
-        var element = this.HtmlBlock.QuerySelectorAsync(selector).GetAwaiter().GetResult();
+        var element = this.HtmlBlock.QuerySelector(selector);
         return element;
     }
 
@@ -63,7 +65,7 @@ public partial class BlockModel<TPageModel>
         this.Before();
         this.BeforeFind();
 
-        var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+        var elements = this.HtmlBlock.QuerySelectorAll(selector);
         return elements;
     }
 
@@ -115,7 +117,7 @@ public partial class BlockModel<TPageModel>
         this.Before();
         this.BeforeFind();
 
-        var elements = this.HtmlBlock.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+        var elements = this.HtmlBlock.QuerySelectorAll(selector);
         var blocks = new List<TBlockModel>();
 
         foreach (var element in elements)
@@ -142,11 +144,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.ClickAsync(options).GetAwaiter().GetResult();
+            element.Click(options);
         }
         else
         {
-            this.HtmlBlock.ClickAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.Click(options);
         }
 
         this.PageModel.Wait();
@@ -175,11 +177,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.DblClickAsync(options).GetAwaiter().GetResult();
+            element.DblClick(options);
         }
         else
         {
-            this.HtmlBlock.DblClickAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.DblClick(options);
         }
 
         this.PageModel.Wait();
@@ -196,11 +198,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.HoverAsync(options).GetAwaiter().GetResult();
+            element.Hover(options);
         }
         else
         {
-            this.HtmlBlock.HoverAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.Hover(options);
         }
 
         this.PageModel.Wait();
@@ -217,11 +219,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.TypeAsync(value, options).GetAwaiter().GetResult();
+            element.Type(value, options);
         }
         else
         {
-            this.HtmlBlock.TypeAsync(value, options).GetAwaiter().GetResult();
+            this.HtmlBlock.Type(value, options);
         }
 
         this.PageModel.Wait();
@@ -238,11 +240,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.FillAsync(value, options).GetAwaiter().GetResult();
+            element.Fill(value, options);
         }
         else
         {
-            this.HtmlBlock.FillAsync(value, options).GetAwaiter().GetResult();
+            this.HtmlBlock.Fill(value, options);
         }
 
         this.PageModel.Wait();
@@ -259,11 +261,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.CheckAsync(options).GetAwaiter().GetResult();
+            element.Check(options);
         }
         else
         {
-            this.HtmlBlock.CheckAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.Check(options);
         }
 
         this.PageModel.Wait();
@@ -280,11 +282,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.UncheckAsync(options).GetAwaiter().GetResult();
+            element.Uncheck(options);
         }
         else
         {
-            this.HtmlBlock.UncheckAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.Uncheck(options);
         }
 
         this.PageModel.Wait();
@@ -301,11 +303,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+            element.SetInputFiles(files, options);
         }
         else
         {
-            this.HtmlBlock.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+            this.HtmlBlock.SetInputFiles(files, options);
         }
 
         this.PageModel.Wait();
@@ -322,11 +324,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+            element.SetInputFiles(files, options);
         }
         else
         {
-            this.HtmlBlock.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+            this.HtmlBlock.SetInputFiles(files, options);
         }
 
         this.PageModel.Wait();
@@ -343,11 +345,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+            element.SetInputFiles(files, options);
         }
         else
         {
-            this.HtmlBlock.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+            this.HtmlBlock.SetInputFiles(files, options);
         }
 
         this.PageModel.Wait();
@@ -364,11 +366,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+            element.SetInputFiles(files, options);
         }
         else
         {
-            this.HtmlBlock.SetInputFilesAsync(files, options).GetAwaiter().GetResult();
+            this.HtmlBlock.SetInputFiles(files, options);
         }
 
         this.PageModel.Wait();
@@ -385,11 +387,11 @@ public partial class BlockModel<TPageModel>
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.ScreenshotAsync(options).GetAwaiter().GetResult();
+            element.Screenshot(options);
         }
         else
         {
-            this.HtmlBlock.ScreenshotAsync(options).GetAwaiter().GetResult();
+            this.HtmlBlock.Screenshot(options);
         }
 
         this.PageModel.Wait();
@@ -397,18 +399,460 @@ public partial class BlockModel<TPageModel>
         this.AfterScreenshot();
     }
 
-    protected virtual string TextContent()
+    protected virtual string TextContent(string? selector = null)
     {
-        return HtmlBlock.TextContentAsync().GetAwaiter().GetResult() ?? "";
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.TextContent() ?? "";
+        }
+        else
+        {
+            return this.HtmlBlock.TextContent() ?? "";
+        }
     }
 
-    protected virtual string InnerText()
+    protected virtual string InnerText(string? selector = null)
     {
-        return HtmlBlock.InnerTextAsync().GetAwaiter().GetResult();
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.InnerText();
+        }
+        else
+        {
+            return this.HtmlBlock.InnerText();
+        }
     }
 
-    protected virtual string InnerHTML()
+    protected virtual string InnerHTML(string? selector = null)
     {
-        return HtmlBlock.InnerHTMLAsync().GetAwaiter().GetResult();
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.InnerHTML();
+        }
+        else
+        {
+            return this.HtmlBlock.InnerHTML();
+        }
+    }
+
+    protected virtual bool IsChecked(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.IsChecked();
+        }
+        else
+        {
+            return this.HtmlBlock.IsChecked();
+        }
+    }
+
+    protected virtual bool IsDisabled(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.IsDisabled();
+        }
+        else
+        {
+            return this.HtmlBlock.IsDisabled();
+        }
+    }
+
+    protected virtual bool IsEditable(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.IsEditable();
+        }
+        else
+        {
+            return this.HtmlBlock.IsEditable();
+        }
+    }
+
+    protected virtual bool IsEnabled(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.IsEnabled();
+        }
+        else
+        {
+            return this.HtmlBlock.IsEnabled();
+        }
+    }
+
+    protected virtual bool IsHidden(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.IsHidden();
+        }
+        else
+        {
+            return this.HtmlBlock.IsHidden();
+        }
+    }
+
+    protected virtual bool IsVisible(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.IsVisible();
+        }
+        else
+        {
+            return this.HtmlBlock.IsVisible();
+        }
+    }
+
+    protected virtual ElementHandleBoundingBoxResult? BoundingBox(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.BoundingBox();
+        }
+        else
+        {
+            return this.HtmlBlock.BoundingBox();
+        }
+    }
+
+    protected virtual IFrame? ContentFrame(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.ContentFrame();
+        }
+        else
+        {
+            return this.HtmlBlock.ContentFrame();
+        }
+    }
+
+    protected virtual void Focus(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.Focus();
+        }
+        else
+        {
+            this.HtmlBlock.Focus();
+        }
+    }
+
+    protected virtual string InputValue(string? selector = null, ElementHandleInputValueOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.InputValue();
+        }
+        else
+        {
+            return this.HtmlBlock.InputValue();
+        }
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(string values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.SelectOption(values);
+        }
+        else
+        {
+            return this.HtmlBlock.SelectOption(values);
+        }
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(IElementHandle values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.SelectOption(values);
+        }
+        else
+        {
+            return this.HtmlBlock.SelectOption(values);
+        }
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<string> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.SelectOption(values);
+        }
+        else
+        {
+            return this.HtmlBlock.SelectOption(values);
+        }
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(SelectOptionValue values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.SelectOption(values);
+        }
+        else
+        {
+            return this.HtmlBlock.SelectOption(values);
+        }
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<IElementHandle> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.SelectOption(values);
+        }
+        else
+        {
+            return this.HtmlBlock.SelectOption(values);
+        }
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<SelectOptionValue> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.SelectOption(values);
+        }
+        else
+        {
+            return this.HtmlBlock.SelectOption(values);
+        }
+    }
+
+    protected virtual void DispatchEvent(string type, string? selector = null, object? eventInit = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.DispatchEvent(type);
+        }
+        else
+        {
+            this.HtmlBlock.DispatchEvent(type);
+        }
+    }
+
+    protected virtual T EvalOnSelector<T>(string selector, string expression, object? arg = null)
+    {
+        this.PageModel.Wait();
+
+        return this.HtmlBlock.EvalOnSelector<T>(selector, expression, arg);
+    }
+
+    protected virtual T EvalOnSelectorAll<T>(string selector, string expression, object? arg = null)
+    {
+        return this.HtmlBlock.EvalOnSelectorAll<T>(selector, expression, arg);
+    }
+
+    protected virtual JsonElement? EvalOnSelector(string selector, string expression, object? arg = null)
+    {
+        return this.HtmlBlock.EvalOnSelector(selector, expression, arg);
+    }
+
+    protected string? GetAttributeAsync(string name, string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.GetAttribute(name);
+        }
+        else
+        {
+            return this.HtmlBlock.GetAttribute(name);
+        }
+    }
+
+    protected virtual void Tap(string? selector = null, ElementHandleTapOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.Tap(options);
+        }
+        else
+        {
+            this.HtmlBlock.Tap(options);
+        }
+    }
+
+    protected virtual IFrame? OwnerFrame(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.OwnerFrame();
+        }
+        else
+        {
+            return this.HtmlBlock.OwnerFrame();
+        }
+    }
+
+    protected virtual void Press(string key, string? selector = null, ElementHandlePressOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.Press(key, options);
+        }
+        else
+        {
+            this.HtmlBlock.Press(key, options);
+        }
+    }
+
+    protected virtual byte[] Screenshot(string? selector = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            return element.Screenshot();
+        }
+        else
+        {
+            return this.HtmlBlock.Screenshot();
+        }
+    }
+
+    protected virtual void SelectText(string? selector = null, ElementHandleSelectTextOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.SelectText(options);
+        }
+        else
+        {
+            this.HtmlBlock.SelectText(options);
+        }
+    }
+
+    protected virtual void SetChecked(bool checkedState, string? selector = null, ElementHandleSetCheckedOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.SetChecked(checkedState);
+        }
+        else
+        {
+            this.HtmlBlock.SetChecked(checkedState);
+        }
+    }
+
+    protected virtual void WaitForElementState(ElementState state, string? selector = null, ElementHandleWaitForElementStateOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.WaitForElementState(state);
+        }
+        else
+        {
+            this.HtmlBlock.WaitForElementState(state);
+        }
+    }
+
+    protected virtual void ScrollIntoViewIfNeeded(string? selector = null, ElementHandleScrollIntoViewIfNeededOptions? options = null)
+    {
+        this.PageModel.Wait();
+
+        if (selector is not null)
+        {
+            var element = this.FindElement(selector);
+            element.ScrollIntoViewIfNeeded();
+        }
+        else
+        {
+            this.HtmlBlock.ScrollIntoViewIfNeeded();
+        }
+    }
+
+    protected virtual IElementHandle? WaitForSelector(string selector, ElementHandleWaitForSelectorOptions? options = null)
+    {
+        return HtmlBlock.WaitForSelector(selector, options);
     }
 }

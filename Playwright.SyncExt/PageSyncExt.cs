@@ -29,41 +29,6 @@ namespace UITesting.Page.Sync;
 
 public static class PageSyncExt
 {
-    public static void Click(this IPage page, string selector, PageClickOptions? options = null)
-    {
-        page.ClickAsync(selector, options).GetAwaiter().GetResult();
-    }
-
-    public static void DblClick(this IPage page, string selector, PageDblClickOptions? options = null)
-    {
-        page.DblClickAsync(selector, options).GetAwaiter().GetResult();
-    }
-
-    public static void Type(this IPage page, string selector, string value, PageTypeOptions? options = null)
-    {
-        page.TypeAsync(selector, value, options).GetAwaiter().GetResult();
-    }
-
-    public static void SetInputFiles(this IPage page, string selector, string files, PageSetInputFilesOptions? options = null)
-    {
-        page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
-    }
-
-    public static void SetInputFiles(this IPage page, string selector, FilePayload files, PageSetInputFilesOptions? options = null)
-    {
-        page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
-    }
-
-    public static void SetInputFiles(this IPage page, string selector, IEnumerable<string> files, PageSetInputFilesOptions? options = null)
-    {
-        page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
-    }
-
-    public static void SetInputFiles(this IPage page, string selector, IEnumerable<FilePayload> files, PageSetInputFilesOptions? options = null)
-    {
-        page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
-    }
-
     public static void AddInitScript(this IPage page, string? script = null, string? scriptPath = null)
     {
         page.AddInitScriptAsync(script, scriptPath).GetAwaiter().GetResult();
@@ -83,15 +48,30 @@ public static class PageSyncExt
     {
         page.BringToFrontAsync().GetAwaiter().GetResult();
     }
-
-    public static void BringToFront(this IPage page, string selector, PageCheckOptions? options = null)
+    
+    public static void Check(this IPage page, string selector, PageCheckOptions? options = null)
     {
         page.CheckAsync(selector, options).GetAwaiter().GetResult();
+    }
+
+    public static void Click(this IPage page, string selector, PageClickOptions? options = null)
+    {
+        page.ClickAsync(selector, options).GetAwaiter().GetResult();
+    }
+
+    public static void Close(this IPage page, PageCloseOptions? options = null)
+    {
+        page.CloseAsync(options).GetAwaiter().GetResult();
     }
 
     public static string Content(this IPage page)
     {
         return page.ContentAsync().GetAwaiter().GetResult();
+    }
+
+    public static void DblClick(this IPage page, string selector, PageDblClickOptions? options = null)
+    {
+        page.DblClickAsync(selector, options).GetAwaiter().GetResult();
     }
 
     public static void DispatchEvent(this IPage page, string selector, string type, object? eventInit = null, PageDispatchEventOptions? options = null)
@@ -109,29 +89,14 @@ public static class PageSyncExt
         page.EmulateMediaAsync(options).GetAwaiter().GetResult();
     }
 
-    public static void EvalOnSelectorAll(this IPage page, string selector, string expression, object? arg = null)
-    {
-        page.EvalOnSelectorAllAsync(selector, expression, arg).GetAwaiter().GetResult();
-    }
-
-    public static void EvalOnSelectorAll<T>(this IPage page, string selector, string expression, object? arg = null)
-    {
-        page.EvalOnSelectorAllAsync<T>(selector, expression, arg).GetAwaiter().GetResult();
-    }
-
-    public static void EvalOnSelector(this IPage page, string selector, string expression, object? arg = null)
-    {
-        page.EvalOnSelectorAsync(selector, expression, arg).GetAwaiter().GetResult();
-    }
-
     public static void EvalOnSelector<T>(this IPage page, string selector, string expression, object? arg = null, PageEvalOnSelectorOptions? options = null)
     {
         page.EvalOnSelectorAsync<T>(selector, expression, arg, options).GetAwaiter().GetResult();
     }
 
-    public static void Evaluate(this IPage page, string expression, object? arg = null)
+    public static void EvalOnSelectorAll<T>(this IPage page, string selector, string expression, object? arg = null)
     {
-        page.EvaluateAsync(expression, arg).GetAwaiter().GetResult();
+        page.EvalOnSelectorAllAsync<T>(selector, expression, arg).GetAwaiter().GetResult();
     }
 
     public static void Evaluate<T>(this IPage page, string expression, object? arg = null)
@@ -149,99 +114,19 @@ public static class PageSyncExt
         page.ExposeBindingAsync(name, callback, options).GetAwaiter().GetResult();
     }
 
-    public static void ExposeBinding<T>(this IPage page, string name, Action<BindingSource, T> callback)
-    {
-        page.ExposeBindingAsync<T>(name, callback).GetAwaiter().GetResult();
-    }
-
-    public static void ExposeBinding<TResult>(this IPage page, string name, Func<BindingSource, TResult> callback)
-    {
-        page.ExposeBindingAsync<TResult>(name, callback).GetAwaiter().GetResult();
-    }
-
-    public static void ExposeBinding<TResult>(this IPage page, string name, Func<BindingSource, IJSHandle, TResult> callback)
-    {
-        page.ExposeBindingAsync<TResult>(name, callback).GetAwaiter().GetResult();
-    }
-
-    public static void ExposeBinding<T, TResult>(this IPage page, string name, Func<BindingSource, T, TResult> callback)
-    {
-        page.ExposeBindingAsync<T, TResult>(name, callback).GetAwaiter().GetResult();
-    }
-
-    public static void ExposeBinding<T1, T2, TResult>(this IPage page, string name, Func<BindingSource, T1, T2, TResult> callback)
-    {
-        page.ExposeBindingAsync<T1, T2, TResult>(name, callback).GetAwaiter().GetResult();
-    }
-
-    public static void ExposeBinding<T1, T2, T3, TResult>(this IPage page, string name, Func<BindingSource, T1, T2, T3, TResult> callback)
-    {
-        page.ExposeBindingAsync<T1, T2, T3, TResult>(name, callback).GetAwaiter().GetResult();
-    }
-
-    public static void ExposeBinding<T1, T2, T3, T4, TResult>(this IPage page, string name, Func<BindingSource, T1, T2, T3, T4, TResult> callback)
-    {
-        page.ExposeBindingAsync<T1, T2, T3, T4, TResult>(name, callback).GetAwaiter().GetResult();
-    }
-
     public static void ExposeFunction(this IPage page, string name, Action callback)
     {
         page.ExposeFunctionAsync(name, callback).GetAwaiter().GetResult();
     }
 
-    public static void ExposeFunction<T>(this IPage page, string name, Action<T> callback)
+    public static void FillAsync(this IPage page, string selector, string value, PageFillOptions? options = null)
     {
-        page.ExposeFunctionAsync<T>(name, callback);
-    }
-
-    public static void ExposeFunction<TResult>(this IPage page, string name, Func<TResult> callback)
-    {
-        page.ExposeFunctionAsync<TResult>(name, callback);
-    }
-
-    public static void ExposeFunction<T, TResult>(this IPage page, string name, Func<T, TResult> callback)
-    {
-        page.ExposeFunctionAsync<T, TResult>(name, callback);
-    }
-
-    public static void ExposeFunction<T1, T2, TResult>(this IPage page, string name, Func<T1, T2, TResult> callback)
-    {
-        page.ExposeFunctionAsync<T1, T2, TResult>(name, callback);
-    }
-
-    public static void ExposeFunction<T1, T2, T3, TResult>(this IPage page, string name, Func<T1, T2, T3, TResult> callback)
-    {
-        page.ExposeFunctionAsync<T1, T2, T3, TResult>(name, callback);
-    }
-
-    public static void ExposeFunction<T1, T2, T3, T4, TResult>(this IPage page, string name, Func<T1, T2, T3, T4, TResult> callback)
-    {
-        page.ExposeFunctionAsync<T1, T2, T3, T4, TResult>(name, callback);
+        page.FillAsync(selector, value, options);
     }
 
     public static void Focus(this IPage page, string selector, PageFocusOptions? options = null)
     {
         page.FocusAsync(selector, options).GetAwaiter().GetResult();
-    }
-
-    public static IFrame? Frame(this IPage page, string name)
-    {
-        return page.Frame(name);
-    }
-
-    public static IFrame? FrameByUrl(this IPage page, string url)
-    {
-        return page.FrameByUrl(url);
-    }
-
-    public static IFrame? FrameByUrl(this IPage page, Regex url)
-    {
-        return page.FrameByUrl(url);
-    }
-
-    public static IFrame? FrameyUrl(this IPage page, Func<string, bool> url)
-    {
-        return page.FrameByUrl(url);
     }
 
     public static void GetAttribute(this IPage page, string selector, string name, PageGetAttributeOptions? options = null)
@@ -334,6 +219,21 @@ public static class PageSyncExt
         page.PressAsync(selector, key, options).GetAwaiter().GetResult();
     }
 
+    public static IElementHandle? QuerySelector(this IPage page, string selector, PageQuerySelectorOptions? options = null)
+    {
+        return page.QuerySelectorAsync(selector, options).GetAwaiter().GetResult();
+    }
+
+    public static IReadOnlyList<IElementHandle> QuerySelectorAll(this IPage page, string selector)
+    {
+        return page.QuerySelectorAllAsync(selector).GetAwaiter().GetResult();
+    }
+
+    public static IResponse? ReloadAsync(this IPage page, PageReloadOptions? options = null)
+    { 
+        return page.ReloadAsync(options).GetAwaiter().GetResult();
+    }
+
     public static void Route(this IPage page, string url, Action<IRoute> handler, PageRouteOptions? options = null)
     {
         page.RouteAsync(url, handler, options).GetAwaiter().GetResult();
@@ -349,74 +249,9 @@ public static class PageSyncExt
         page.RouteAsync(url, handler, options).GetAwaiter().GetResult();
     }
 
-    public static IConsoleMessage RunAndWaitForConsoleMessage(this IPage page, Func<Task> action, PageRunAndWaitForConsoleMessageOptions? options = null)
+    public static byte[] ScreenshotAsync(this IPage page, PageScreenshotOptions? options = null)
     {
-        return page.RunAndWaitForConsoleMessageAsync(action, options).GetAwaiter().GetResult();
-    }
-
-    public static IDownload RunAndWaitForDownload(this IPage page, Func<Task> action, PageRunAndWaitForDownloadOptions? options = null)
-    {
-        return page.RunAndWaitForDownloadAsync(action, options).GetAwaiter().GetResult();
-    }
-
-    public static IFileChooser RunAndWaitForFileChooser(this IPage page, Func<Task> action, PageRunAndWaitForFileChooserOptions? options = null)
-    {
-        return page.RunAndWaitForFileChooserAsync(action, options).GetAwaiter().GetResult();
-    }
-
-    public static IResponse? RunAndWaitForNavigation(this IPage page, Func<Task> action, PageRunAndWaitForNavigationOptions? options = null)
-    {
-        return page.RunAndWaitForNavigationAsync(action, options).GetAwaiter().GetResult();
-    }
-
-    public static IPage RunAndWaitForPopup(this IPage page, Func<Task> action, PageRunAndWaitForPopupOptions? options = null)
-    {
-        return page.RunAndWaitForPopupAsync(action, options).GetAwaiter().GetResult();
-    }
-
-    public static IRequest RunAndWaitForRequest(this IPage page, Func<Task> action, string urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
-    {
-        return page.RunAndWaitForRequestAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
-    }
-
-    public static IRequest RunAndWaitForRequest(this IPage page, Func<Task> action, Regex urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
-    {
-        return page.RunAndWaitForRequestAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
-    }
-
-    public static IRequest RunAndWaitForRequest(this IPage page, Func<Task> action, Func<IRequest, bool> urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
-    {
-        return page.RunAndWaitForRequestAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
-    }
-
-    public static IRequest RunAndWaitForRequestFinished(this IPage page, Func<Task> action, PageRunAndWaitForRequestFinishedOptions? options = null)
-    {
-        return page.RunAndWaitForRequestFinishedAsync(action, options).GetAwaiter().GetResult();
-    }
-
-    public static IResponse RunAndWaitForResponse(this IPage page, Func<Task> action, string urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
-    {
-        return page.RunAndWaitForResponseAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
-    }
-
-    public static IResponse RunAndWaitForResponse(this IPage page, Func<Task> action, Regex urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
-    {
-        return page.RunAndWaitForResponseAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
-    }
-
-    public static IResponse RunAndWaitForResponse(this IPage page, Func<Task> action, Func<IResponse, bool> urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
-    {
-        return page.RunAndWaitForResponseAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
-    }
-
-    public static IWebSocket RunAndWaitForWebSocket(this IPage page, Func<Task> action, PageRunAndWaitForWebSocketOptions? options = null)
-    {
-        return page.RunAndWaitForWebSocketAsync(action, options).GetAwaiter().GetResult();
-    }
-
-    public static void RunAndWaitForWorker(this IPage page, Func<Task> action, PageRunAndWaitForWorkerOptions? options = null)
-    {
-        page.RunAndWaitForWorkerAsync(action, options).GetAwaiter().GetResult();
+        return page.ScreenshotAsync(options).GetAwaiter().GetResult();
     }
 
     public static IReadOnlyList<string> SelectOption(this IPage page, string selector, string values, PageSelectOptionOptions? options = null)
@@ -452,5 +287,335 @@ public static class PageSyncExt
     public static void SetChecked(this IPage page, string selector, bool checkedState, PageSetCheckedOptions? options = null)
     {
         page.SetCheckedAsync(selector, checkedState, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetContent(this IPage page, string html, PageSetContentOptions? options = null)
+    {
+        page.SetContentAsync(html, options);
+    }
+
+    public static void SetExtraHTTPHeadersAsync(this IPage page, IEnumerable<KeyValuePair<string, string>> headers)
+    {
+        page.SetExtraHTTPHeadersAsync(headers).GetAwaiter().GetResult();
+    }
+
+    public static void SetInputFiles(this IPage page, string selector, string files, PageSetInputFilesOptions? options = null)
+    {
+        page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetInputFiles(this IPage page, string selector, FilePayload files, PageSetInputFilesOptions? options = null)
+    {
+        page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetInputFiles(this IPage page, string selector, IEnumerable<string> files, PageSetInputFilesOptions? options = null)
+    {
+        page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetInputFiles(this IPage page, string selector, IEnumerable<FilePayload> files, PageSetInputFilesOptions? options = null)
+    {
+        page.SetInputFilesAsync(selector, files, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetViewportSize(this IPage page, int width, int height)
+    {
+        page.SetViewportSizeAsync(width, height).GetAwaiter().GetResult();
+    }
+
+    public static void Tap(this IPage page, string selector, PageTapOptions? options = null)
+    {
+        page.TapAsync(selector, options).GetAwaiter().GetResult();
+    }
+
+    public static string? TextContent(this IPage page, string selector, PageTextContentOptions? options = null)
+    {
+        return page.TextContentAsync(selector, options).GetAwaiter().GetResult();
+    }
+
+    public static string Title(this IPage page)
+    { 
+        return page.TitleAsync().GetAwaiter().GetResult();
+    }
+
+    public static void Type(this IPage page, string selector, string value, PageTypeOptions? options = null)
+    {
+        page.TypeAsync(selector, value, options).GetAwaiter().GetResult();
+    }
+
+    public static void Uncheck(this IPage page, string selector, PageUncheckOptions? options = null)
+    {
+        page.UncheckAsync(selector, options).GetAwaiter().GetResult();
+    }
+
+    public static void Unroute(this IPage page, string url, Action<IRoute>? handler = null)
+    {
+        page.UnrouteAsync(url, handler).GetAwaiter().GetResult();
+    }
+
+    public static void Unroute(this IPage page, Regex url, Action<IRoute>? handler = null)
+    {
+        page.UnrouteAsync(url, handler).GetAwaiter().GetResult();
+    }
+
+    public static void Unroute(this IPage page, Func<string, bool> url, Action<IRoute>? handler = null)
+    {
+        page.UnrouteAsync(url, handler).GetAwaiter().GetResult();
+    }
+
+    public static IConsoleMessage WaitForConsoleMessage(this IPage page, PageWaitForConsoleMessageOptions? options = null)
+    {
+        return page.WaitForConsoleMessageAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IConsoleMessage RunAndWaitForConsoleMessage(this IPage page, Func<Task> action, PageRunAndWaitForConsoleMessageOptions? options = null)
+    {
+        return page.RunAndWaitForConsoleMessageAsync(action, options).GetAwaiter().GetResult();
+    }
+
+    public static IDownload WaitForDownload(this IPage page, PageWaitForDownloadOptions? options = null)
+    {
+        return page.WaitForDownloadAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IDownload RunAndWaitForDownload(this IPage page, Func<Task> action, PageRunAndWaitForDownloadOptions? options = null)
+    {
+        return page.RunAndWaitForDownloadAsync(action, options).GetAwaiter().GetResult();
+    }
+
+    public static IFileChooser WaitForFileChooser(this IPage page, PageWaitForFileChooserOptions? options = null)
+    { 
+        return page.WaitForFileChooserAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IFileChooser RunAndWaitForFileChooser(this IPage page, Func<Task> action, PageRunAndWaitForFileChooserOptions? options = null)
+    {
+        return page.RunAndWaitForFileChooserAsync(action, options).GetAwaiter().GetResult();
+    }
+
+    public static IJSHandle WaitForFunction(this IPage page, string expression, object? arg = null, PageWaitForFunctionOptions? options = null)
+    {
+        return page.WaitForFunctionAsync(expression, arg, options).GetAwaiter().GetResult();
+    }
+
+    public static void WaitForLoadState(this IPage page, LoadState? state = null, PageWaitForLoadStateOptions? options = null)
+    { 
+        page.WaitForLoadStateAsync(state, options).GetAwaiter().GetResult();
+    }
+
+    public static IResponse? WaitForNavigation(this IPage page, PageWaitForNavigationOptions? options = null)
+    {
+        return page.WaitForNavigationAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IResponse? RunAndWaitForNavigation(this IPage page, Func<Task> action, PageRunAndWaitForNavigationOptions? options = null)
+    {
+        return page.RunAndWaitForNavigationAsync(action, options).GetAwaiter().GetResult();
+    }
+
+    public static IPage WaitForPopup(this IPage page, PageWaitForPopupOptions? options = null)
+    {
+        return page.WaitForPopupAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IPage RunAndWaitForPopup(this IPage page, Func<Task> action, PageRunAndWaitForPopupOptions? options = null)
+    {
+        return page.RunAndWaitForPopupAsync(action, options).GetAwaiter().GetResult();
+    }
+
+    public static IRequest WaitForRequest(IPage page, string urlOrPredicate, PageWaitForRequestOptions? options = null)
+    {
+        return page.WaitForRequestAsync(urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IRequest WaitForRequest(this IPage page, Regex urlOrPredicate, PageWaitForRequestOptions? options = null)
+    {
+        return page.WaitForRequestAsync(urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IRequest WaitForRequest(IPage page, Func<IRequest, bool> urlOrPredicate, PageWaitForRequestOptions? options = null)
+    {
+        return page.WaitForRequestAsync(urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IRequest RunAndWaitForRequest(this IPage page, Func<Task> action, string urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
+    {
+        return page.RunAndWaitForRequestAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IRequest RunAndWaitForRequest(this IPage page, Func<Task> action, Regex urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
+    {
+        return page.RunAndWaitForRequestAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IRequest RunAndWaitForRequest(this IPage page, Func<Task> action, Func<IRequest, bool> urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
+    {
+        return page.RunAndWaitForRequestAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IRequest WaitForRequestFinished(this IPage page, PageWaitForRequestFinishedOptions? options = null)
+    {
+        return page.WaitForRequestFinishedAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IRequest RunAndWaitForRequestFinished(this IPage page, Func<Task> action, PageRunAndWaitForRequestFinishedOptions? options = null)
+    {
+        return page.RunAndWaitForRequestFinishedAsync(action, options).GetAwaiter().GetResult();
+    }
+
+    public static IResponse WaitForResponse(this IPage page, string urlOrPredicate, PageWaitForResponseOptions? options = null)
+    {
+        return page.WaitForResponseAsync(urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IResponse WaitForResponse(this IPage page, Regex urlOrPredicate, PageWaitForResponseOptions? options = null)
+    {
+        return page.WaitForResponseAsync(urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IResponse WaitForResponse(this IPage page, Func<IResponse, bool> urlOrPredicate, PageWaitForResponseOptions? options = null)
+    {
+        return page.WaitForResponseAsync(urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IResponse RunAndWaitForResponse(this IPage page, Func<Task> action, string urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
+    {
+        return page.RunAndWaitForResponseAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IResponse RunAndWaitForResponse(this IPage page, Func<Task> action, Regex urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
+    {
+        return page.RunAndWaitForResponseAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IResponse RunAndWaitForResponse(this IPage page, Func<Task> action, Func<IResponse, bool> urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
+    {
+        return page.RunAndWaitForResponseAsync(action, urlOrPredicate, options).GetAwaiter().GetResult();
+    }
+
+    public static IElementHandle? WaitForSelector(this IPage page, string selector, PageWaitForSelectorOptions? options = null)
+    {
+        return page.WaitForSelectorAsync(selector, options).GetAwaiter().GetResult();
+    }
+
+    public static void WaitForTimeout(this IPage page, float timeout)
+    {
+        page.WaitForTimeoutAsync(timeout).GetAwaiter().GetResult();
+    }
+
+    public static void WaitForURL(this IPage page, Regex url, PageWaitForURLOptions? options = null)
+    {
+        page.WaitForURLAsync(url, options).GetAwaiter().GetResult();
+    }
+
+    public static void WaitForURL(this IPage page, Func<string, bool> url, PageWaitForURLOptions? options = null)
+    {
+        page.WaitForURLAsync(url, options).GetAwaiter().GetResult();
+    }
+
+    public static IWebSocket WaitForWebSocket(this IPage page, PageWaitForWebSocketOptions? options = null)
+    {
+        return page.WaitForWebSocketAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IWebSocket RunAndWaitForWebSocket(this IPage page, Func<Task> action, PageRunAndWaitForWebSocketOptions? options = null)
+    {
+        return page.RunAndWaitForWebSocketAsync(action, options).GetAwaiter().GetResult();
+    }
+
+    public static IWorker WaitForWorker(this IPage page, PageWaitForWorkerOptions? options = null)
+    {
+        return page.WaitForWorkerAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static void RunAndWaitForWorker(this IPage page, Func<Task> action, PageRunAndWaitForWorkerOptions? options = null)
+    {
+        page.RunAndWaitForWorkerAsync(action, options).GetAwaiter().GetResult();
+    }
+
+    public static void Evaluate(this IPage page, string expression, object? arg = null)
+    {
+        page.EvaluateAsync(expression, arg).GetAwaiter().GetResult();
+    }
+
+    public static void EvalOnSelector(this IPage page, string selector, string expression, object? arg = null)
+    {
+        page.EvalOnSelectorAsync(selector, expression, arg).GetAwaiter().GetResult();
+    }
+
+    public static void EvalOnSelectorAll(this IPage page, string selector, string expression, object? arg = null)
+    {
+        page.EvalOnSelectorAllAsync(selector, expression, arg).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeBinding(this IPage page, string name, Action<BindingSource> callback)
+    {
+        page.ExposeBindingAsync(name, callback).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeBinding<T>(this IPage page, string name, Action<BindingSource, T> callback)
+    {
+        page.ExposeBindingAsync<T>(name, callback).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeBinding<TResult>(this IPage page, string name, Func<BindingSource, TResult> callback)
+    {
+        page.ExposeBindingAsync<TResult>(name, callback).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeBinding<TResult>(this IPage page, string name, Func<BindingSource, IJSHandle, TResult> callback)
+    {
+        page.ExposeBindingAsync<TResult>(name, callback).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeBinding<T, TResult>(this IPage page, string name, Func<BindingSource, T, TResult> callback)
+    {
+        page.ExposeBindingAsync<T, TResult>(name, callback).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeBinding<T1, T2, TResult>(this IPage page, string name, Func<BindingSource, T1, T2, TResult> callback)
+    {
+        page.ExposeBindingAsync<T1, T2, TResult>(name, callback).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeBinding<T1, T2, T3, TResult>(this IPage page, string name, Func<BindingSource, T1, T2, T3, TResult> callback)
+    {
+        page.ExposeBindingAsync<T1, T2, T3, TResult>(name, callback).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeBinding<T1, T2, T3, T4, TResult>(this IPage page, string name, Func<BindingSource, T1, T2, T3, T4, TResult> callback)
+    {
+        page.ExposeBindingAsync<T1, T2, T3, T4, TResult>(name, callback).GetAwaiter().GetResult();
+    }
+
+    public static void ExposeFunction<T>(this IPage page, string name, Action<T> callback)
+    {
+        page.ExposeFunctionAsync<T>(name, callback);
+    }
+
+    public static void ExposeFunction<TResult>(this IPage page, string name, Func<TResult> callback)
+    {
+        page.ExposeFunctionAsync<TResult>(name, callback);
+    }
+
+    public static void ExposeFunction<T, TResult>(this IPage page, string name, Func<T, TResult> callback)
+    {
+        page.ExposeFunctionAsync<T, TResult>(name, callback);
+    }
+
+    public static void ExposeFunction<T1, T2, TResult>(this IPage page, string name, Func<T1, T2, TResult> callback)
+    {
+        page.ExposeFunctionAsync<T1, T2, TResult>(name, callback);
+    }
+
+    public static void ExposeFunction<T1, T2, T3, TResult>(this IPage page, string name, Func<T1, T2, T3, TResult> callback)
+    {
+        page.ExposeFunctionAsync<T1, T2, T3, TResult>(name, callback);
+    }
+
+    public static void ExposeFunction<T1, T2, T3, T4, TResult>(this IPage page, string name, Func<T1, T2, T3, T4, TResult> callback)
+    {
+        page.ExposeFunctionAsync<T1, T2, T3, T4, TResult>(name, callback);
     }
 }
