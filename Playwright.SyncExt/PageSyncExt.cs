@@ -59,7 +59,7 @@ public static class PageSyncExt
         page.ClickAsync(selector, options).GetAwaiter().GetResult();
     }
 
-    public static void Close(this IPage page, PageCloseOptions? options = null)
+    public static void ClosePage(this IPage page, PageCloseOptions? options = null)
     {
         page.CloseAsync(options).GetAwaiter().GetResult();
     }
@@ -119,7 +119,7 @@ public static class PageSyncExt
         page.ExposeFunctionAsync(name, callback).GetAwaiter().GetResult();
     }
 
-    public static void FillAsync(this IPage page, string selector, string value, PageFillOptions? options = null)
+    public static void Fill(this IPage page, string selector, string value, PageFillOptions? options = null)
     {
         page.FillAsync(selector, value, options);
     }
@@ -164,9 +164,9 @@ public static class PageSyncExt
         page.InnerTextAsync(selector, options).GetAwaiter().GetResult();
     }
 
-    public static void InputValue(this IPage page, string selector, PageInputValueOptions? options = null)
+    public static string InputValue(this IPage page, string selector, PageInputValueOptions? options = null)
     {
-        page.InputValueAsync(selector, options).GetAwaiter().GetResult();
+        return page.InputValueAsync(selector, options).GetAwaiter().GetResult();
     }
 
     public static bool IsChecked(this IPage page, string selector, PageIsCheckedOptions? options = null)
@@ -294,7 +294,7 @@ public static class PageSyncExt
         page.SetContentAsync(html, options);
     }
 
-    public static void SetExtraHTTPHeadersAsync(this IPage page, IEnumerable<KeyValuePair<string, string>> headers)
+    public static void SetExtraHTTPHeaders(this IPage page, IEnumerable<KeyValuePair<string, string>> headers)
     {
         page.SetExtraHTTPHeadersAsync(headers).GetAwaiter().GetResult();
     }
@@ -424,7 +424,7 @@ public static class PageSyncExt
         return page.RunAndWaitForPopupAsync(action, options).GetAwaiter().GetResult();
     }
 
-    public static IRequest WaitForRequest(IPage page, string urlOrPredicate, PageWaitForRequestOptions? options = null)
+    public static IRequest WaitForRequest(this IPage page, string urlOrPredicate, PageWaitForRequestOptions? options = null)
     {
         return page.WaitForRequestAsync(urlOrPredicate, options).GetAwaiter().GetResult();
     }
@@ -434,7 +434,7 @@ public static class PageSyncExt
         return page.WaitForRequestAsync(urlOrPredicate, options).GetAwaiter().GetResult();
     }
 
-    public static IRequest WaitForRequest(IPage page, Func<IRequest, bool> urlOrPredicate, PageWaitForRequestOptions? options = null)
+    public static IRequest WaitForRequest(this IPage page, Func<IRequest, bool> urlOrPredicate, PageWaitForRequestOptions? options = null)
     {
         return page.WaitForRequestAsync(urlOrPredicate, options).GetAwaiter().GetResult();
     }
@@ -617,5 +617,15 @@ public static class PageSyncExt
     public static void ExposeFunction<T1, T2, T3, T4, TResult>(this IPage page, string name, Func<T1, T2, T3, T4, TResult> callback)
     {
         page.ExposeFunctionAsync<T1, T2, T3, T4, TResult>(name, callback);
+    }
+
+    public static void Reload(this IPage page, PageReloadOptions? options = null)
+    {
+        page.ReloadAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static byte[] Screenshot(this IPage page, PageScreenshotOptions? options = null)
+    {
+        return page.ScreenshotAsync(options).GetAwaiter().GetResult();
     }
 }

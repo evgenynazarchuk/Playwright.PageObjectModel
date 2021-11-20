@@ -82,10 +82,6 @@ public partial class PageModel
 
     protected virtual void AfterDragAndDrop() { }
 
-    protected virtual void BeforeInputValue() { }
-
-    protected virtual void AfterInputValue() { }
-
     protected virtual void BeforePress() { }
 
     protected virtual void AfterPress() { }
@@ -93,5 +89,13 @@ public partial class PageModel
     protected virtual void BeforeSelectOption() { }
 
     protected virtual void AfterSelectOption() { }
+
+    protected virtual void BeforeTap() { }
+
+    protected virtual void AfterTap() { }
+
+    protected virtual void BeforeSetChecked() { }
+
+    protected virtual void AfterSetChecked() { }
 
 }
