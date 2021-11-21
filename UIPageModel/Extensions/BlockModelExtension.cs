@@ -23,15 +23,49 @@
  */
 
 using System;
+using UITesting.Page.Sync;
+using UIPageModel.Exceptions;
 
 namespace UIPageModel.BasicModels;
 
 public static class BlockModelExtension
 {
-    public static TBlockModel VerifyThat<TBlockModel>(this TBlockModel blockModel, Action<TBlockModel> action)
+    public static TBlockModel VerifyThat<TBlockModel>(
+        this TBlockModel blockModel, 
+        Action<TBlockModel> action)
         where TBlockModel : BlockModel<PageModel>
     {
         action(blockModel);
+        return blockModel;
+    }
+
+    public static TBlockModel HaveChecked<TBlockModel>(
+        this TBlockModel blockModel,
+        string? selector = null,
+        string because = "")
+        where TBlockModel : BlockModel<PageModel>
+    {
+        bool isChecked;
+
+        if (selector is not null)
+        {
+            var element = blockModel.HtmlBlock.QuerySelector(selector);
+            if (element is null) throw new ApplicationException("Element not found");
+            isChecked = element.IsChecked();
+        }
+        else
+        { 
+            isChecked = blockModel.HtmlBlock.IsChecked();
+        }
+
+        if (isChecked is false)
+        {
+            throw new AssertException($@"
+HaveChecked Assert Exception
+Because: {because}
+");
+        }
+
         return blockModel;
     }
 }

@@ -129,9 +129,9 @@ public static class PageSyncExt
         page.FocusAsync(selector, options).GetAwaiter().GetResult();
     }
 
-    public static void GetAttribute(this IPage page, string selector, string name, PageGetAttributeOptions? options = null)
+    public static string? GetAttribute(this IPage page, string selector, string name, PageGetAttributeOptions? options = null)
     {
-        page.GetAttributeAsync(selector, name, options).GetAwaiter().GetResult();
+        return page.GetAttributeAsync(selector, name, options).GetAwaiter().GetResult();
     }
 
     public static void GoBack(this IPage page, PageGoBackOptions? options = null)

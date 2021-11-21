@@ -53,7 +53,7 @@ public partial class BlockModel<TPageModel>
         this.HtmlBlock = element;
     }
     
-    protected readonly TPageModel PageModel;
+    public readonly TPageModel PageModel;
 
-    protected readonly IElementHandle HtmlBlock;
+    public readonly IElementHandle HtmlBlock;
 }

@@ -505,11 +505,11 @@ public partial class PageModel
         return this.Page.FrameByUrl(url);
     }
 
-    public virtual void GetAttribute(string selector, string name, PageGetAttributeOptions? options = null)
+    public virtual string? GetAttribute(string selector, string name, PageGetAttributeOptions? options = null)
     {
         this.Wait();
 
-        this.Page.GetAttribute(selector, name, options);
+        return this.Page.GetAttribute(selector, name, options);
     }
 
     public virtual void GoBack(PageGoBackOptions? options = null)
