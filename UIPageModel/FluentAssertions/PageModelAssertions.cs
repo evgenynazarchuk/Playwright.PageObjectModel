@@ -25,13 +25,18 @@
 using System;
 using System.Text.RegularExpressions;
 using Microsoft.Playwright;
-using UIPageModel.Exceptions;
 using UITesting.Page.Sync;
 
-namespace UIPageModel.BasicModels;
+namespace UIPageModel.FluentAssertions;
 
-public static partial class PageModelExtension
+public static partial class PageModelAssertions
 {
+    public static ReferenceTypeAssertion<T> Should<T>(this T pageModel)
+        where T : PageModel
+    {
+        return new ReferenceTypeAssertion<T>(pageModel);
+    }
+
     public static TPageModel VerifyThat<TPageModel>(
         this TPageModel pageModel, 
         Action<TPageModel> action)
@@ -42,11 +47,11 @@ public static partial class PageModelExtension
     }
 
     public static TPageModel HaveTitle<TPageModel>(
-        this TPageModel pageModel, 
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string pattern)
         where TPageModel : PageModel
     {
-        var title = pageModel.Title();
+        var title = pageModel.Value.Title();
         Match match = Regex.Match(pattern, title, RegexOptions.Compiled);
 
         if (!match.Success)
@@ -58,16 +63,16 @@ Actual: {pattern}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel NotHaveTitle<TPageModel>(
-        this TPageModel pageModel, 
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string pattern, 
         string because = "")
         where TPageModel : PageModel
     {
-        var title = pageModel.Title();
+        var title = pageModel.Value.Title();
         Match match = Regex.Match(pattern, title, RegexOptions.Compiled);
 
         if (match.Success)
@@ -80,15 +85,15 @@ Bacause: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveContent<TPageModel>(
-        this TPageModel pageModel, 
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string pattern)
         where TPageModel : PageModel
     {
-        var title = pageModel.Content();
+        var title = pageModel.Value.Content();
         Match match = Regex.Match(pattern, title, RegexOptions.Compiled);
 
         if (!match.Success)
@@ -100,15 +105,15 @@ Actual: {pattern}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel NotHaveContent<TPageModel>(
-        this TPageModel pageModel, 
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string pattern)
         where TPageModel : PageModel
     {
-        var title = pageModel.Content();
+        var title = pageModel.Value.Content();
         Match match = Regex.Match(pattern, title, RegexOptions.Compiled);
 
         if (match.Success)
@@ -120,16 +125,16 @@ Actual: {pattern}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveElementAttribute<TPageModel>(
-        this TPageModel pageModel, 
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector, 
         string attributeName)
         where TPageModel : PageModel
     {
-        var attributeValue = pageModel.GetAttribute(selector, attributeName);
+        var attributeValue = pageModel.Value.GetAttribute(selector, attributeName);
 
         if (attributeValue is null)
         {
@@ -139,11 +144,11 @@ Expected: selector {selector}, attribute name {attributeName}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveElementAttributeValue<TPageModel>(
-        this TPageModel pageModel, 
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector, 
         string attributeName, 
         string value,
@@ -151,7 +156,7 @@ Expected: selector {selector}, attribute name {attributeName}
         PageGetAttributeOptions? options = null)
         where TPageModel : PageModel
     {
-        var result = pageModel.GetAttribute(selector, attributeName, options);
+        var result = pageModel.Value.GetAttribute(selector, attributeName, options);
 
         if (string.Compare(result, value) != 0)
         {
@@ -162,17 +167,18 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
-    public static TPageModel NotHaveElementAttribute<TPageModel>(this TPageModel pageModel,
+    public static TPageModel NotHaveElementAttribute<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         string attributeName,
         string because = "",
         PageGetAttributeOptions? options = null)
         where TPageModel : PageModel
     {
-        var result = pageModel.GetAttribute(selector, attributeName, options);
+        var result = pageModel.Value.GetAttribute(selector, attributeName, options);
 
         if (result is not null)
         {
@@ -183,17 +189,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveElement<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         string because = "",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        var result = pageModel.FindElementOrNull(selector, options);
+        var result = pageModel.Value.FindElementOrNull(selector, options);
 
         if (result is null)
         {
@@ -204,17 +210,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveElementCount<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         int count,
         string because = "")
         where TPageModel : PageModel
     {
-        var result = pageModel.FindElements(selector);
+        var result = pageModel.Value.FindElements(selector);
 
         if (result is null || result.Count != count)
         {
@@ -225,18 +231,18 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveElementWithContent<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         string textContent,
         string because = "",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        var result = pageModel.FindElement(selector, options);
+        var result = pageModel.Value.FindElement(selector, options);
         var actualContent = result.TextContent();
 
         if (string.Compare(actualContent, textContent) != 0)
@@ -249,17 +255,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveChecked<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         string because = "",
         PageIsCheckedOptions? options = null)
         where TPageModel : PageModel
     {
-        var isChecked = pageModel.IsChecked(selector, options);
+        var isChecked = pageModel.Value.IsChecked(selector, options);
 
         if (!isChecked)
         {
@@ -271,17 +277,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveDisabled<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         string because = "",
         PageIsDisabledOptions? options = null)
         where TPageModel : PageModel
     {
-        var isDisabled = pageModel.IsDisabled(selector, options);
+        var isDisabled = pageModel.Value.IsDisabled(selector, options);
 
         if (!isDisabled)
         {
@@ -293,17 +299,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveEditable<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         PageIsEditableOptions? options = null,
         string because = "")
         where TPageModel : PageModel
     {
-        var isEditable = pageModel.IsEditable(selector, options);
+        var isEditable = pageModel.Value.IsEditable(selector, options);
 
         if (!isEditable)
         {
@@ -315,17 +321,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveEnabled<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         PageIsEnabledOptions? options = null,
         string because = "")
         where TPageModel : PageModel
     {
-        var isEnable = pageModel.IsEnabled(selector, options);
+        var isEnable = pageModel.Value.IsEnabled(selector, options);
 
         if (!isEnable)
         {
@@ -337,17 +343,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveHidden<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         PageIsHiddenOptions? options = null,
         string because = "")
         where TPageModel : PageModel
     {
-        var isHidden = pageModel.IsHidden(selector, options);
+        var isHidden = pageModel.Value.IsHidden(selector, options);
 
         if (!isHidden)
         {
@@ -359,17 +365,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel HaveVisible<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         PageIsVisibleOptions? options = null,
         string because = "")
         where TPageModel : PageModel
     {
-        var isVisible = pageModel.IsVisible(selector, options);
+        var isVisible = pageModel.Value.IsVisible(selector, options);
 
         if (!isVisible)
         {
@@ -381,17 +387,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel NotHaveChecked<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         PageIsCheckedOptions? options = null,
         string because = "")
         where TPageModel : PageModel
     {
-        var isChecked = pageModel.IsChecked(selector, options);
+        var isChecked = pageModel.Value.IsChecked(selector, options);
 
         if (isChecked)
         {
@@ -403,17 +409,17 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 
     public static TPageModel NotHaveEditable<TPageModel>(
-        this TPageModel pageModel,
+        this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         PageIsEditableOptions? options = null,
         string because = "")
         where TPageModel : PageModel
     {
-        var isChecked = pageModel.IsEditable(selector, options);
+        var isChecked = pageModel.Value.IsEditable(selector, options);
 
         if (isChecked)
         {
@@ -425,6 +431,6 @@ Because: {because}
 ");
         }
 
-        return pageModel;
+        return pageModel.Value;
     }
 }

@@ -24,6 +24,7 @@
 
 using Microsoft.Playwright;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace UITesting.Page.Sync;
 

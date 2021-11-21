@@ -24,6 +24,9 @@
 
 using Microsoft.Playwright;
 using System.Text.RegularExpressions;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace UITesting.Page.Sync;
 

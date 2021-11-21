@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIPageModel.Tests", "UIPage
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIPageModel.SampleRunTests", "UIPageModel.SampleRunTests\UIPageModel.SampleRunTests.csproj", "{6FD0749D-693F-42DA-BA07-E901EC0665CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIPageModel.NUnitSampleTests", "UIPageModel.NUnitSampleTests\UIPageModel.NUnitSampleTests.csproj", "{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playwright.SyncExt", "Playwright.SyncExt\Playwright.SyncExt.csproj", "{0091D974-1D8F-4361-94DA-D0D8F224DFB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIPageModel.NUnitSampleTests", "UIPageModel.NUnitSampleTests\UIPageModel.NUnitSampleTests.csproj", "{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0091D974-1D8F-4361-94DA-D0D8F224DFB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0091D974-1D8F-4361-94DA-D0D8F224DFB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0091D974-1D8F-4361-94DA-D0D8F224DFB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0091D974-1D8F-4361-94DA-D0D8F224DFB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

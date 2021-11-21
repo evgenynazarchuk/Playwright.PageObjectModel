@@ -24,12 +24,17 @@
 
 using System;
 using UITesting.Page.Sync;
-using UIPageModel.Exceptions;
 
-namespace UIPageModel.BasicModels;
+namespace UIPageModel.FluentAssertions;
 
-public static class BlockModelExtension
+public static class BlockModelAssertions
 {
+    public static ReferenceTypeAssertion<T> Should<T>(this T blockModel)
+        where T : BlockModel<PageModel>
+    {
+        return new ReferenceTypeAssertion<T>(blockModel);
+    }
+
     public static TBlockModel VerifyThat<TBlockModel>(
         this TBlockModel blockModel, 
         Action<TBlockModel> action)
@@ -40,7 +45,7 @@ public static class BlockModelExtension
     }
 
     public static TBlockModel HaveChecked<TBlockModel>(
-        this TBlockModel blockModel,
+        this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "")
         where TBlockModel : BlockModel<PageModel>
@@ -49,13 +54,13 @@ public static class BlockModelExtension
 
         if (selector is not null)
         {
-            var element = blockModel.HtmlBlock.QuerySelector(selector);
+            var element = blockModel.Value.HtmlBlock.QuerySelector(selector);
             if (element is null) throw new ApplicationException("Element not found");
             isChecked = element.IsChecked();
         }
         else
         { 
-            isChecked = blockModel.HtmlBlock.IsChecked();
+            isChecked = blockModel.Value.HtmlBlock.IsChecked();
         }
 
         if (isChecked is false)
@@ -66,6 +71,6 @@ Because: {because}
 ");
         }
 
-        return blockModel;
+        return blockModel.Value;
     }
 }
