@@ -48,7 +48,8 @@ public static partial class PageModelAssertions
 
     public static TPageModel HaveTitle<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string pattern)
+        string pattern,
+        string because = "")
         where TPageModel : PageModel
     {
         var title = pageModel.Value.Title();
@@ -60,6 +61,7 @@ public static partial class PageModelAssertions
 HaveTitle Assert Exception
 Expected: {title}
 Actual: {pattern}
+Because: {because}
 ");
         }
 
@@ -90,7 +92,8 @@ Bacause: {because}
 
     public static TPageModel HaveContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string pattern)
+        string pattern,
+        string because = "")
         where TPageModel : PageModel
     {
         var title = pageModel.Value.Content();
@@ -102,6 +105,7 @@ Bacause: {because}
 HaveContent Assert Exception
 Expected: {title}
 Actual: {pattern}
+Because: {because}
 ");
         }
 
@@ -110,7 +114,8 @@ Actual: {pattern}
 
     public static TPageModel NotHaveContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string pattern)
+        string pattern,
+        string because = "")
         where TPageModel : PageModel
     {
         var title = pageModel.Value.Content();
@@ -122,6 +127,7 @@ Actual: {pattern}
 NotHaveContent Assert Exception
 Expected: {title}
 Actual: {pattern}
+Because: {because}
 ");
         }
 
@@ -131,7 +137,8 @@ Actual: {pattern}
     public static TPageModel HaveElementAttribute<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector, 
-        string attributeName)
+        string attributeName,
+        string because = "")
         where TPageModel : PageModel
     {
         var attributeValue = pageModel.Value.GetAttribute(selector, attributeName);
@@ -141,6 +148,7 @@ Actual: {pattern}
             throw new AssertException($@"
 HaveElementAttribute Assert Exception
 Expected: selector {selector}, attribute name {attributeName}
+Because: {because}
 ");
         }
 
