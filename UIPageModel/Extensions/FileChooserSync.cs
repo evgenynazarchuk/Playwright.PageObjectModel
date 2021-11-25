@@ -22,38 +22,30 @@
  * SOFTWARE.
  */
 
+using System.Collections.Generic;
 using Microsoft.Playwright;
 
-namespace UIPageModel;
+namespace UIPageModel.Extensions;
 
-public partial class BlockModel<TPageModel>
-    where TPageModel : PageModel
+public static class FileChooserSync
 {
-    public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
+    public static void SetFile(this IFileChooser fileChooser, string files, FileChooserSetFilesOptions? options = null)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = this.PageModel.FindElement(selector, options);
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
+    public static void SetFile(this IFileChooser fileChooser, IEnumerable<string> files, FileChooserSetFilesOptions? options = null)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = parentBlockModel.FindElement(selector);
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
     }
 
-    public BlockModel(TPageModel pageModel, IElementHandle element)
+    public static void SetFile(this IFileChooser fileChooser, FilePayload files, FileChooserSetFilesOptions? options = null)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = element;
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
+    public static void SetFile(this IFileChooser fileChooser, IEnumerable<FilePayload> files, FileChooserSetFilesOptions? options = null)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = element;
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
     }
-    
-    public readonly TPageModel PageModel;
-
-    public readonly IElementHandle ElementHandle;
 }

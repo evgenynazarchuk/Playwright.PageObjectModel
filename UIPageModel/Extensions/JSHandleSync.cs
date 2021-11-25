@@ -22,38 +22,41 @@
  * SOFTWARE.
  */
 
+using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.Playwright;
 
-namespace UIPageModel;
+namespace UIPageModel.Extensions;
 
-public partial class BlockModel<TPageModel>
-    where TPageModel : PageModel
+public static class JSHandleSync
 {
-    public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
+    public static T Evaluate<T>(this IJSHandle jsHandle, string expression, object? arg = null)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = this.PageModel.FindElement(selector, options);
+        return jsHandle.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
+    public static IJSHandle EvaluateHandle(this IJSHandle jsHandle, string expression, object? arg = null)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = parentBlockModel.FindElement(selector);
+        return jsHandle.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
     }
 
-    public BlockModel(TPageModel pageModel, IElementHandle element)
+    public static Dictionary<string, IJSHandle> GetProperties(this IJSHandle jsHandle)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = element;
+        return jsHandle.GetPropertiesAsync().GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
+    public static IJSHandle GetProperty(this IJSHandle jsHandle, string propertyName)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = element;
+        return jsHandle.GetPropertyAsync(propertyName).GetAwaiter().GetResult();
     }
-    
-    public readonly TPageModel PageModel;
 
-    public readonly IElementHandle ElementHandle;
+    public static T JsonValue<T>(this IJSHandle jsHandle)
+    {
+        return jsHandle.JsonValueAsync<T>().GetAwaiter().GetResult();
+    }
+
+    public static JsonElement? Evaluate(this IJSHandle jsHandle, string expression, object? arg = null)
+    {
+        return jsHandle.EvaluateAsync(expression, arg).GetAwaiter().GetResult();
+    }
 }

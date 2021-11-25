@@ -22,38 +22,40 @@
  * SOFTWARE.
  */
 
+using System.IO;
 using Microsoft.Playwright;
 
-namespace UIPageModel;
+namespace UIPageModel.Extensions;
 
-public partial class BlockModel<TPageModel>
-    where TPageModel : PageModel
+public static class DownloadSync
 {
-    public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
+    public static void Cancel(this IDownload download)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = this.PageModel.FindElement(selector, options);
+        download.CancelAsync().GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
+    public static Stream? CreateReadStream(this IDownload download)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = parentBlockModel.FindElement(selector);
+        return download.CreateReadStreamAsync().GetAwaiter().GetResult();
     }
 
-    public BlockModel(TPageModel pageModel, IElementHandle element)
+    public static void Delete(this IDownload download)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = element;
+        download.DeleteAsync().GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
+    public static string? Failure(this IDownload download)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = element;
+        return download.FailureAsync().GetAwaiter().GetResult();
     }
-    
-    public readonly TPageModel PageModel;
 
-    public readonly IElementHandle ElementHandle;
+    public static string? Path(this IDownload download)
+    {
+        return download.PathAsync().GetAwaiter().GetResult();
+    }
+
+    public static void SaveAs(this IDownload download, string path)
+    {
+        download.SaveAsAsync(path).GetAwaiter().GetResult();
+    }
 }

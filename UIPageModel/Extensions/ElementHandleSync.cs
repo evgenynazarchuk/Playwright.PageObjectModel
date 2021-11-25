@@ -26,9 +26,9 @@ using Microsoft.Playwright;
 using System.Text.Json;
 using System.Collections.Generic;
 
-namespace UITesting.Page.Sync;
+namespace UITesting.Sync;
 
-public static class ElementHandleSyncExt
+public static class ElementHandleSync
 {
     public static ElementHandleBoundingBoxResult? BoundingBox(this IElementHandle element)
     {

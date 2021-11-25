@@ -23,7 +23,7 @@
  */
 
 using System;
-using UITesting.Page.Sync;
+using UITesting.Sync;
 
 namespace UIPageModel.FluentAssertions;
 
@@ -54,13 +54,13 @@ public static class BlockModelAssertions
 
         if (selector is not null)
         {
-            var element = blockModel.Value.HtmlBlock.QuerySelector(selector);
+            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
             if (element is null) throw new ApplicationException("Element not found");
             isChecked = element.IsChecked();
         }
         else
         { 
-            isChecked = blockModel.Value.HtmlBlock.IsChecked();
+            isChecked = blockModel.Value.ElementHandle.IsChecked();
         }
 
         if (isChecked is false)

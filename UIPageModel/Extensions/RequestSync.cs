@@ -22,38 +22,35 @@
  * SOFTWARE.
  */
 
+using System.Collections.Generic;
 using Microsoft.Playwright;
 
-namespace UIPageModel;
+namespace UIPageModel.Extensions;
 
-public partial class BlockModel<TPageModel>
-    where TPageModel : PageModel
+public static class RequestSync
 {
-    public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
+    public static Dictionary<string, string> AllHeaders(this IRequest request)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = this.PageModel.FindElement(selector, options);
+        return request.AllHeadersAsync().GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
+    public static IReadOnlyList<Header> HeadersArray(this IRequest request)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = parentBlockModel.FindElement(selector);
+        return request.HeadersArrayAsync().GetAwaiter().GetResult();
     }
 
-    public BlockModel(TPageModel pageModel, IElementHandle element)
+    public static string? HeaderValueAsync(this IRequest request, string name)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = element;
+        return request.HeaderValueAsync(name).GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
+    public static IResponse? Response(this IRequest request)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = element;
+        return request.ResponseAsync().GetAwaiter().GetResult();
     }
-    
-    public readonly TPageModel PageModel;
 
-    public readonly IElementHandle ElementHandle;
+    public static RequestSizesResult Sizes(this IRequest request)
+    {
+        return request.SizesAsync().GetAwaiter().GetResult();
+    }
 }

@@ -25,7 +25,7 @@
 using System;
 using System.Text.RegularExpressions;
 using Microsoft.Playwright;
-using UITesting.Page.Sync;
+using UITesting.Sync;
 
 namespace UIPageModel.FluentAssertions;
 

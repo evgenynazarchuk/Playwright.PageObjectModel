@@ -28,9 +28,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace UITesting.Page.Sync;
+namespace UITesting.Sync;
 
-public static class PageSyncExt
+public static class PageSync
 {
     public static void AddInitScript(this IPage page, string? script = null, string? scriptPath = null)
     {
@@ -157,14 +157,14 @@ public static class PageSyncExt
         page.HoverAsync(selector, options).GetAwaiter().GetResult();
     }
 
-    public static void InnerHTML(this IPage page, string selector, PageInnerHTMLOptions? options = null)
+    public static string InnerHTML(this IPage page, string selector, PageInnerHTMLOptions? options = null)
     {
-        page.InnerHTMLAsync(selector, options).GetAwaiter().GetResult();
+        return page.InnerHTMLAsync(selector, options).GetAwaiter().GetResult();
     }
 
-    public static void InnerText(this IPage page, string selector, PageInnerTextOptions? options = null)
+    public static string InnerText(this IPage page, string selector, PageInnerTextOptions? options = null)
     {
-        page.InnerTextAsync(selector, options).GetAwaiter().GetResult();
+        return page.InnerTextAsync(selector, options).GetAwaiter().GetResult();
     }
 
     public static string InputValue(this IPage page, string selector, PageInputValueOptions? options = null)

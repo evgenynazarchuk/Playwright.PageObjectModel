@@ -24,36 +24,17 @@
 
 using Microsoft.Playwright;
 
-namespace UIPageModel;
+namespace UIPageModel.Extensions;
 
-public partial class BlockModel<TPageModel>
-    where TPageModel : PageModel
+public static class WorkerSync
 {
-    public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
+    public static T EvaluateAsync<T>(this IWorker worker, string expression, object? arg = null)
     {
-        this.PageModel = pageModel;
-        this.ElementHandle = this.PageModel.FindElement(selector, options);
+        return worker.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
+    public static IJSHandle EvaluateHandle(this IWorker worker, string expression, object? arg = null)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = parentBlockModel.FindElement(selector);
+        return worker.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
     }
-
-    public BlockModel(TPageModel pageModel, IElementHandle element)
-    {
-        this.PageModel = pageModel;
-        this.ElementHandle = element;
-    }
-
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
-    {
-        this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = element;
-    }
-    
-    public readonly TPageModel PageModel;
-
-    public readonly IElementHandle ElementHandle;
 }
