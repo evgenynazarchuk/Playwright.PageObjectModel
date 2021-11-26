@@ -28,7 +28,7 @@ namespace UIPageModel.Extensions;
 
 public static class WorkerSynchronization
 {
-    public static T EvaluateAsync<T>(this IWorker worker, string expression, object? arg = null)
+    public static T Evaluate<T>(this IWorker worker, string expression, object? arg = null)
     {
         return worker.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
     }
