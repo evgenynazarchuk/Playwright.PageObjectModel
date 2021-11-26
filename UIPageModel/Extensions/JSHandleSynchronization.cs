@@ -23,34 +23,40 @@
  */
 
 using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.Playwright;
 
 namespace UIPageModel.Extensions;
 
-public static class RequestSync
+public static class JSHandleSynchronization
 {
-    public static Dictionary<string, string> AllHeaders(this IRequest request)
+    public static T Evaluate<T>(this IJSHandle jsHandle, string expression, object? arg = null)
     {
-        return request.AllHeadersAsync().GetAwaiter().GetResult();
+        return jsHandle.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
     }
 
-    public static IReadOnlyList<Header> HeadersArray(this IRequest request)
+    public static IJSHandle EvaluateHandle(this IJSHandle jsHandle, string expression, object? arg = null)
     {
-        return request.HeadersArrayAsync().GetAwaiter().GetResult();
+        return jsHandle.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
     }
 
-    public static string? HeaderValueAsync(this IRequest request, string name)
+    public static Dictionary<string, IJSHandle> GetProperties(this IJSHandle jsHandle)
     {
-        return request.HeaderValueAsync(name).GetAwaiter().GetResult();
+        return jsHandle.GetPropertiesAsync().GetAwaiter().GetResult();
     }
 
-    public static IResponse? Response(this IRequest request)
+    public static IJSHandle GetProperty(this IJSHandle jsHandle, string propertyName)
     {
-        return request.ResponseAsync().GetAwaiter().GetResult();
+        return jsHandle.GetPropertyAsync(propertyName).GetAwaiter().GetResult();
     }
 
-    public static RequestSizesResult Sizes(this IRequest request)
+    public static T JsonValue<T>(this IJSHandle jsHandle)
     {
-        return request.SizesAsync().GetAwaiter().GetResult();
+        return jsHandle.JsonValueAsync<T>().GetAwaiter().GetResult();
+    }
+
+    public static JsonElement? Evaluate(this IJSHandle jsHandle, string expression, object? arg = null)
+    {
+        return jsHandle.EvaluateAsync(expression, arg).GetAwaiter().GetResult();
     }
 }

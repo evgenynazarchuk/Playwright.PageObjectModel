@@ -22,41 +22,19 @@
  * SOFTWARE.
  */
 
-using System.Collections.Generic;
-using System.Text.Json;
 using Microsoft.Playwright;
 
 namespace UIPageModel.Extensions;
 
-public static class JSHandleSync
+public static class WorkerSynchronization
 {
-    public static T Evaluate<T>(this IJSHandle jsHandle, string expression, object? arg = null)
+    public static T EvaluateAsync<T>(this IWorker worker, string expression, object? arg = null)
     {
-        return jsHandle.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
+        return worker.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
     }
 
-    public static IJSHandle EvaluateHandle(this IJSHandle jsHandle, string expression, object? arg = null)
+    public static IJSHandle EvaluateHandle(this IWorker worker, string expression, object? arg = null)
     {
-        return jsHandle.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
-    }
-
-    public static Dictionary<string, IJSHandle> GetProperties(this IJSHandle jsHandle)
-    {
-        return jsHandle.GetPropertiesAsync().GetAwaiter().GetResult();
-    }
-
-    public static IJSHandle GetProperty(this IJSHandle jsHandle, string propertyName)
-    {
-        return jsHandle.GetPropertyAsync(propertyName).GetAwaiter().GetResult();
-    }
-
-    public static T JsonValue<T>(this IJSHandle jsHandle)
-    {
-        return jsHandle.JsonValueAsync<T>().GetAwaiter().GetResult();
-    }
-
-    public static JsonElement? Evaluate(this IJSHandle jsHandle, string expression, object? arg = null)
-    {
-        return jsHandle.EvaluateAsync(expression, arg).GetAwaiter().GetResult();
+        return worker.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
     }
 }

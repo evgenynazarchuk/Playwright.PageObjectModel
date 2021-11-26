@@ -27,25 +27,30 @@ using Microsoft.Playwright;
 
 namespace UIPageModel.Extensions;
 
-public static class FileChooserSync
+public static class RequestSynchronization
 {
-    public static void SetFile(this IFileChooser fileChooser, string files, FileChooserSetFilesOptions? options = null)
+    public static Dictionary<string, string> AllHeaders(this IRequest request)
     {
-        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+        return request.AllHeadersAsync().GetAwaiter().GetResult();
     }
 
-    public static void SetFile(this IFileChooser fileChooser, IEnumerable<string> files, FileChooserSetFilesOptions? options = null)
+    public static IReadOnlyList<Header> HeadersArray(this IRequest request)
     {
-        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+        return request.HeadersArrayAsync().GetAwaiter().GetResult();
     }
 
-    public static void SetFile(this IFileChooser fileChooser, FilePayload files, FileChooserSetFilesOptions? options = null)
+    public static string? HeaderValueAsync(this IRequest request, string name)
     {
-        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+        return request.HeaderValueAsync(name).GetAwaiter().GetResult();
     }
 
-    public static void SetFile(this IFileChooser fileChooser, IEnumerable<FilePayload> files, FileChooserSetFilesOptions? options = null)
+    public static IResponse? Response(this IRequest request)
     {
-        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+        return request.ResponseAsync().GetAwaiter().GetResult();
+    }
+
+    public static RequestSizesResult Sizes(this IRequest request)
+    {
+        return request.SizesAsync().GetAwaiter().GetResult();
     }
 }

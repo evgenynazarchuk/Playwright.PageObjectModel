@@ -30,7 +30,7 @@ using System.Threading.Tasks;
 
 namespace UITesting.Sync;
 
-public static class PageSync
+public static class PageSynchronization
 {
     public static void AddInitScript(this IPage page, string? script = null, string? scriptPath = null)
     {

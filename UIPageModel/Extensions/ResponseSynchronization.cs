@@ -28,7 +28,7 @@ using System.Text.Json;
 
 namespace UIPageModel.Extensions;
 
-public static class ResponseSync
+public static class ResponseSynchronization
 {
     public static Dictionary<string, string> AllHeaders(this IResponse response)
     {

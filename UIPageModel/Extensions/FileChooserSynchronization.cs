@@ -22,24 +22,30 @@
  * SOFTWARE.
  */
 
+using System.Collections.Generic;
 using Microsoft.Playwright;
 
 namespace UIPageModel.Extensions;
 
-public static class BrowserSync
+public static class FileChooserSynchronization
 {
-    public static void Close(this IBrowser browser)
-    { 
-        browser.CloseAsync().GetAwaiter().GetResult();
+    public static void SetFile(this IFileChooser fileChooser, string files, FileChooserSetFilesOptions? options = null)
+    {
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
     }
 
-    public static IBrowserContext NewContext(this IBrowser browser, BrowserNewContextOptions? options = null)
+    public static void SetFile(this IFileChooser fileChooser, IEnumerable<string> files, FileChooserSetFilesOptions? options = null)
     {
-        return browser.NewContextAsync(options).GetAwaiter().GetResult();
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
     }
 
-    public static IPage NewPage(this IBrowser browser, BrowserNewPageOptions? options = null)
+    public static void SetFile(this IFileChooser fileChooser, FilePayload files, FileChooserSetFilesOptions? options = null)
     {
-        return browser.NewPageAsync(options).GetAwaiter().GetResult();
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetFile(this IFileChooser fileChooser, IEnumerable<FilePayload> files, FileChooserSetFilesOptions? options = null)
+    {
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
     }
 }

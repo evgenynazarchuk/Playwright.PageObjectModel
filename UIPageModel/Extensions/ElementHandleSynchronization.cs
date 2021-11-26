@@ -28,7 +28,7 @@ using System.Collections.Generic;
 
 namespace UITesting.Sync;
 
-public static class ElementHandleSync
+public static class ElementHandleSynchronization
 {
     public static ElementHandleBoundingBoxResult? BoundingBox(this IElementHandle element)
     {

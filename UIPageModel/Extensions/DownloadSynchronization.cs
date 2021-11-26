@@ -22,19 +22,40 @@
  * SOFTWARE.
  */
 
+using System.IO;
 using Microsoft.Playwright;
 
 namespace UIPageModel.Extensions;
 
-public static class WorkerSync
+public static class DownloadSynchronization
 {
-    public static T EvaluateAsync<T>(this IWorker worker, string expression, object? arg = null)
+    public static void Cancel(this IDownload download)
     {
-        return worker.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
+        download.CancelAsync().GetAwaiter().GetResult();
     }
 
-    public static IJSHandle EvaluateHandle(this IWorker worker, string expression, object? arg = null)
+    public static Stream? CreateReadStream(this IDownload download)
     {
-        return worker.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
+        return download.CreateReadStreamAsync().GetAwaiter().GetResult();
+    }
+
+    public static void Delete(this IDownload download)
+    {
+        download.DeleteAsync().GetAwaiter().GetResult();
+    }
+
+    public static string? Failure(this IDownload download)
+    {
+        return download.FailureAsync().GetAwaiter().GetResult();
+    }
+
+    public static string? Path(this IDownload download)
+    {
+        return download.PathAsync().GetAwaiter().GetResult();
+    }
+
+    public static void SaveAs(this IDownload download, string path)
+    {
+        download.SaveAsAsync(path).GetAwaiter().GetResult();
     }
 }

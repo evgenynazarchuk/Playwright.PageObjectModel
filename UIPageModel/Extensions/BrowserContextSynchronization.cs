@@ -32,7 +32,7 @@ using System.Text.RegularExpressions;
 
 namespace UIPageModel.Extensions;
 
-public static class BrowserContextSync
+public static class BrowserContextSynchronization
 {
     public static void AddCookies(this IBrowserContext browserContext, IEnumerable<Cookie> cookies)
     { 

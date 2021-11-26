@@ -22,40 +22,19 @@
  * SOFTWARE.
  */
 
-using System.IO;
 using Microsoft.Playwright;
 
 namespace UIPageModel.Extensions;
 
-public static class DownloadSync
+public static class BrowserTypeSynchronization
 {
-    public static void Cancel(this IDownload download)
-    {
-        download.CancelAsync().GetAwaiter().GetResult();
+    public static IBrowser Launch(this IBrowserType browserType, BrowserTypeLaunchOptions? options = null)
+    { 
+        return browserType.LaunchAsync(options).GetAwaiter().GetResult();
     }
 
-    public static Stream? CreateReadStream(this IDownload download)
+    public static IBrowserContext LaunchPersistentContext(this IBrowserType browserType, string userDataDir, BrowserTypeLaunchPersistentContextOptions? options = null)
     {
-        return download.CreateReadStreamAsync().GetAwaiter().GetResult();
-    }
-
-    public static void Delete(this IDownload download)
-    {
-        download.DeleteAsync().GetAwaiter().GetResult();
-    }
-
-    public static string? Failure(this IDownload download)
-    {
-        return download.FailureAsync().GetAwaiter().GetResult();
-    }
-
-    public static string? Path(this IDownload download)
-    {
-        return download.PathAsync().GetAwaiter().GetResult();
-    }
-
-    public static void SaveAs(this IDownload download, string path)
-    {
-        download.SaveAsAsync(path).GetAwaiter().GetResult();
+        return browserType.LaunchPersistentContextAsync(userDataDir, options).GetAwaiter().GetResult();
     }
 }

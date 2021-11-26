@@ -26,15 +26,20 @@ using Microsoft.Playwright;
 
 namespace UIPageModel.Extensions;
 
-public static class BrowserTypeSync
+public static class BrowserSynchronization
 {
-    public static IBrowser Launch(this IBrowserType browserType, BrowserTypeLaunchOptions? options = null)
+    public static void Close(this IBrowser browser)
     { 
-        return browserType.LaunchAsync(options).GetAwaiter().GetResult();
+        browser.CloseAsync().GetAwaiter().GetResult();
     }
 
-    public static IBrowserContext LaunchPersistentContext(this IBrowserType browserType, string userDataDir, BrowserTypeLaunchPersistentContextOptions? options = null)
+    public static IBrowserContext NewContext(this IBrowser browser, BrowserNewContextOptions? options = null)
     {
-        return browserType.LaunchPersistentContextAsync(userDataDir, options).GetAwaiter().GetResult();
+        return browser.NewContextAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IPage NewPage(this IBrowser browser, BrowserNewPageOptions? options = null)
+    {
+        return browser.NewPageAsync(options).GetAwaiter().GetResult();
     }
 }
