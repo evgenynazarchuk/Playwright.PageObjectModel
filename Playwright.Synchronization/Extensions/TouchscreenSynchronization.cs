@@ -24,7 +24,7 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization.Extensions;
+namespace Playwright.Synchronization;
 
 public static class TouchscreenSynchronization
 {

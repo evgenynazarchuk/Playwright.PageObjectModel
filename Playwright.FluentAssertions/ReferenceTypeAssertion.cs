@@ -22,10 +22,9 @@
  * SOFTWARE.
  */
 
-namespace Playwright.PageObjectModel;
+namespace Playwright.FluentAsserions;
 
 public class ReferenceTypeAssertion<T>
-    where T : class
 {
     public ReferenceTypeAssertion(T value)
     {

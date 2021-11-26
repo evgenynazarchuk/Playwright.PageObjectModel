@@ -23,6 +23,7 @@
  */
 
 using Playwright.Synchronization;
+using Playwright.FluentAsserions;
 using System;
 
 namespace Playwright.PageObjectModel;

@@ -22,12 +22,37 @@
  * SOFTWARE.
  */
 
-using System;
+using Microsoft.Playwright;
+using Playwright.Synchronization;
+using System.Text.RegularExpressions;
 
-namespace Playwright.PageObjectModel;
+namespace Playwright.FluentAsserions;
 
-public class AssertException : Exception
+public static class PageAssertions
 {
-    public AssertException(string message)
-        : base(message) { }
+    public static ReferenceTypeAssertion<IPage> Should(this IPage page)
+    {
+        return new ReferenceTypeAssertion<IPage>(page);
+    }
+
+    public static IPage HaveTitle(
+        this ReferenceTypeAssertion<IPage> page,
+        string pattern,
+        string because = "")
+    {
+        var title = page.Value.Title();
+        var match = Regex.Match(pattern, title, RegexOptions.Compiled);
+
+        if (!match.Success)
+        {
+            throw new AssertException(@$"
+HaveTitle Assert Exception
+Expected: {title}
+Actual: {pattern}
+Because: {because}
+");
+        }
+
+        return page.Value;
+    }
 }

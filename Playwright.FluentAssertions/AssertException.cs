@@ -22,39 +22,12 @@
  * SOFTWARE.
  */
 
-using Microsoft.Playwright;
+using System;
 
-namespace Playwright.Synchronization;
+namespace Playwright.FluentAsserions;
 
-public static class MouseSynchronization
+public class AssertException : Exception
 {
-    public static void Click(this IMouse mouse, float x, float y, MouseClickOptions? options = default)
-    {
-        mouse.ClickAsync(x, y, options).GetAwaiter().GetResult();
-    }
-
-    public static void DblClick(this IMouse mouse, float x, float y, MouseDblClickOptions? options = default)
-    {
-        mouse.DblClickAsync(x, y, options).GetAwaiter().GetResult();
-    }
-
-    public static void Down(this IMouse mouse, MouseDownOptions? options = default)
-    {
-        mouse.DownAsync(options).GetAwaiter().GetResult();
-    }
-
-    public static void Move(this IMouse mouse, float x, float y, MouseMoveOptions? options = default)
-    {
-        mouse.MoveAsync(x, y, options).GetAwaiter().GetResult();
-    }
-
-    public static void Up(this IMouse mouse, MouseUpOptions? options = default)
-    {
-        mouse.UpAsync(options).GetAwaiter().GetResult();
-    }
-
-    public static void Wheel(this IMouse mouse, float deltaX, float deltaY)
-    {
-        mouse.WheelAsync(deltaX, deltaY).GetAwaiter().GetResult();
-    }
+    public AssertException(string message)
+        : base(message) { }
 }

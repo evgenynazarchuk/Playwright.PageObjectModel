@@ -24,6 +24,7 @@
 
 using Microsoft.Playwright;
 using Playwright.Synchronization;
+using Playwright.FluentAsserions;
 using System;
 using System.Text.RegularExpressions;
 

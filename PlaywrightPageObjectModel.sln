@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playwright.PageObjectModel.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playwright.PageObjectModel.NUnitSampleTests", "Playwright.PageObjectModel.NUnitSampleRunTests\Playwright.PageObjectModel.NUnitSampleTests.csproj", "{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playwright.Synchronization", "Playwright.Synchronization\Playwright.Synchronization.csproj", "{D0B7ACBB-A461-4BAC-B465-38182FD3A278}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playwright.Synchronization", "Playwright.Synchronization\Playwright.Synchronization.csproj", "{D0B7ACBB-A461-4BAC-B465-38182FD3A278}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playwright.FluentAssertions", "Playwright.FluentAssertions\Playwright.FluentAssertions.csproj", "{DC244D21-B08A-4542-8CA3-2E9C0AA7F882}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D0B7ACBB-A461-4BAC-B465-38182FD3A278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0B7ACBB-A461-4BAC-B465-38182FD3A278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0B7ACBB-A461-4BAC-B465-38182FD3A278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC244D21-B08A-4542-8CA3-2E9C0AA7F882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC244D21-B08A-4542-8CA3-2E9C0AA7F882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC244D21-B08A-4542-8CA3-2E9C0AA7F882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC244D21-B08A-4542-8CA3-2E9C0AA7F882}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
