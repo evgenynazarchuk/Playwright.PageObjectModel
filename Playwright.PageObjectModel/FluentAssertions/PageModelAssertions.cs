@@ -24,11 +24,11 @@
 
 using Microsoft.Playwright;
 using Playwright.Synchronization;
-using Playwright.FluentAsserions;
+using Playwright.PageObjectModel;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Playwright.PageObjectModel;
+namespace Playwright.FluentAsserions;
 
 public static partial class PageModelAssertions
 {

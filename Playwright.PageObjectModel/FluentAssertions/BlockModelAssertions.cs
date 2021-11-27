@@ -23,10 +23,10 @@
  */
 
 using Playwright.Synchronization;
-using Playwright.FluentAsserions;
+using Playwright.PageObjectModel;
 using System;
 
-namespace Playwright.PageObjectModel;
+namespace Playwright.FluentAsserions;
 
 public static class BlockModelAssertions
 {
