@@ -1,1 +1,1 @@
-# PlaywrightPageObjectModel
+# Playwright.PageObjectModel
