@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
 	  <Nullable>enable</Nullable>
+
+	  <OutputType>Library</OutputType>
+	  <Version>1.17.0</Version>
+	  <Authors>Evgeny Nazarchuk</Authors>
+	  <PackageProjectUrl>https://github.com/evgenynazarchuk/PlaywrightPageObjectModel/wiki</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/evgenynazarchuk/PlaywrightPageObjectModel</RepositoryUrl>
+	  <Copyright>Copyright © Evgeny Nazarchuk</Copyright>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
