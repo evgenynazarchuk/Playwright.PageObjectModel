@@ -25,9 +25,9 @@
 using Microsoft.Playwright;
 using System.Text.RegularExpressions;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class PageSynchronization
+public static class PageSynchronous
 {
     public static void AddInitScript(this IPage page, string? script = null, string? scriptPath = null)
     {

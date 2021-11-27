@@ -24,37 +24,17 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class MouseSynchronization
+public static class WorkerSynchronous
 {
-    public static void Click(this IMouse mouse, float x, float y, MouseClickOptions? options = default)
+    public static T Evaluate<T>(this IWorker worker, string expression, object? arg = null)
     {
-        mouse.ClickAsync(x, y, options).GetAwaiter().GetResult();
+        return worker.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
     }
 
-    public static void DblClick(this IMouse mouse, float x, float y, MouseDblClickOptions? options = default)
+    public static IJSHandle EvaluateHandle(this IWorker worker, string expression, object? arg = null)
     {
-        mouse.DblClickAsync(x, y, options).GetAwaiter().GetResult();
-    }
-
-    public static void Down(this IMouse mouse, MouseDownOptions? options = default)
-    {
-        mouse.DownAsync(options).GetAwaiter().GetResult();
-    }
-
-    public static void Move(this IMouse mouse, float x, float y, MouseMoveOptions? options = default)
-    {
-        mouse.MoveAsync(x, y, options).GetAwaiter().GetResult();
-    }
-
-    public static void Up(this IMouse mouse, MouseUpOptions? options = default)
-    {
-        mouse.UpAsync(options).GetAwaiter().GetResult();
-    }
-
-    public static void Wheel(this IMouse mouse, float deltaX, float deltaY)
-    {
-        mouse.WheelAsync(deltaX, deltaY).GetAwaiter().GetResult();
+        return worker.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
     }
 }

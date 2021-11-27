@@ -24,7 +24,7 @@
 
 using System;
 
-namespace Playwright.FluentAsserions;
+namespace Playwright.FluentAssertions;
 
 public class AssertException : Exception
 {

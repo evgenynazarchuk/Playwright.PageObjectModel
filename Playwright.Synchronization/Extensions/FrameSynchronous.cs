@@ -26,9 +26,9 @@ using Microsoft.Playwright;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class FrameSynchronization
+public static class FrameSynchronous
 {
     public static IElementHandle AddScriptTag(this IFrame frame, FrameAddScriptTagOptions? options = null)
     {

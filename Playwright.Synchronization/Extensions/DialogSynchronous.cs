@@ -24,22 +24,17 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class BrowserSynchronization
+public static class DialogSynchronous
 {
-    public static void Close(this IBrowser browser)
+    public static void Accept(this IDialog dialoag, string? promptText = default)
     {
-        browser.CloseAsync().GetAwaiter().GetResult();
+        dialoag.AcceptAsync(promptText).GetAwaiter().GetResult();
     }
 
-    public static IBrowserContext NewContext(this IBrowser browser, BrowserNewContextOptions? options = null)
+    public static void Dismiss(this IDialog dialoag)
     {
-        return browser.NewContextAsync(options).GetAwaiter().GetResult();
-    }
-
-    public static IPage NewPage(this IBrowser browser, BrowserNewPageOptions? options = null)
-    {
-        return browser.NewPageAsync(options).GetAwaiter().GetResult();
+        dialoag.DismissAsync().GetAwaiter().GetResult();
     }
 }

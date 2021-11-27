@@ -25,9 +25,9 @@
 using Microsoft.Playwright;
 using System.Text.Json;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class ResponseSynchronization
+public static class ResponseSynchronous
 {
     public static Dictionary<string, string> AllHeaders(this IResponse response)
     {

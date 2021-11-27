@@ -24,22 +24,37 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class RouteSynchronization
+public static class MouseSynchronous
 {
-    public static void Abort(this IRoute route, string? errorCode = default)
+    public static void Click(this IMouse mouse, float x, float y, MouseClickOptions? options = default)
     {
-        route.AbortAsync(errorCode).GetAwaiter().GetResult();
+        mouse.ClickAsync(x, y, options).GetAwaiter().GetResult();
     }
 
-    public static void Continue(this IRoute route, RouteContinueOptions? options = default)
+    public static void DblClick(this IMouse mouse, float x, float y, MouseDblClickOptions? options = default)
     {
-        route.ContinueAsync(options).GetAwaiter().GetResult();
+        mouse.DblClickAsync(x, y, options).GetAwaiter().GetResult();
     }
 
-    public static void FulfillAsync(this IRoute route, RouteFulfillOptions? options = default)
+    public static void Down(this IMouse mouse, MouseDownOptions? options = default)
     {
-        route.FulfillAsync(options).GetAwaiter().GetResult();
+        mouse.DownAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static void Move(this IMouse mouse, float x, float y, MouseMoveOptions? options = default)
+    {
+        mouse.MoveAsync(x, y, options).GetAwaiter().GetResult();
+    }
+
+    public static void Up(this IMouse mouse, MouseUpOptions? options = default)
+    {
+        mouse.UpAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static void Wheel(this IMouse mouse, float deltaX, float deltaY)
+    {
+        mouse.WheelAsync(deltaX, deltaY).GetAwaiter().GetResult();
     }
 }

@@ -24,12 +24,17 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class TouchscreenSynchronization
+public static class BrowserTypeSynchronous
 {
-    public static void Tap(ITouchscreen touchscreen, float x, float y)
+    public static IBrowser Launch(this IBrowserType browserType, BrowserTypeLaunchOptions? options = null)
     {
-        touchscreen.TapAsync(x, y).GetAwaiter().GetResult();
+        return browserType.LaunchAsync(options).GetAwaiter().GetResult();
+    }
+
+    public static IBrowserContext LaunchPersistentContext(this IBrowserType browserType, string userDataDir, BrowserTypeLaunchPersistentContextOptions? options = null)
+    {
+        return browserType.LaunchPersistentContextAsync(userDataDir, options).GetAwaiter().GetResult();
     }
 }

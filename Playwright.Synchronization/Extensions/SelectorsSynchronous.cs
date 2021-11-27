@@ -24,27 +24,12 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class TracingSynchronization
+public static class SelectorsSynchronous
 {
-    public static void Start(ITracing tracing, TracingStartOptions? options = default)
+    public static void Register(this ISelectors selectors, string name, SelectorsRegisterOptions? options = null)
     {
-        tracing.StartAsync(options).GetAwaiter().GetResult();
-    }
-
-    public static void StartChunk(ITracing tracing, TracingStartChunkOptions? options = default)
-    {
-        tracing.StartChunkAsync(options).GetAwaiter().GetResult();
-    }
-
-    public static void Stop(ITracing tracing, TracingStopOptions? options = default)
-    {
-        tracing.StopAsync(options).GetAwaiter().GetResult();
-    }
-
-    public static void StopChunk(ITracing tracing, TracingStopChunkOptions? options = default)
-    {
-        tracing.StopChunkAsync(options).GetAwaiter().GetResult();
+        selectors.RegisterAsync(name, options).GetAwaiter().GetResult();
     }
 }

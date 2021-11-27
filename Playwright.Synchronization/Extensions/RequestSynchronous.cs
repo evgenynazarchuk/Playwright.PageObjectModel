@@ -24,17 +24,32 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class WorkerSynchronization
+public static class RequestSynchronous
 {
-    public static T Evaluate<T>(this IWorker worker, string expression, object? arg = null)
+    public static Dictionary<string, string> AllHeaders(this IRequest request)
     {
-        return worker.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
+        return request.AllHeadersAsync().GetAwaiter().GetResult();
     }
 
-    public static IJSHandle EvaluateHandle(this IWorker worker, string expression, object? arg = null)
+    public static IReadOnlyList<Header> HeadersArray(this IRequest request)
     {
-        return worker.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
+        return request.HeadersArrayAsync().GetAwaiter().GetResult();
+    }
+
+    public static string? HeaderValueAsync(this IRequest request, string name)
+    {
+        return request.HeaderValueAsync(name).GetAwaiter().GetResult();
+    }
+
+    public static IResponse? Response(this IRequest request)
+    {
+        return request.ResponseAsync().GetAwaiter().GetResult();
+    }
+
+    public static RequestSizesResult Sizes(this IRequest request)
+    {
+        return request.SizesAsync().GetAwaiter().GetResult();
     }
 }

@@ -24,22 +24,32 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class VideoSynchronization
+public static class KeyboardSynchronous
 {
-    public static void Delete(this IVideo video)
+    public static void Down(this IKeyboard keyboard, string key)
     {
-        video.DeleteAsync().GetAwaiter().GetResult();
+        keyboard.DownAsync(key).GetAwaiter().GetResult();
     }
 
-    public static string Path(this IVideo video)
+    public static void InsertText(this IKeyboard keyboard, string text)
     {
-        return video.PathAsync().GetAwaiter().GetResult();
+        keyboard.InsertTextAsync(text).GetAwaiter().GetResult();
     }
 
-    public static void SaveAs(this IVideo video, string path)
+    public static void Press(this IKeyboard keyboard, string key, KeyboardPressOptions? options = default)
     {
-        video.SaveAsAsync(path).GetAwaiter().GetResult();
+        keyboard.PressAsync(key, options).GetAwaiter().GetResult();
+    }
+
+    public static void Type(this IKeyboard keyboard, string text, KeyboardTypeOptions? options = default)
+    {
+        keyboard.TypeAsync(text, options).GetAwaiter().GetResult();
+    }
+
+    public static void Up(this IKeyboard keyboard, string key)
+    {
+        keyboard.UpAsync(key).GetAwaiter().GetResult();
     }
 }

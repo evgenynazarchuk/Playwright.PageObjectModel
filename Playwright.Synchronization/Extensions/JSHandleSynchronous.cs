@@ -23,18 +23,39 @@
  */
 
 using Microsoft.Playwright;
+using System.Text.Json;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class BrowserTypeSynchronization
+public static class JSHandleSynchronous
 {
-    public static IBrowser Launch(this IBrowserType browserType, BrowserTypeLaunchOptions? options = null)
+    public static T Evaluate<T>(this IJSHandle jsHandle, string expression, object? arg = null)
     {
-        return browserType.LaunchAsync(options).GetAwaiter().GetResult();
+        return jsHandle.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
     }
 
-    public static IBrowserContext LaunchPersistentContext(this IBrowserType browserType, string userDataDir, BrowserTypeLaunchPersistentContextOptions? options = null)
+    public static IJSHandle EvaluateHandle(this IJSHandle jsHandle, string expression, object? arg = null)
     {
-        return browserType.LaunchPersistentContextAsync(userDataDir, options).GetAwaiter().GetResult();
+        return jsHandle.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
+    }
+
+    public static Dictionary<string, IJSHandle> GetProperties(this IJSHandle jsHandle)
+    {
+        return jsHandle.GetPropertiesAsync().GetAwaiter().GetResult();
+    }
+
+    public static IJSHandle GetProperty(this IJSHandle jsHandle, string propertyName)
+    {
+        return jsHandle.GetPropertyAsync(propertyName).GetAwaiter().GetResult();
+    }
+
+    public static T JsonValue<T>(this IJSHandle jsHandle)
+    {
+        return jsHandle.JsonValueAsync<T>().GetAwaiter().GetResult();
+    }
+
+    public static JsonElement? Evaluate(this IJSHandle jsHandle, string expression, object? arg = null)
+    {
+        return jsHandle.EvaluateAsync(expression, arg).GetAwaiter().GetResult();
     }
 }

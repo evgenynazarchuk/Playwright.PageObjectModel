@@ -23,10 +23,10 @@
  */
 
 using Microsoft.Playwright;
-using Playwright.Synchronization;
+using Playwright.Synchronous;
 using System.Text.RegularExpressions;
 
-namespace Playwright.FluentAsserions;
+namespace Playwright.FluentAssertions;
 
 public static class PageAssertions
 {

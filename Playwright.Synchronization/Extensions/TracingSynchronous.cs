@@ -23,39 +23,28 @@
  */
 
 using Microsoft.Playwright;
-using System.Text.Json;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class JSHandleSynchronization
+public static class TracingSynchronous
 {
-    public static T Evaluate<T>(this IJSHandle jsHandle, string expression, object? arg = null)
+    public static void Start(ITracing tracing, TracingStartOptions? options = default)
     {
-        return jsHandle.EvaluateAsync<T>(expression, arg).GetAwaiter().GetResult();
+        tracing.StartAsync(options).GetAwaiter().GetResult();
     }
 
-    public static IJSHandle EvaluateHandle(this IJSHandle jsHandle, string expression, object? arg = null)
+    public static void StartChunk(ITracing tracing, TracingStartChunkOptions? options = default)
     {
-        return jsHandle.EvaluateHandleAsync(expression, arg).GetAwaiter().GetResult();
+        tracing.StartChunkAsync(options).GetAwaiter().GetResult();
     }
 
-    public static Dictionary<string, IJSHandle> GetProperties(this IJSHandle jsHandle)
+    public static void Stop(ITracing tracing, TracingStopOptions? options = default)
     {
-        return jsHandle.GetPropertiesAsync().GetAwaiter().GetResult();
+        tracing.StopAsync(options).GetAwaiter().GetResult();
     }
 
-    public static IJSHandle GetProperty(this IJSHandle jsHandle, string propertyName)
+    public static void StopChunk(ITracing tracing, TracingStopChunkOptions? options = default)
     {
-        return jsHandle.GetPropertyAsync(propertyName).GetAwaiter().GetResult();
-    }
-
-    public static T JsonValue<T>(this IJSHandle jsHandle)
-    {
-        return jsHandle.JsonValueAsync<T>().GetAwaiter().GetResult();
-    }
-
-    public static JsonElement? Evaluate(this IJSHandle jsHandle, string expression, object? arg = null)
-    {
-        return jsHandle.EvaluateAsync(expression, arg).GetAwaiter().GetResult();
+        tracing.StopChunkAsync(options).GetAwaiter().GetResult();
     }
 }

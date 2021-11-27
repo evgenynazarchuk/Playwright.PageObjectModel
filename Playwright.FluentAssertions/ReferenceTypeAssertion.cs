@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-namespace Playwright.FluentAsserions;
+namespace Playwright.FluentAssertions;
 
 public class ReferenceTypeAssertion<T>
 {

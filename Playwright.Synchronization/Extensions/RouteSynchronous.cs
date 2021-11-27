@@ -24,32 +24,22 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class KeyboardSynchronization
+public static class RouteSynchronous
 {
-    public static void Down(this IKeyboard keyboard, string key)
+    public static void Abort(this IRoute route, string? errorCode = default)
     {
-        keyboard.DownAsync(key).GetAwaiter().GetResult();
+        route.AbortAsync(errorCode).GetAwaiter().GetResult();
     }
 
-    public static void InsertText(this IKeyboard keyboard, string text)
+    public static void Continue(this IRoute route, RouteContinueOptions? options = default)
     {
-        keyboard.InsertTextAsync(text).GetAwaiter().GetResult();
+        route.ContinueAsync(options).GetAwaiter().GetResult();
     }
 
-    public static void Press(this IKeyboard keyboard, string key, KeyboardPressOptions? options = default)
+    public static void FulfillAsync(this IRoute route, RouteFulfillOptions? options = default)
     {
-        keyboard.PressAsync(key, options).GetAwaiter().GetResult();
-    }
-
-    public static void Type(this IKeyboard keyboard, string text, KeyboardTypeOptions? options = default)
-    {
-        keyboard.TypeAsync(text, options).GetAwaiter().GetResult();
-    }
-
-    public static void Up(this IKeyboard keyboard, string key)
-    {
-        keyboard.UpAsync(key).GetAwaiter().GetResult();
+        route.FulfillAsync(options).GetAwaiter().GetResult();
     }
 }

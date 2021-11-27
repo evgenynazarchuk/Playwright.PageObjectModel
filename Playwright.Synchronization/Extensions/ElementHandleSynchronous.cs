@@ -25,9 +25,9 @@
 using Microsoft.Playwright;
 using System.Text.Json;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class ElementHandleSynchronization
+public static class ElementHandleSynchronous
 {
     public static ElementHandleBoundingBoxResult? BoundingBox(this IElementHandle element)
     {

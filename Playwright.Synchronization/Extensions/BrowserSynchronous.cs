@@ -24,37 +24,22 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class DownloadSynchronization
+public static class BrowserSynchronous
 {
-    public static void Cancel(this IDownload download)
+    public static void Close(this IBrowser browser)
     {
-        download.CancelAsync().GetAwaiter().GetResult();
+        browser.CloseAsync().GetAwaiter().GetResult();
     }
 
-    public static Stream? CreateReadStream(this IDownload download)
+    public static IBrowserContext NewContext(this IBrowser browser, BrowserNewContextOptions? options = null)
     {
-        return download.CreateReadStreamAsync().GetAwaiter().GetResult();
+        return browser.NewContextAsync(options).GetAwaiter().GetResult();
     }
 
-    public static void Delete(this IDownload download)
+    public static IPage NewPage(this IBrowser browser, BrowserNewPageOptions? options = null)
     {
-        download.DeleteAsync().GetAwaiter().GetResult();
-    }
-
-    public static string? Failure(this IDownload download)
-    {
-        return download.FailureAsync().GetAwaiter().GetResult();
-    }
-
-    public static string? Path(this IDownload download)
-    {
-        return download.PathAsync().GetAwaiter().GetResult();
-    }
-
-    public static void SaveAs(this IDownload download, string path)
-    {
-        download.SaveAsAsync(path).GetAwaiter().GetResult();
+        return browser.NewPageAsync(options).GetAwaiter().GetResult();
     }
 }

@@ -24,17 +24,12 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class DialogSynchronization
+public static class TouchscreenSynchronous
 {
-    public static void Accept(this IDialog dialoag, string? promptText = default)
+    public static void Tap(ITouchscreen touchscreen, float x, float y)
     {
-        dialoag.AcceptAsync(promptText).GetAwaiter().GetResult();
-    }
-
-    public static void Dismiss(this IDialog dialoag)
-    {
-        dialoag.DismissAsync().GetAwaiter().GetResult();
+        touchscreen.TapAsync(x, y).GetAwaiter().GetResult();
     }
 }

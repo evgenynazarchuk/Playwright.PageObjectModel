@@ -1,45 +1,26 @@
-﻿/*
- * MIT License
- *
- * Copyright (c) Evgeny Nazarchuk.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using Microsoft.Playwright;
 using Playwright.Synchronous;
-using System.Text.RegularExpressions;
 
 namespace Playwright.FluentAssertions;
 
-public static partial class ElementHandleAssertions
+public static class LocatorAssertions
 {
-    public static ReferenceTypeAssertion<IElementHandle> Should(this IElementHandle elementHandle)
+    public static ReferenceTypeAssertion<ILocator> Should(this ILocator locator)
     {
-        return new ReferenceTypeAssertion<IElementHandle>(elementHandle);
+        return new ReferenceTypeAssertion<ILocator>(locator);
     }
 
-    public static IElementHandle BeChecked(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeChecked(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isChecked = element.IsChecked();
 
         if (!isChecked)
@@ -55,11 +36,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotChecked(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotChecked(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isChecked = element.IsChecked();
 
         if (isChecked)
@@ -75,11 +56,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeDisabled(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeDisabled(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isDisabled = element.IsDisabled();
 
         if (!isDisabled)
@@ -95,11 +76,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotDisabled(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotDisabled(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isDisabled = element.IsDisabled();
 
         if (isDisabled)
@@ -115,11 +96,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeEditable(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeEditable(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isEditable = element.IsEditable();
 
         if (!isEditable)
@@ -135,11 +116,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotEditable(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotEditable(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isEditable = element.IsEditable();
 
         if (isEditable)
@@ -155,11 +136,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeEnabled(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeEnabled(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isEnabled = element.IsEnabled();
 
         if (!isEnabled)
@@ -175,11 +156,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotEnabled(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotEnabled(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isEnabled = element.IsEnabled();
 
         if (isEnabled)
@@ -195,11 +176,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeHidden(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeHidden(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isHidden = element.IsHidden();
 
         if (!isHidden)
@@ -215,11 +196,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotHidden(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotHidden(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isHidden = element.IsHidden();
 
         if (isHidden)
@@ -235,11 +216,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeVisible(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeVisible(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isVisible = element.IsVisible();
 
         if (!isVisible)
@@ -255,11 +236,11 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotVisible(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotVisible(
+        this ReferenceTypeAssertion<ILocator> locator,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var isVisible = element.IsVisible();
 
         if (isVisible)
@@ -275,12 +256,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeTextContent(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeTextContent(
+        this ReferenceTypeAssertion<ILocator> locator,
         string pattern,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var textContent = element.TextContent() ?? "";
         var match = Regex.Match(textContent, pattern, RegexOptions.Compiled);
 
@@ -297,12 +278,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotTextContent(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotTextContent(
+        this ReferenceTypeAssertion<ILocator> locator,
         string pattern,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var textContent = element.TextContent() ?? "";
         var match = Regex.Match(textContent, pattern, RegexOptions.Compiled);
 
@@ -319,12 +300,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeInnerHTML(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeInnerHTML(
+        this ReferenceTypeAssertion<ILocator> locator,
         string pattern,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var innerHTML = element.InnerHTML() ?? "";
         var match = Regex.Match(innerHTML, pattern, RegexOptions.Compiled);
 
@@ -341,12 +322,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotInnerHTML(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotInnerHTML(
+        this ReferenceTypeAssertion<ILocator> locator,
         string pattern,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var innerHTML = element.InnerHTML() ?? "";
         var match = Regex.Match(innerHTML, pattern, RegexOptions.Compiled);
 
@@ -363,12 +344,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeInnerText(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeInnerText(
+        this ReferenceTypeAssertion<ILocator> locator,
         string pattern,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var innerText = element.InnerText() ?? "";
         var match = Regex.Match(innerText, pattern, RegexOptions.Compiled);
 
@@ -376,7 +357,7 @@ Because: {because}
         {
             throw new AssertException(@$"
 BeInnerText Assert Exception
-Actual inner html: {innerText}
+Actual inner text: {innerText}
 Expected pattern: {pattern}
 Because: {because}
 ");
@@ -385,12 +366,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotInnerText(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotInnerText(
+        this ReferenceTypeAssertion<ILocator> locator,
         string pattern,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var innerText = element.InnerText() ?? "";
         var match = Regex.Match(innerText, pattern, RegexOptions.Compiled);
 
@@ -407,12 +388,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeInputValue(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeInputValue(
+        this ReferenceTypeAssertion<ILocator> locator,
         string pattern,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var inputValue = element.InputValue() ?? "";
         var match = Regex.Match(inputValue, pattern, RegexOptions.Compiled);
 
@@ -429,12 +410,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotInputValue(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotInputValue(
+        this ReferenceTypeAssertion<ILocator> locator,
         string pattern,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var inputValue = element.InputValue() ?? "";
         var match = Regex.Match(inputValue, pattern, RegexOptions.Compiled);
 
@@ -451,12 +432,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeAttribute(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeAttribute(
+        this ReferenceTypeAssertion<ILocator> locator,
         string attributeName,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var attribute = element.GetAttribute(attributeName);
 
         if (attribute is null)
@@ -471,12 +452,12 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeNotAttribute(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeNotAttribute(
+        this ReferenceTypeAssertion<ILocator> locator,
         string attributeName,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var attribute = element.GetAttribute(attributeName);
 
         if (attribute is not null)
@@ -491,13 +472,13 @@ Because: {because}
         return element;
     }
 
-    public static IElementHandle BeAttributeValue(
-        this ReferenceTypeAssertion<IElementHandle> elementHandle,
+    public static ILocator BeAttributeValue(
+        this ReferenceTypeAssertion<ILocator> locator,
         string attributeName,
         string attributeValue,
         string because = "no reason given")
     {
-        var element = elementHandle.Value;
+        var element = locator.Value;
         var attribute = element.GetAttribute(attributeName);
 
         if (attribute is null || string.Compare(attribute, attributeValue) != 0)

@@ -23,14 +23,28 @@
  */
 
 using Microsoft.Playwright;
-using System.Text.Json;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class Accessibility
+public static class FileChooserSynchronous
 {
-    public static JsonElement? SnapshotAsync(this IAccessibility accessibility, AccessibilitySnapshotOptions? options = default)
+    public static void SetFile(this IFileChooser fileChooser, string files, FileChooserSetFilesOptions? options = null)
     {
-        return accessibility.SnapshotAsync(options).GetAwaiter().GetResult();
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetFile(this IFileChooser fileChooser, IEnumerable<string> files, FileChooserSetFilesOptions? options = null)
+    {
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetFile(this IFileChooser fileChooser, FilePayload files, FileChooserSetFilesOptions? options = null)
+    {
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+    }
+
+    public static void SetFile(this IFileChooser fileChooser, IEnumerable<FilePayload> files, FileChooserSetFilesOptions? options = null)
+    {
+        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
     }
 }

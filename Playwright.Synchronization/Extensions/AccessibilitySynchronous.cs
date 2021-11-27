@@ -23,33 +23,14 @@
  */
 
 using Microsoft.Playwright;
+using System.Text.Json;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class RequestSynchronization
+public static class AccessibilitySynchronous
 {
-    public static Dictionary<string, string> AllHeaders(this IRequest request)
+    public static JsonElement? Snapshot(this IAccessibility accessibility, AccessibilitySnapshotOptions? options = default)
     {
-        return request.AllHeadersAsync().GetAwaiter().GetResult();
-    }
-
-    public static IReadOnlyList<Header> HeadersArray(this IRequest request)
-    {
-        return request.HeadersArrayAsync().GetAwaiter().GetResult();
-    }
-
-    public static string? HeaderValueAsync(this IRequest request, string name)
-    {
-        return request.HeaderValueAsync(name).GetAwaiter().GetResult();
-    }
-
-    public static IResponse? Response(this IRequest request)
-    {
-        return request.ResponseAsync().GetAwaiter().GetResult();
-    }
-
-    public static RequestSizesResult Sizes(this IRequest request)
-    {
-        return request.SizesAsync().GetAwaiter().GetResult();
+        return accessibility.SnapshotAsync(options).GetAwaiter().GetResult();
     }
 }

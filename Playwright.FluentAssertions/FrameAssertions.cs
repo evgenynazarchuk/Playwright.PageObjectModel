@@ -23,10 +23,10 @@
  */
 
 using Microsoft.Playwright;
-using Playwright.Synchronization;
+using Playwright.Synchronous;
 using System.Text.RegularExpressions;
 
-namespace Playwright.FluentAsserions;
+namespace Playwright.FluentAssertions;
 
 public static class FrameAssertions
 {
@@ -183,7 +183,7 @@ Because: {because}
         if (!isDisabled)
         {
             throw new AssertException(@$"
-HaveNotElementChecked Assert Exception
+HaveElementDisabled Assert Exception
 Selector: {selector}
 Expected: disable
 Actual: not disable
@@ -258,7 +258,7 @@ Because: {because}
         if (isEditable)
         {
             throw new AssertException(@$"
-HaveElementEditable Assert Exception
+HaveNotElementEditable Assert Exception
 Selector: {selector}
 Expected: not editable
 Actual: editable
@@ -408,7 +408,7 @@ Because: {because}
         if (isVisible)
         {
             throw new AssertException(@$"
-HaveElementVisible Assert Exception
+HaveNotElementVisible Assert Exception
 Selector: {selector}
 Expected: not visible
 Actual: visible

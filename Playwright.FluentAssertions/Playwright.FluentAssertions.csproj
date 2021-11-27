@@ -6,12 +6,15 @@
     <Nullable>enable</Nullable>
 
 	  <OutputType>Library</OutputType>
-	  <Version>1.17.0</Version>
+	  <Version>1.17.0.1</Version>
 	  <Authors>Evgeny Nazarchuk</Authors>
-	  <PackageProjectUrl>https://github.com/evgenynazarchuk/PlaywrightPageObjectModel/wiki</PackageProjectUrl>
-	  <RepositoryUrl>https://github.com/evgenynazarchuk/PlaywrightPageObjectModel</RepositoryUrl>
+	  <PackageProjectUrl>https://github.com/evgenynazarchuk/Playwright.PageObjectModel/wiki</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/evgenynazarchuk/Playwright.PageObjectModel</RepositoryUrl>
 	  <Copyright>Copyright © Evgeny Nazarchuk</Copyright>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <Title>Playwright.PageObjectModel</Title>
+	  <Description>Page Object Model for Playwright</Description>
+	  
   </PropertyGroup>
 
   <ItemGroup>

@@ -25,9 +25,9 @@
 using Microsoft.Playwright;
 using System.Text.RegularExpressions;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class BrowserContextSynchronization
+public static class BrowserContextSynchronous
 {
     public static void AddCookies(this IBrowserContext browserContext, IEnumerable<Cookie> cookies)
     {

@@ -24,12 +24,37 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class SelectorsSynchronization
+public static class DownloadSynchronous
 {
-    public static void Register(this ISelectors selectors, string name, SelectorsRegisterOptions? options = null)
+    public static void Cancel(this IDownload download)
     {
-        selectors.RegisterAsync(name, options).GetAwaiter().GetResult();
+        download.CancelAsync().GetAwaiter().GetResult();
+    }
+
+    public static Stream? CreateReadStream(this IDownload download)
+    {
+        return download.CreateReadStreamAsync().GetAwaiter().GetResult();
+    }
+
+    public static void Delete(this IDownload download)
+    {
+        download.DeleteAsync().GetAwaiter().GetResult();
+    }
+
+    public static string? Failure(this IDownload download)
+    {
+        return download.FailureAsync().GetAwaiter().GetResult();
+    }
+
+    public static string? Path(this IDownload download)
+    {
+        return download.PathAsync().GetAwaiter().GetResult();
+    }
+
+    public static void SaveAs(this IDownload download, string path)
+    {
+        download.SaveAsAsync(path).GetAwaiter().GetResult();
     }
 }

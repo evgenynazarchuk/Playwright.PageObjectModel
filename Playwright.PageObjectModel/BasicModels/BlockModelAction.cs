@@ -23,7 +23,7 @@
  */
 
 using Microsoft.Playwright;
-using Playwright.Synchronization;
+using Playwright.Synchronous;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;

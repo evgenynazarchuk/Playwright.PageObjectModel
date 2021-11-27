@@ -24,27 +24,22 @@
 
 using Microsoft.Playwright;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class FileChooserSynchronization
+public static class VideoSynchronous
 {
-    public static void SetFile(this IFileChooser fileChooser, string files, FileChooserSetFilesOptions? options = null)
+    public static void Delete(this IVideo video)
     {
-        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+        video.DeleteAsync().GetAwaiter().GetResult();
     }
 
-    public static void SetFile(this IFileChooser fileChooser, IEnumerable<string> files, FileChooserSetFilesOptions? options = null)
+    public static string Path(this IVideo video)
     {
-        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+        return video.PathAsync().GetAwaiter().GetResult();
     }
 
-    public static void SetFile(this IFileChooser fileChooser, FilePayload files, FileChooserSetFilesOptions? options = null)
+    public static void SaveAs(this IVideo video, string path)
     {
-        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
-    }
-
-    public static void SetFile(this IFileChooser fileChooser, IEnumerable<FilePayload> files, FileChooserSetFilesOptions? options = null)
-    {
-        fileChooser.SetFilesAsync(files, options).GetAwaiter().GetResult();
+        video.SaveAsAsync(path).GetAwaiter().GetResult();
     }
 }

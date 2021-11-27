@@ -25,9 +25,9 @@
 using Microsoft.Playwright;
 using System.Text.Json;
 
-namespace Playwright.Synchronization;
+namespace Playwright.Synchronous;
 
-public static class LocatorSynchronization
+public static class LocatorSynchronous
 {
     public static IReadOnlyList<string> AllInnerTexts(this ILocator locator)
     {
