@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Playwright.FluentAssertions\Playwright.FluentAssertions.csproj" />
     <ProjectReference Include="..\Playwright.Synchronization\Playwright.Synchronization.csproj" />
   </ItemGroup>
 

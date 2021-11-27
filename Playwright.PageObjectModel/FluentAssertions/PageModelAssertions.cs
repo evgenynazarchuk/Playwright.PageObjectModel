@@ -50,18 +50,18 @@ public static partial class PageModelAssertions
     public static TPageModel HaveTitle<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string pattern,
-        string because = "")
+        string because = "no reason given")
         where TPageModel : PageModel
     {
         var title = pageModel.Value.Title();
-        var match = Regex.Match(pattern, title, RegexOptions.Compiled);
+        var match = Regex.Match(title, pattern, RegexOptions.Compiled);
 
         if (!match.Success)
         {
             throw new AssertException(@$"
 HaveTitle Assert Exception
-Expected: {title}
-Actual: {pattern}
+Actual title: {title}
+Expected pattern: {pattern}
 Because: {because}
 ");
         }
@@ -69,21 +69,21 @@ Because: {because}
         return pageModel.Value;
     }
 
-    public static TPageModel NotHaveTitle<TPageModel>(
+    public static TPageModel HaveNotTitle<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string pattern,
-        string because = "")
+        string because = "no reason given")
         where TPageModel : PageModel
     {
         var title = pageModel.Value.Title();
-        var match = Regex.Match(pattern, title, RegexOptions.Compiled);
+        var match = Regex.Match(title, pattern, RegexOptions.Compiled);
 
         if (match.Success)
         {
             throw new AssertException(@$"
-NotHaveTitle Assert Exception
-Expected: {title}
-Actual: {pattern}
+HaveNotTitle Assert Exception
+Actual title: {title}
+Expected pattern: {pattern}
 Bacause: {because}
 ");
         }
@@ -94,18 +94,18 @@ Bacause: {because}
     public static TPageModel HaveContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string pattern,
-        string because = "")
+        string because = "no reason given")
         where TPageModel : PageModel
     {
-        var title = pageModel.Value.Content();
-        var match = Regex.Match(pattern, title, RegexOptions.Compiled);
+        var content = pageModel.Value.Content();
+        var match = Regex.Match(content, pattern, RegexOptions.Compiled);
 
         if (!match.Success)
         {
             throw new AssertException(@$"
 HaveContent Assert Exception
-Expected: {title}
-Actual: {pattern}
+Actual content: {content}
+Expected pattern: {pattern}
 Because: {because}
 ");
         }
@@ -113,21 +113,221 @@ Because: {because}
         return pageModel.Value;
     }
 
-    public static TPageModel NotHaveContent<TPageModel>(
+    public static TPageModel HaveNotContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string pattern,
-        string because = "")
+        string because = "no reason given")
         where TPageModel : PageModel
     {
-        var title = pageModel.Value.Content();
-        var match = Regex.Match(pattern, title, RegexOptions.Compiled);
+        var content = pageModel.Value.Content();
+        var match = Regex.Match(content, pattern, RegexOptions.Compiled);
 
         if (match.Success)
         {
             throw new AssertException(@$"
-NotHaveContent Assert Exception
-Expected: {title}
-Actual: {pattern}
+HaveNotContent Assert Exception
+Actual content: {content}
+Expected pattern: {pattern}
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveInnerHTML<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string pattern,
+        string because = "no reason given",
+        PageInnerHTMLOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var innerHtml = pageModel.Value.InnerHTML(selector, options);
+        var match = Regex.Match(innerHtml, pattern, RegexOptions.Compiled);
+
+        if (!match.Success)
+        {
+            throw new AssertException(@$"
+HaveInnerHTML Assert Exception
+Selector: {selector}
+Actual inner html: {innerHtml}
+Expected pattern: {pattern}
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotInnerHTML<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string pattern,
+        string because = "no reason given",
+        PageInnerHTMLOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var innerHtml = pageModel.Value.InnerHTML(selector, options);
+        var match = Regex.Match(innerHtml, pattern, RegexOptions.Compiled);
+
+        if (match.Success)
+        {
+            throw new AssertException(@$"
+HaveNotInnerHTML Assert Exception
+Selector: {selector}
+Actual inner html: {innerHtml}
+Not expected pattern: {pattern}
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveInnerText<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string pattern,
+        string because = "no reason given",
+        PageInnerTextOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var innerText = pageModel.Value.InnerText(selector, options);
+        var match = Regex.Match(innerText, pattern, RegexOptions.Compiled);
+
+        if (!match.Success)
+        {
+            throw new AssertException(@$"
+HaveInnerText Assert Exception
+Selector: {selector}
+Actual inner text: {innerText}
+Expected pattern: {pattern}
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotInnerText<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string pattern,
+        string because = "no reason given",
+        PageInnerTextOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var innerText = pageModel.Value.InnerText(selector, options);
+        var match = Regex.Match(innerText, pattern, RegexOptions.Compiled);
+
+        if (match.Success)
+        {
+            throw new AssertException(@$"
+HaveNotInnerText Assert Exception
+Selector: {selector}
+Actual inner text: {innerText}
+Not expected pattern: {pattern}
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveInputValue<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string pattern,
+        string because = "no reason given",
+        PageInputValueOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var inputValue = pageModel.Value.InputValue(selector, options);
+        var match = Regex.Match(inputValue, pattern, RegexOptions.Compiled);
+
+        if (!match.Success)
+        {
+            throw new AssertException(@$"
+HaveInputValue Assert Exception
+Selector: {selector}
+Actual input text: {inputValue}
+Expected pattern: {pattern}
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotInputValue<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string pattern,
+        string because = "no reason given",
+        PageInputValueOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var inputValue = pageModel.Value.InputValue(selector, options);
+        var match = Regex.Match(inputValue, pattern, RegexOptions.Compiled);
+
+        if (match.Success)
+        {
+            throw new AssertException(@$"
+HaveInputValue Assert Exception
+Selector: {selector}
+Actual input text: {inputValue}
+Not expected pattern: {pattern}
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveTextContent<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string pattern,
+        string because = "no reason given",
+        PageTextContentOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var textContent = pageModel.Value.TextContent(selector, options) ?? "";
+        var match = Regex.Match(textContent, pattern, RegexOptions.Compiled);
+
+        if (!match.Success)
+        {
+            throw new AssertException(@$"
+HaveTextContent Assert Exception
+Selector: {selector}
+Actual text content: {textContent}
+Expected pattern: {pattern}
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotTextContent<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string pattern,
+        string because = "no reason given",
+        PageTextContentOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var textContent = pageModel.Value.TextContent(selector, options) ?? "";
+        var match = Regex.Match(textContent, pattern, RegexOptions.Compiled);
+
+        if (match.Success)
+        {
+            throw new AssertException(@$"
+HaveNotTextContent Assert Exception
+Selector: {selector}
+Actual text content: {textContent}
+Not expected pattern: {pattern}
 Because: {because}
 ");
         }
@@ -139,16 +339,17 @@ Because: {because}
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         string attributeName,
-        string because = "")
+        string because = "no reason given")
         where TPageModel : PageModel
     {
-        var attributeValue = pageModel.Value.GetAttribute(selector, attributeName);
+        var value = pageModel.Value.GetAttribute(selector, attributeName);
 
-        if (attributeValue is null)
+        if (value is null)
         {
             throw new AssertException($@"
 HaveElementAttribute Assert Exception
-Expected: selector {selector}, attribute name {attributeName}
+Selector: {selector}
+Expected attribute: {attributeName}
 Because: {because}
 ");
         }
@@ -160,18 +361,21 @@ Because: {because}
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         string attributeName,
-        string value,
-        string because = "",
+        string expectedValue,
+        string because = "no reason given",
         PageGetAttributeOptions? options = null)
         where TPageModel : PageModel
     {
-        var result = pageModel.Value.GetAttribute(selector, attributeName, options);
+        var value = pageModel.Value.GetAttribute(selector, attributeName, options);
+        if (value is null) throw new AssertException($@"Attibute not found. Selector {selector}. Attribute {attributeName}");
 
-        if (string.Compare(result, value) != 0)
+        if (string.Compare(value, expectedValue) != 0)
         {
             throw new AssertException($@"
-HaveElementAttribute Assert Exception
-Expected: selector {selector}, attribute name {attributeName}, 
+HaveElementAttributeValue Assert Exception
+Selector: {selector}
+Attribute name: {attributeName},
+Attribute value: {expectedValue}
 Because: {because}
 ");
         }
@@ -179,21 +383,22 @@ Because: {because}
         return pageModel.Value;
     }
 
-    public static TPageModel NotHaveElementAttribute<TPageModel>(
+    public static TPageModel HaveNotElementAttribute<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         string attributeName,
-        string because = "",
+        string because = "no reason given",
         PageGetAttributeOptions? options = null)
         where TPageModel : PageModel
     {
-        var result = pageModel.Value.GetAttribute(selector, attributeName, options);
+        var value = pageModel.Value.GetAttribute(selector, attributeName, options);
 
-        if (result is not null)
+        if (value is not null)
         {
             throw new AssertException($@"
-NotHaveElementAttribute Assert Exception
-Not expected attribute: selector {selector}, attribute name {attributeName}, 
+HaveNotElementAttribute Assert Exception
+Selector: {selector}
+Attribute name: {attributeName}
 Because: {because}
 ");
         }
@@ -204,17 +409,17 @@ Because: {because}
     public static TPageModel HaveElement<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string because = "",
+        string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        var result = pageModel.Value.FindElementOrNull(selector, options);
+        var element = pageModel.Value.FindElementOrNull(selector, options);
 
-        if (result is null)
+        if (element is null)
         {
             throw new AssertException($@"
 HaveElement Assert Exception
-Expected element: selector {selector} 
+Selector {selector}
 Because: {because}
 ");
         }
@@ -226,16 +431,17 @@ Because: {because}
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
         int count,
-        string because = "")
+        string because = "no reason given")
         where TPageModel : PageModel
     {
-        var result = pageModel.Value.FindElements(selector);
+        var elements = pageModel.Value.FindElements(selector);
 
-        if (result is null || result.Count != count)
+        if (elements is null || elements.Count != count)
         {
             throw new AssertException($@"
 HaveElementCount Assert Exception
-Expected count element: selector {selector}, count {count}
+Selector: {selector}
+Count: {count}
 Because: {because}
 ");
         }
@@ -246,20 +452,22 @@ Because: {because}
     public static TPageModel HaveElementWithContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string textContent,
-        string because = "",
+        string pattern,
+        string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
         var result = pageModel.Value.FindElement(selector, options);
-        var actualContent = result.TextContent();
+        var actualContent = result.TextContent() ?? "";
+        var match = Regex.Match(actualContent, pattern, RegexOptions.Compiled);
 
-        if (string.Compare(actualContent, textContent) != 0)
+        if (!match.Success)
         {
             throw new AssertException($@"
 HaveElementWithContent Assert Exception
-Expected: selector {selector}, textContent {textContent}
+Selector: {selector}
 Actual text content: {actualContent}
+Expected pattern: {pattern}
 Because: {because}
 ");
         }
@@ -270,7 +478,7 @@ Because: {because}
     public static TPageModel HaveChecked<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string because = "",
+        string because = "no reason given",
         PageIsCheckedOptions? options = null)
         where TPageModel : PageModel
     {
@@ -280,8 +488,32 @@ Because: {because}
         {
             throw new AssertException($@"
 HaveChecked Assert Exception
-Expected: selector {selector} is checked
-Actual: {isChecked}
+Selector: {selector}
+Expected: checked
+Actual: not checked
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotChecked<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string because = "no reason given",
+        PageIsCheckedOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var isChecked = pageModel.Value.IsChecked(selector, options);
+
+        if (isChecked)
+        {
+            throw new AssertException($@"
+HaveNotChecked Assert Exception
+Selector: {selector}
+Expected not checked
+Actual: checked
 Because: {because}
 ");
         }
@@ -292,7 +524,7 @@ Because: {because}
     public static TPageModel HaveDisabled<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string because = "",
+        string because = "no reason given",
         PageIsDisabledOptions? options = null)
         where TPageModel : PageModel
     {
@@ -302,8 +534,32 @@ Because: {because}
         {
             throw new AssertException($@"
 HaveDisabled Assert Exception
-Expected: selector {selector} is disabled
-Actual: {isDisabled}
+Selector: {selector}
+Expected: disabled
+Actual: not disabled
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotDisabled<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string because = "no reason given",
+        PageIsDisabledOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var isDisabled = pageModel.Value.IsDisabled(selector, options);
+
+        if (isDisabled)
+        {
+            throw new AssertException($@"
+HaveNotDisabled Assert Exception
+Selector: {selector}
+Expected: not disabled
+Actual: disabled
 Because: {because}
 ");
         }
@@ -314,8 +570,8 @@ Because: {because}
     public static TPageModel HaveEditable<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        PageIsEditableOptions? options = null,
-        string because = "")
+        string because = "no reason given",
+        PageIsEditableOptions? options = null)
         where TPageModel : PageModel
     {
         var isEditable = pageModel.Value.IsEditable(selector, options);
@@ -324,8 +580,32 @@ Because: {because}
         {
             throw new AssertException($@"
 HaveEditable Assert Exception
-Expected: selector {selector} is editable
-Actual: {isEditable}
+Selector: {selector}
+Expected: editable
+Actual: not editable
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotEditable<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string because = "no reason given",
+        PageIsEditableOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var isEditable = pageModel.Value.IsEditable(selector, options);
+
+        if (isEditable)
+        {
+            throw new AssertException($@"
+HaveNotEditable Assert Exception
+Selector: {selector}
+Expected: not editable
+Actual: editable
 Because: {because}
 ");
         }
@@ -336,8 +616,8 @@ Because: {because}
     public static TPageModel HaveEnabled<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        PageIsEnabledOptions? options = null,
-        string because = "")
+        string because = "no reason given",
+        PageIsEnabledOptions? options = null)
         where TPageModel : PageModel
     {
         var isEnable = pageModel.Value.IsEnabled(selector, options);
@@ -346,8 +626,32 @@ Because: {because}
         {
             throw new AssertException($@"
 HaveEnabled Assert Exception
-Expected: selector {selector} is enable
-Actual: {isEnable}
+Selector: {selector}
+Expected: enabled
+Actual: not enabled
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotEnabled<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string because = "no reason given",
+        PageIsEnabledOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var isEnable = pageModel.Value.IsEnabled(selector, options);
+
+        if (isEnable)
+        {
+            throw new AssertException($@"
+HaveNotEnabled Assert Exception
+Selector: {selector}
+Expected: not enabled
+Actual: enabled
 Because: {because}
 ");
         }
@@ -358,8 +662,8 @@ Because: {because}
     public static TPageModel HaveHidden<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        PageIsHiddenOptions? options = null,
-        string because = "")
+        string because = "no reason given",
+        PageIsHiddenOptions? options = null)
         where TPageModel : PageModel
     {
         var isHidden = pageModel.Value.IsHidden(selector, options);
@@ -368,8 +672,32 @@ Because: {because}
         {
             throw new AssertException($@"
 HaveHidden Assert Exception
-Expected: selector {selector} is hidden
-Actual: {isHidden}
+Selector: {selector}
+Expected: hidden
+Actual: not hidden
+Because: {because}
+");
+        }
+
+        return pageModel.Value;
+    }
+
+    public static TPageModel HaveNotHidden<TPageModel>(
+        this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
+        string because = "no reason given",
+        PageIsHiddenOptions? options = null)
+        where TPageModel : PageModel
+    {
+        var isHidden = pageModel.Value.IsHidden(selector, options);
+
+        if (isHidden)
+        {
+            throw new AssertException($@"
+HaveNotHidden Assert Exception
+Selector: {selector}
+Expected: not hidden
+Actual: hidden
 Because: {because}
 ");
         }
@@ -380,8 +708,8 @@ Because: {because}
     public static TPageModel HaveVisible<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        PageIsVisibleOptions? options = null,
-        string because = "")
+        string because = "no reason given",
+        PageIsVisibleOptions? options = null)
         where TPageModel : PageModel
     {
         var isVisible = pageModel.Value.IsVisible(selector, options);
@@ -390,8 +718,9 @@ Because: {because}
         {
             throw new AssertException($@"
 HaveVisible Assert Exception
-Expected: selector {selector} is visible
-Actual: {isVisible}
+Selector: {selector}
+Expected: visible
+Actual: not visible
 Because: {because}
 ");
         }
@@ -399,43 +728,22 @@ Because: {because}
         return pageModel.Value;
     }
 
-    public static TPageModel NotHaveChecked<TPageModel>(
+    public static TPageModel HaveNotVisible<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        PageIsCheckedOptions? options = null,
-        string because = "")
+        string because = "no reason given",
+        PageIsVisibleOptions? options = null)
         where TPageModel : PageModel
     {
-        var isChecked = pageModel.Value.IsChecked(selector, options);
+        var isVisible = pageModel.Value.IsVisible(selector, options);
 
-        if (isChecked)
+        if (isVisible)
         {
             throw new AssertException($@"
-NotHaveChecked Assert Exception
-Expected: selector {selector} is not checked
-Actual: {isChecked}
-Because: {because}
-");
-        }
-
-        return pageModel.Value;
-    }
-
-    public static TPageModel NotHaveEditable<TPageModel>(
-        this ReferenceTypeAssertion<TPageModel> pageModel,
-        string selector,
-        PageIsEditableOptions? options = null,
-        string because = "")
-        where TPageModel : PageModel
-    {
-        var isChecked = pageModel.Value.IsEditable(selector, options);
-
-        if (isChecked)
-        {
-            throw new AssertException($@"
-NotHaveEditable Assert Exception
-Expected: selector {selector} is not editable
-Actual: {isChecked}
+HaveNotVisible Assert Exception
+Selector: {selector}
+Expected: not visible
+Actual: visible
 Because: {because}
 ");
         }

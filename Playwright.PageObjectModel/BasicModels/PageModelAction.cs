@@ -528,18 +528,18 @@ public partial class PageModel
         this.AfterHover();
     }
 
-    public virtual void InnerHTML(string selector, PageInnerHTMLOptions? options = null)
+    public virtual string InnerHTML(string selector, PageInnerHTMLOptions? options = null)
     {
         this.WaitPage();
 
-        this.Page.InnerHTML(selector, options);
+        return this.Page.InnerHTML(selector, options);
     }
 
-    public virtual void InnerText(string selector, PageInnerTextOptions? options = null)
+    public virtual string InnerText(string selector, PageInnerTextOptions? options = null)
     {
         this.WaitPage();
 
-        this.Page.InnerText(selector, options);
+        return this.Page.InnerText(selector, options);
     }
 
     public virtual string InputValue(string selector, PageInputValueOptions? options = null)
