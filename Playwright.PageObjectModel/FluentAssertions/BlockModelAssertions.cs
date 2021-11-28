@@ -55,31 +55,18 @@ public static class BlockModelAssertions
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var block = blockModel.Value.ElementHandle;
-        string? textContent = null;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
             var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector {selector}");
+            if (element is null) throw new AssertException($"Element not found. Selector: {selector}");
 
-            textContent = element.TextContent();
+            element.Should().HaveTextContent(pattern, because);
         }
         else
         {
-            textContent = block.TextContent();
-        }
-
-        var match = Regex.Match(textContent ?? "", pattern, RegexOptions.Compiled);
-
-        if (!match.Success)
-        {
-            throw new AssertException(@$"
-HaveContent Assert Exception
-Actual text content: {textContent}
-Expected pattern: {pattern}
-Because: {because}
-");
+            block.Should().HaveTextContent(pattern, because);
         }
 
         return blockModel.Value;
@@ -92,31 +79,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var block = blockModel.Value.ElementHandle;
-        string? textContent = null;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            textContent = element.TextContent();
+            element.Should().HaveNotTextContent(pattern, because);
         }
         else
         {
-            textContent = block.TextContent();
-        }
-
-        var match = Regex.Match(textContent ?? "", pattern, RegexOptions.Compiled);
-
-        if (match.Success)
-        {
-            throw new AssertException(@$"
-HaveNotTextContent Assert Exception
-Actual text content: {textContent}
-Not expected pattern: {pattern}
-Because: {because}
-");
+            block.Should().HaveNotTextContent(pattern, because);
         }
 
         return blockModel.Value;
@@ -129,31 +103,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var block = blockModel.Value.ElementHandle;
-        string? innerHtml = null;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            innerHtml = element.InnerHTML();
+            element.Should().HaveInnerHTML(pattern, because);
         }
         else
         {
-            innerHtml = block.InnerHTML();
-        }
-
-        var match = Regex.Match(innerHtml ?? "", pattern, RegexOptions.Compiled);
-
-        if (!match.Success)
-        {
-            throw new AssertException(@$"
-HaveInnerHTML Assert Exception
-Actual inner html: {innerHtml}
-Expected pattern: {pattern}
-Because: {because}
-");
+            block.Should().HaveInnerHTML(pattern, because);
         }
 
         return blockModel.Value;
@@ -166,31 +127,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var block = blockModel.Value.ElementHandle;
-        string? innerHtml = null;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            innerHtml = element.InnerHTML();
+            element.Should().HaveNotInnerHTML(pattern, because);
         }
         else
         {
-            innerHtml = block.InnerHTML();
-        }
-
-        var match = Regex.Match(innerHtml ?? "", pattern, RegexOptions.Compiled);
-
-        if (match.Success)
-        {
-            throw new AssertException(@$"
-HaveNotInnerHTML Assert Exception
-Actual inner html: {innerHtml}
-Not expected pattern: {pattern}
-Because: {because}
-");
+            block.Should().HaveNotInnerHTML(pattern, because);
         }
 
         return blockModel.Value;
@@ -203,31 +151,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var block = blockModel.Value.ElementHandle;
-        string? innerText = null;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            innerText = element.InnerText();
+            element.Should().HaveInnerText(pattern, because);
         }
         else
         {
-            innerText = block.InnerText();
-        }
-
-        var match = Regex.Match(innerText ?? "", pattern, RegexOptions.Compiled);
-
-        if (!match.Success)
-        {
-            throw new AssertException(@$"
-HaveInnerText Assert Exception
-Actual inner text: {innerText}
-Expected pattern: {pattern}
-Because: {because}
-");
+            block.Should().HaveInnerText(pattern, because);
         }
 
         return blockModel.Value;
@@ -240,31 +175,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var block = blockModel.Value.ElementHandle;
-        string? innerText = null;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            innerText = element.InnerText();
+            element.Should().HaveNotInnerText(pattern, because);
         }
         else
         {
-            innerText = block.InnerText();
-        }
-
-        var match = Regex.Match(innerText ?? "", pattern, RegexOptions.Compiled);
-
-        if (match.Success)
-        {
-            throw new AssertException(@$"
-HaveNotInnerText Assert Exception
-Actual inner text: {innerText}
-Not expected pattern: {pattern}
-Because: {because}
-");
+            block.Should().HaveNotInnerText(pattern, because);
         }
 
         return blockModel.Value;
@@ -277,31 +199,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var block = blockModel.Value.ElementHandle;
-        string? inputValue = null;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            inputValue = element.InputValue();
+            element.Should().HaveInputValue(pattern, because);
         }
         else
         {
-            inputValue = block.InputValue();
-        }
-
-        var match = Regex.Match(inputValue ?? "", pattern, RegexOptions.Compiled);
-
-        if (!match.Success)
-        {
-            throw new AssertException(@$"
-HaveInputValue Assert Exception
-Actual input value: {inputValue}
-Expected pattern: {pattern}
-Because: {because}
-");
+            block.Should().HaveInputValue(pattern, because);
         }
 
         return blockModel.Value;
@@ -314,136 +223,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var block = blockModel.Value.ElementHandle;
-        string? inputValue = null;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            inputValue = element.InputValue();
+            element.Should().HaveNotInputValue(pattern, because);
         }
         else
         {
-            inputValue = block.InputValue();
-        }
-
-        var match = Regex.Match(inputValue ?? "", pattern, RegexOptions.Compiled);
-
-        if (match.Success)
-        {
-            throw new AssertException(@$"
-HaveNotInputValue Assert Exception
-Actual input value: {inputValue}
-Not expected pattern: {pattern}
-Because: {because}
-");
-        }
-
-        return blockModel.Value;
-    }
-
-    public static TBlockModel HaveElementAttribute<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
-        string attributeName,
-        string? selector = null,
-        string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
-    {
-        var block = blockModel.Value.ElementHandle;
-        string? attributeValue = null;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
-
-            attributeValue = element.GetAttribute(attributeName);
-        }
-        else
-        {
-            attributeValue = block.GetAttribute(attributeName);
-        }
-
-        if (attributeValue is null)
-        {
-            throw new AssertException($@"
-HaveElementAttribute Assert Exception
-Expected attribute: {attributeName}
-Actual: attribute {attributeName} not found
-Because: {because}
-");
-        }
-
-        return blockModel.Value;
-    }
-
-    public static TBlockModel NotHaveElementAttribute<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
-        string attributeName,
-        string? selector = null,
-        string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
-    {
-        var block = blockModel.Value.ElementHandle;
-        string? attributeValue = null;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
-
-            attributeValue = element.GetAttribute(attributeName);
-        }
-        else
-        {
-            attributeValue = block.GetAttribute(attributeName);
-        }
-
-        if (attributeValue is not null)
-        {
-            throw new AssertException($@"
-HaveElementAttribute Assert Exception
-Not expected attribute: {attributeName}
-Because: {because}
-");
-        }
-
-        return blockModel.Value;
-    }
-
-    public static TBlockModel HaveElementAttributeValue<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
-        string attributeName,
-        string value,
-        string? selector = null,
-        string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
-    {
-        var block = blockModel.Value.ElementHandle;
-        string? attributeValue = null;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
-
-            attributeValue = element.GetAttribute(attributeName);
-        }
-        else
-        {
-            attributeValue = block.GetAttribute(attributeName);
-        }
-
-        if (attributeValue is not null && string.Compare(attributeValue, value) != 0)
-        {
-            throw new AssertException($@"
-HaveElementAttributeValue Assert Exception
-Expected attribute: {attributeName}
-Expected attribute value: {value}
-Because: {because}
-");
+            block.Should().HaveNotInputValue(pattern, because);
         }
 
         return blockModel.Value;
@@ -455,28 +246,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isChecked;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isChecked = element.IsChecked();
+
+            element.Should().BeChecked(because);
         }
         else
         {
-            isChecked = blockModel.Value.ElementHandle.IsChecked();
-        }
-
-        if (isChecked is false)
-        {
-            throw new AssertException($@"
-HaveChecked Assert Exception
-Selector: {selector}
-Expected: checked
-Actual: not checked
-Because: {because}
-");
+            block.Should().BeChecked(because);
         }
 
         return blockModel.Value;
@@ -488,28 +269,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isChecked;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isChecked = element.IsChecked();
+
+            element.Should().BeNotChecked(because);
         }
         else
         {
-            isChecked = blockModel.Value.ElementHandle.IsChecked();
-        }
-
-        if (isChecked is true)
-        {
-            throw new AssertException($@"
-HaveNotChecked Assert Exception
-Selector: {selector}
-Expected: not checked
-Actual: checked
-Because: {because}
-");
+            block.Should().BeNotChecked(because);
         }
 
         return blockModel.Value;
@@ -521,28 +292,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isDisabled;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = blockModel.Value.Block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isDisabled = element.IsDisabled();
+
+            element.Should().BeDisabled(because);
         }
         else
         {
-            isDisabled = blockModel.Value.ElementHandle.IsDisabled();
-        }
-
-        if (isDisabled is false)
-        {
-            throw new AssertException($@"
-HaveDisabled Assert Exception
-Selector: {selector}
-Expected: disable
-Atual: not disable
-Because: {because}
-");
+            block.Should().BeDisabled(because);
         }
 
         return blockModel.Value;
@@ -554,28 +315,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isDisabled;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isDisabled = element.IsDisabled();
+
+            element.Should().BeNotDisabled(because);
         }
         else
         {
-            isDisabled = blockModel.Value.ElementHandle.IsDisabled();
-        }
-
-        if (isDisabled is true)
-        {
-            throw new AssertException($@"
-HaveNotDisabled Assert Exception
-Selector: {selector}
-Expected: not disable
-Atual: disable
-Because: {because}
-");
+            block.Should().BeNotDisabled(because);
         }
 
         return blockModel.Value;
@@ -587,28 +338,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isEditable;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isEditable = element.IsEditable();
+            
+            element.Should().BeEditable(because);
         }
         else
         {
-            isEditable = blockModel.Value.ElementHandle.IsEditable();
-        }
-
-        if (isEditable is false)
-        {
-            throw new AssertException($@"
-HaveEditable Assert Exception
-Selector: {selector}
-Expected: editable
-Actual: not editable
-Because: {because}
-");
+            block.Should().BeEditable(because);
         }
 
         return blockModel.Value;
@@ -620,28 +361,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isEditable;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isEditable = element.IsEditable();
+
+            element.Should().BeNotEditable(because);
         }
         else
         {
-            isEditable = blockModel.Value.ElementHandle.IsEditable();
-        }
-
-        if (isEditable is true)
-        {
-            throw new AssertException($@"
-HaveNotEditable Assert Exception
-Selector: {selector}
-Expected: editable
-Actual: not editable
-Because: {because}
-");
+            block.Should().BeNotEditable(because);
         }
 
         return blockModel.Value;
@@ -653,28 +384,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isEnabled;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = blockModel.Value.Block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isEnabled = element.IsEnabled();
+
+            block.Should().BeEnabled(because);
         }
         else
         {
-            isEnabled = blockModel.Value.ElementHandle.IsEnabled();
-        }
-
-        if (isEnabled is false)
-        {
-            throw new AssertException($@"
-HaveEnabled Assert Exception
-Selector: {selector}
-Expected: enable
-Actual: not enable
-Because: {because}
-");
+            block.Should().BeEnabled(because);
         }
 
         return blockModel.Value;
@@ -686,28 +407,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isEnabled;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = blockModel.Value.Block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isEnabled = element.IsEnabled();
+
+            block.Should().BeNotEnabled(because);
         }
         else
         {
-            isEnabled = blockModel.Value.ElementHandle.IsEnabled();
-        }
-
-        if (isEnabled is true)
-        {
-            throw new AssertException($@"
-HaveNotEnabled Assert Exception
-Selector: {selector}
-Expected: not enable
-Actual: enable
-Because: {because}
-");
+            block.Should().BeNotEnabled(because);
         }
 
         return blockModel.Value;
@@ -719,30 +430,20 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isEnabled;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = blockModel.Value.Block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isEnabled = element.IsHidden();
+
+            element.Should().BeHidden(because);
         }
         else
         {
-            isEnabled = blockModel.Value.ElementHandle.IsHidden();
+            block.Should().BeHidden(because);
         }
-
-        if (isEnabled is false)
-        {
-            throw new AssertException($@"
-HaveHidden Assert Exception
-Selector: {selector}
-Expected: hidden
-Actual: not hidden
-Because: {because}
-");
-        }
-
+        
         return blockModel.Value;
     }
 
@@ -752,28 +453,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isEnabled;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = blockModel.Value.Block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isEnabled = element.IsHidden();
+
+            element.Should().BeNotHidden(because);
         }
         else
         {
-            isEnabled = blockModel.Value.ElementHandle.IsHidden();
-        }
-
-        if (isEnabled is true)
-        {
-            throw new AssertException($@"
-HaveNotHidden Assert Exception
-Selector: {selector}
-Expected: not hidden
-Actual: hidden
-Because: {because}
-");
+            block.Should().BeNotHidden(because);
         }
 
         return blockModel.Value;
@@ -785,28 +476,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isEnabled;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = blockModel.Value.Block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isEnabled = element.IsVisible();
+
+            element.Should().BeVisible(because);
         }
         else
         {
-            isEnabled = blockModel.Value.ElementHandle.IsVisible();
-        }
-
-        if (isEnabled is false)
-        {
-            throw new AssertException($@"
-HaveVisible Assert Exception
-Selector: {selector}
-Expected: visible
-Actual: not visible
-Because: {because}
-");
+            block.Should().BeVisible(because);
         }
 
         return blockModel.Value;
@@ -818,28 +499,91 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        bool isEnabled;
+        var block = blockModel.Value.Block;
 
         if (selector is not null)
         {
-            var element = blockModel.Value.ElementHandle.QuerySelector(selector);
+            var element = blockModel.Value.Block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            isEnabled = element.IsVisible();
+
+            element.Should().BeNotVisible(because);
         }
         else
         {
-            isEnabled = blockModel.Value.ElementHandle.IsVisible();
+            block.Should().BeNotVisible(because);
         }
 
-        if (isEnabled is true)
+        return blockModel.Value;
+    }
+
+    public static TBlockModel HaveAttribute<TBlockModel>(
+        this ReferenceTypeAssertion<TBlockModel> blockModel,
+        string attributeName,
+        string? selector = null,
+        string because = "no reason given")
+        where TBlockModel : BlockModel<PageModel>
+    {
+        var block = blockModel.Value.Block;
+
+        if (selector is not null)
         {
-            throw new AssertException($@"
-HaveNotVisible Assert Exception
-Selector: {selector}
-Expected: not visible
-Actual: visible
-Because: {because}
-");
+            var element = block.QuerySelector(selector);
+            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
+
+            element.Should().HaveAttribute(attributeName, because);
+        }
+        else
+        {
+            block.Should().HaveAttribute(attributeName, because);
+        }
+
+        return blockModel.Value;
+    }
+
+    public static TBlockModel HaveNotAttribute<TBlockModel>(
+        this ReferenceTypeAssertion<TBlockModel> blockModel,
+        string attributeName,
+        string? selector = null,
+        string because = "no reason given")
+        where TBlockModel : BlockModel<PageModel>
+    {
+        var block = blockModel.Value.Block;
+
+        if (selector is not null)
+        {
+            var element = block.QuerySelector(selector);
+            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
+
+            element.Should().HaveNotAttribute(attributeName, because);
+        }
+        else
+        {
+            block.Should().HaveNotAttribute(attributeName, because);
+        }
+
+        return blockModel.Value;
+    }
+
+    public static TBlockModel HaveAttributeValue<TBlockModel>(
+        this ReferenceTypeAssertion<TBlockModel> blockModel,
+        string attributeName,
+        string value,
+        string? selector = null,
+        string because = "no reason given")
+        where TBlockModel : BlockModel<PageModel>
+    {
+        var block = blockModel.Value.Block;
+
+        if (selector is not null)
+        {
+            var element = block.QuerySelector(selector);
+            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
+
+            element.Should().HaveAttributeValue(attributeName, because);
+        }
+        else
+        {
+            block.Should().HaveAttributeValue(attributeName, because);
         }
 
         return blockModel.Value;
@@ -853,32 +597,18 @@ Because: {because}
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
     {
-        var element = blockModel.Value.ElementHandle;
-        IElementHandle? checkElement = null;
-        string? actualStylevalue = null;
+        var block = blockModel.Value.Block;
 
-        if (selector is null)
+        if (selector is not null)
         {
-            checkElement = element;
+            var element = block.QuerySelector(selector);
+            if (element is null) throw new AssertException($"Element not found. Selector: {selector}");
+
+            element.Should().HaveComputedStyle(styleName, expectedStyleValue, because);
         }
         else
         {
-            checkElement = element.QuerySelector(selector);
-            if (checkElement is null) throw new AssertException($"Element not found. Selector: {selector}");
-        }
-
-        actualStylevalue = checkElement.Evaluate($"e => getComputedStyle(e).{styleName}", element).ToString();
-        if (actualStylevalue is null) throw new AssertException($"Style not found. Style name: {styleName}");
-
-        if (string.Compare(actualStylevalue, expectedStyleValue) != 0)
-        {
-            throw new AssertException($@"
-HaveComputedStyle Assert Exception
-Style name: {styleName}
-Expected style value: {expectedStyleValue}
-Actual style value: {actualStylevalue}
-Because: {because}
-");
+            block.Should().HaveComputedStyle(styleName, expectedStyleValue, because);
         }
 
         return blockModel.Value;

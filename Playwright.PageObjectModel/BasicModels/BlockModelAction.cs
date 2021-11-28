@@ -42,7 +42,7 @@ public partial class BlockModel<TPageModel>
     {
         this.PageModel.WaitPage();
 
-        var element = this.ElementHandle.QuerySelector(selector);
+        var element = this.Block.QuerySelector(selector);
         if (element is null) throw new ApplicationException(exceptionMessage);
         else return element;
     }
@@ -51,7 +51,7 @@ public partial class BlockModel<TPageModel>
     {
         this.PageModel.WaitPage();
 
-        var element = this.ElementHandle.QuerySelector(selector);
+        var element = this.Block.QuerySelector(selector);
         return element;
     }
 
@@ -59,7 +59,7 @@ public partial class BlockModel<TPageModel>
     {
         this.PageModel.WaitPage();
 
-        var elements = this.ElementHandle.QuerySelectorAll(selector);
+        var elements = this.Block.QuerySelectorAll(selector);
         return elements;
     }
 
@@ -105,7 +105,7 @@ public partial class BlockModel<TPageModel>
     {
         this.PageModel.WaitPage();
 
-        var elements = this.ElementHandle.QuerySelectorAll(selector);
+        var elements = this.Block.QuerySelectorAll(selector);
         var blocks = new List<TBlockModel>();
 
         foreach (var element in elements)
@@ -136,7 +136,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Click(options);
+            this.Block.Click(options);
         }
 
         this.PageModel.WaitPage();
@@ -169,7 +169,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.DblClick(options);
+            this.Block.DblClick(options);
         }
 
         this.PageModel.WaitPage();
@@ -190,7 +190,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Hover(options);
+            this.Block.Hover(options);
         }
 
         this.PageModel.WaitPage();
@@ -211,7 +211,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Type(value, options);
+            this.Block.Type(value, options);
         }
 
         this.PageModel.WaitPage();
@@ -232,7 +232,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Fill(value, options);
+            this.Block.Fill(value, options);
         }
 
         this.PageModel.WaitPage();
@@ -253,7 +253,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Check(options);
+            this.Block.Check(options);
         }
 
         this.PageModel.WaitPage();
@@ -274,7 +274,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Uncheck(options);
+            this.Block.Uncheck(options);
         }
 
         this.PageModel.WaitPage();
@@ -295,7 +295,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.SetInputFiles(files, options);
+            this.Block.SetInputFiles(files, options);
         }
 
         this.PageModel.WaitPage();
@@ -316,7 +316,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.SetInputFiles(files, options);
+            this.Block.SetInputFiles(files, options);
         }
 
         this.PageModel.WaitPage();
@@ -337,7 +337,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.SetInputFiles(files, options);
+            this.Block.SetInputFiles(files, options);
         }
 
         this.PageModel.WaitPage();
@@ -358,7 +358,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.SetInputFiles(files, options);
+            this.Block.SetInputFiles(files, options);
         }
 
         this.PageModel.WaitPage();
@@ -379,7 +379,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Screenshot(options);
+            this.Block.Screenshot(options);
         }
 
         this.PageModel.WaitPage();
@@ -398,7 +398,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.TextContent() ?? "";
+            return this.Block.TextContent() ?? "";
         }
     }
 
@@ -413,7 +413,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.InnerText();
+            return this.Block.InnerText();
         }
     }
 
@@ -428,7 +428,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.InnerHTML();
+            return this.Block.InnerHTML();
         }
     }
 
@@ -443,7 +443,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.IsChecked();
+            return this.Block.IsChecked();
         }
     }
 
@@ -458,7 +458,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.IsDisabled();
+            return this.Block.IsDisabled();
         }
     }
 
@@ -473,7 +473,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.IsEditable();
+            return this.Block.IsEditable();
         }
     }
 
@@ -488,7 +488,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.IsEnabled();
+            return this.Block.IsEnabled();
         }
     }
 
@@ -503,7 +503,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.IsHidden();
+            return this.Block.IsHidden();
         }
     }
 
@@ -518,7 +518,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.IsVisible();
+            return this.Block.IsVisible();
         }
     }
 
@@ -533,7 +533,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.BoundingBox();
+            return this.Block.BoundingBox();
         }
     }
 
@@ -548,7 +548,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.ContentFrame();
+            return this.Block.ContentFrame();
         }
     }
 
@@ -563,7 +563,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Focus();
+            this.Block.Focus();
         }
     }
 
@@ -578,7 +578,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.InputValue();
+            return this.Block.InputValue();
         }
     }
 
@@ -593,7 +593,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.SelectOption(values);
+            return this.Block.SelectOption(values);
         }
     }
 
@@ -608,7 +608,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.SelectOption(values);
+            return this.Block.SelectOption(values);
         }
     }
 
@@ -623,7 +623,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.SelectOption(values);
+            return this.Block.SelectOption(values);
         }
     }
 
@@ -638,7 +638,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.SelectOption(values);
+            return this.Block.SelectOption(values);
         }
     }
 
@@ -653,7 +653,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.SelectOption(values);
+            return this.Block.SelectOption(values);
         }
     }
 
@@ -668,7 +668,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.SelectOption(values);
+            return this.Block.SelectOption(values);
         }
     }
 
@@ -683,7 +683,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.DispatchEvent(type);
+            this.Block.DispatchEvent(type);
         }
     }
 
@@ -691,17 +691,17 @@ public partial class BlockModel<TPageModel>
     {
         this.PageModel.WaitPage();
 
-        return this.ElementHandle.EvalOnSelector<T>(selector, expression, arg);
+        return this.Block.EvalOnSelector<T>(selector, expression, arg);
     }
 
     protected virtual T EvalOnSelectorAll<T>(string selector, string expression, object? arg = null)
     {
-        return this.ElementHandle.EvalOnSelectorAll<T>(selector, expression, arg);
+        return this.Block.EvalOnSelectorAll<T>(selector, expression, arg);
     }
 
     protected virtual JsonElement? EvalOnSelector(string selector, string expression, object? arg = null)
     {
-        return this.ElementHandle.EvalOnSelector(selector, expression, arg);
+        return this.Block.EvalOnSelector(selector, expression, arg);
     }
 
     protected string? GetAttributeAsync(string name, string? selector = null)
@@ -715,7 +715,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.GetAttribute(name);
+            return this.Block.GetAttribute(name);
         }
     }
 
@@ -730,7 +730,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Tap(options);
+            this.Block.Tap(options);
         }
     }
 
@@ -745,7 +745,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.OwnerFrame();
+            return this.Block.OwnerFrame();
         }
     }
 
@@ -760,7 +760,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.Press(key, options);
+            this.Block.Press(key, options);
         }
     }
 
@@ -775,7 +775,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            return this.ElementHandle.Screenshot();
+            return this.Block.Screenshot();
         }
     }
 
@@ -790,7 +790,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.SelectText(options);
+            this.Block.SelectText(options);
         }
     }
 
@@ -805,7 +805,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.SetChecked(checkedState);
+            this.Block.SetChecked(checkedState);
         }
     }
 
@@ -820,7 +820,7 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.WaitForElementState(state);
+            this.Block.WaitForElementState(state);
         }
     }
 
@@ -835,12 +835,12 @@ public partial class BlockModel<TPageModel>
         }
         else
         {
-            this.ElementHandle.ScrollIntoViewIfNeeded();
+            this.Block.ScrollIntoViewIfNeeded();
         }
     }
 
     protected virtual IElementHandle? WaitForSelector(string selector, ElementHandleWaitForSelectorOptions? options = null)
     {
-        return ElementHandle.WaitForSelector(selector, options);
+        return Block.WaitForSelector(selector, options);
     }
 }

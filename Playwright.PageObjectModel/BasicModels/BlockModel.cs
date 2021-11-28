@@ -32,28 +32,28 @@ public partial class BlockModel<TPageModel>
     public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
     {
         this.PageModel = pageModel;
-        this.ElementHandle = this.PageModel.FindElement(selector, options);
+        this.Block = this.PageModel.FindElement(selector, options);
     }
 
     public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
     {
         this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = parentBlockModel.FindElement(selector);
+        this.Block = parentBlockModel.FindElement(selector);
     }
 
     public BlockModel(TPageModel pageModel, IElementHandle element)
     {
         this.PageModel = pageModel;
-        this.ElementHandle = element;
+        this.Block = element;
     }
 
     public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
     {
         this.PageModel = parentBlockModel.PageModel;
-        this.ElementHandle = element;
+        this.Block = element;
     }
 
     public readonly TPageModel PageModel;
 
-    public readonly IElementHandle ElementHandle;
+    public readonly IElementHandle Block;
 }

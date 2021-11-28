@@ -15,8 +15,8 @@
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
-    <PackageReference Include="Playwright.FluentAssertions" Version="1.17.0.4" />
-    <PackageReference Include="Playwright.Synchronous" Version="1.17.0.4" />
+    <PackageReference Include="Playwright.FluentAssertions" Version="1.17.0.5" />
+    <PackageReference Include="Playwright.Synchronous" Version="1.17.0.5" />
   </ItemGroup>
 
   <ItemGroup>
