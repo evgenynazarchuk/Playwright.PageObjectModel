@@ -26,6 +26,8 @@ using Playwright.Synchronous;
 using Playwright.PageObjectModel;
 using System;
 using System.Text.RegularExpressions;
+using Microsoft.Playwright;
+
 
 namespace Playwright.FluentAssertions;
 
@@ -836,6 +838,45 @@ HaveNotVisible Assert Exception
 Selector: {selector}
 Expected: not visible
 Actual: visible
+Because: {because}
+");
+        }
+
+        return blockModel.Value;
+    }
+
+    public static TBlockModel HaveComputedStyle<TBlockModel>(
+        this ReferenceTypeAssertion<TBlockModel> blockModel,
+        string styleName,
+        string expectedStyleValue,
+        string? selector = null,
+        string because = "no reason given")
+        where TBlockModel : BlockModel<PageModel>
+    {
+        var element = blockModel.Value.ElementHandle;
+        IElementHandle? checkElement = null;
+        string? actualStylevalue = null;
+
+        if (selector is null)
+        {
+            checkElement = element;
+        }
+        else
+        {
+            checkElement = element.QuerySelector(selector);
+            if (checkElement is null) throw new AssertException($"Element not found. Selector: {selector}");
+        }
+
+        actualStylevalue = checkElement.Evaluate($"e => getComputedStyle(e).{styleName}", element).ToString();
+        if (actualStylevalue is null) throw new AssertException($"Style not found. Style name: {styleName}");
+
+        if (string.Compare(actualStylevalue, expectedStyleValue) != 0)
+        {
+            throw new AssertException($@"
+HaveComputedStyle Assert Exception
+Style name: {styleName}
+Expected style value: {expectedStyleValue}
+Actual style value: {actualStylevalue}
 Because: {because}
 ");
         }
