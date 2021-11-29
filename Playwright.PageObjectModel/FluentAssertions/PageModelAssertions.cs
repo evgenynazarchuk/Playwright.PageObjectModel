@@ -49,137 +49,137 @@ public static partial class PageModelAssertions
 
     public static TPageModel HaveTitle<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string pattern,
+        string expectedTitle,
         string because = "no reason given")
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveTitle(pattern, because);
+        pageModel.Value.Page.Should().HaveTitle(expectedTitle, because);
         return pageModel.Value;
     }
 
     public static TPageModel HaveNotTitle<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string pattern,
+        string regularExpression,
         string because = "no reason given")
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotTitle(pattern, because);
+        pageModel.Value.Page.Should().HaveNotTitle(regularExpression, because);
         return pageModel.Value;
     }
 
     public static TPageModel HaveContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string pattern,
+        string regularExpression,
         string because = "no reason given")
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveContent(pattern, because);
+        pageModel.Value.Page.Should().HaveContent(regularExpression, because);
         return pageModel.Value;
     }
 
     public static TPageModel HaveNotContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string pattern,
+        string regularExpression,
         string because = "no reason given")
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotContent(pattern, because);
+        pageModel.Value.Page.Should().HaveNotContent(regularExpression, because);
         return pageModel.Value;
     }
 
     public static TPageModel HaveElementTextContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string selector,
+        string expectedTextContent,
         string pattern,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveElementTextContent(selector, pattern, because, options);
+        pageModel.Value.Page.Should().HaveElementTextContent(expectedTextContent, pattern, because, options);
         return pageModel.Value;
     }
 
     public static TPageModel HaveNotElementTextContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string pattern,
+        string regularExpression,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotElementTextContent(selector, pattern, because, options);
+        pageModel.Value.Page.Should().HaveNotElementTextContent(selector, regularExpression, because, options);
         return pageModel.Value;
     }
 
     public static TPageModel HaveElementInnerHTML<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string pattern,
+        string expectedInnerHtml,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveElementInnerHTML(selector, pattern, because, options);
+        pageModel.Value.Page.Should().HaveElementInnerHTML(selector, expectedInnerHtml, because, options);
         return pageModel.Value;
     }
 
     public static TPageModel HaveNotElementInnerHTML<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string pattern,
+        string regularExpression,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotElementInnerHTML(selector, pattern, because, options);
+        pageModel.Value.Page.Should().HaveNotElementInnerHTML(selector, regularExpression, because, options);
         return pageModel.Value;
     }
 
     public static TPageModel HaveElementInnerText<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string pattern,
+        string expectedInnerText,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveElementInnerText(selector, pattern, because, options);
+        pageModel.Value.Page.Should().HaveElementInnerText(selector, expectedInnerText, because, options);
         return pageModel.Value;
     }
 
     public static TPageModel HaveNotElementInnerText<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string pattern,
+        string regularExpression,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotElementInnerText(selector, pattern, because, options);
+        pageModel.Value.Page.Should().HaveNotElementInnerText(selector, regularExpression, because, options);
         return pageModel.Value;
     }
 
     public static TPageModel HaveElementInputValue<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string pattern,
+        string expectedInputValue,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveElementInputValue(selector, pattern, because, options);
+        pageModel.Value.Page.Should().HaveElementInputValue(selector, expectedInputValue, because, options);
         return pageModel.Value;
     }
 
     public static TPageModel HaveNotElementInputValue<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string pattern,
+        string regularExpression,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotElementInputValue(selector, pattern, because, options);
+        pageModel.Value.Page.Should().HaveNotElementInputValue(selector, regularExpression, because, options);
         return pageModel.Value;
     }
 
