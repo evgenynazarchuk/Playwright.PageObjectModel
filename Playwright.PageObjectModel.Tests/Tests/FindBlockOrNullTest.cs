@@ -2,7 +2,6 @@ using FluentAssertions;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Playwright.PageObjectModel;
 using System.IO;
 
 namespace Playwright.PageObjectModel.Tests;

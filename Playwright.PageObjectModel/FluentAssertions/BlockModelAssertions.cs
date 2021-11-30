@@ -22,11 +22,9 @@
  * SOFTWARE.
  */
 
-using Playwright.Synchronous;
 using Playwright.PageObjectModel;
+using Playwright.Synchronous;
 using System;
-using System.Text.RegularExpressions;
-using Microsoft.Playwright;
 
 
 namespace Playwright.FluentAssertions;
@@ -344,7 +342,7 @@ public static class BlockModelAssertions
         {
             var element = block.QuerySelector(selector);
             if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-            
+
             element.Should().BeEditable(because);
         }
         else
@@ -443,7 +441,7 @@ public static class BlockModelAssertions
         {
             block.Should().BeHidden(because);
         }
-        
+
         return blockModel.Value;
     }
 
