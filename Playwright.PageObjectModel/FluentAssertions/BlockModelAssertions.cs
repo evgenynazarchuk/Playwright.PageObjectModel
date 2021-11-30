@@ -74,7 +74,7 @@ public static class BlockModelAssertions
 
     public static TBlockModel HaveNotTextContent<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
-        string regulatExpression,
+        string notExpectedTextContent,
         string? selector = null,
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
@@ -86,11 +86,11 @@ public static class BlockModelAssertions
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            element.Should().HaveNotTextContent(regulatExpression, because);
+            element.Should().HaveNotTextContent(notExpectedTextContent, because);
         }
         else
         {
-            block.Should().HaveNotTextContent(regulatExpression, because);
+            block.Should().HaveNotTextContent(notExpectedTextContent, because);
         }
 
         return blockModel.Value;
@@ -122,7 +122,7 @@ public static class BlockModelAssertions
 
     public static TBlockModel HaveNotInnerHTML<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
-        string regularExpression,
+        string notExpectedInnerHtml,
         string? selector = null,
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
@@ -134,11 +134,11 @@ public static class BlockModelAssertions
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            element.Should().HaveNotInnerHTML(regularExpression, because);
+            element.Should().HaveNotInnerHTML(notExpectedInnerHtml, because);
         }
         else
         {
-            block.Should().HaveNotInnerHTML(regularExpression, because);
+            block.Should().HaveNotInnerHTML(notExpectedInnerHtml, because);
         }
 
         return blockModel.Value;
@@ -170,7 +170,7 @@ public static class BlockModelAssertions
 
     public static TBlockModel HaveNotInnerText<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
-        string regularExpression,
+        string notExpectedInnerText,
         string? selector = null,
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
@@ -182,11 +182,11 @@ public static class BlockModelAssertions
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            element.Should().HaveNotInnerText(regularExpression, because);
+            element.Should().HaveNotInnerText(notExpectedInnerText, because);
         }
         else
         {
-            block.Should().HaveNotInnerText(regularExpression, because);
+            block.Should().HaveNotInnerText(notExpectedInnerText, because);
         }
 
         return blockModel.Value;
@@ -218,7 +218,7 @@ public static class BlockModelAssertions
 
     public static TBlockModel HaveNotInputValue<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
-        string regularExpression,
+        string notExpectedInputValue,
         string? selector = null,
         string because = "no reason given")
         where TBlockModel : BlockModel<PageModel>
@@ -230,11 +230,11 @@ public static class BlockModelAssertions
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($"Element not found. Selector {selector}");
 
-            element.Should().HaveNotInputValue(regularExpression, because);
+            element.Should().HaveNotInputValue(notExpectedInputValue, because);
         }
         else
         {
-            block.Should().HaveNotInputValue(regularExpression, because);
+            block.Should().HaveNotInputValue(notExpectedInputValue, because);
         }
 
         return blockModel.Value;
@@ -579,11 +579,11 @@ public static class BlockModelAssertions
             var element = block.QuerySelector(selector);
             if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
 
-            element.Should().HaveAttributeValue(attributeName, because);
+            element.Should().HaveAttributeValue(attributeName, value, because);
         }
         else
         {
-            block.Should().HaveAttributeValue(attributeName, because);
+            block.Should().HaveAttributeValue(attributeName, value, because);
         }
 
         return blockModel.Value;

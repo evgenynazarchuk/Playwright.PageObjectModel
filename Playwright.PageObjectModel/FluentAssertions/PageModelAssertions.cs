@@ -59,55 +59,56 @@ public static partial class PageModelAssertions
 
     public static TPageModel HaveNotTitle<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string regularExpression,
+        string notExpectedTitle,
         string because = "no reason given")
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotTitle(regularExpression, because);
+        pageModel.Value.Page.Should().HaveNotTitle(notExpectedTitle, because);
         return pageModel.Value;
     }
 
     public static TPageModel HaveContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string regularExpression,
+        string expectedContent,
         string because = "no reason given")
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveContent(regularExpression, because);
+        pageModel.Value.Page.Should().HaveContent(expectedContent, because);
         return pageModel.Value;
     }
 
     public static TPageModel HaveNotContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
-        string regularExpression,
+        string notExpectedContent,
         string because = "no reason given")
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotContent(regularExpression, because);
+        pageModel.Value.Page.Should().HaveNotContent(notExpectedContent, because);
         return pageModel.Value;
     }
 
     public static TPageModel HaveElementTextContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
+        string selector,
         string expectedTextContent,
         string pattern,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveElementTextContent(expectedTextContent, pattern, because, options);
+        pageModel.Value.Page.Should().HaveElementTextContent(selector, expectedTextContent, because, options);
         return pageModel.Value;
     }
 
     public static TPageModel HaveNotElementTextContent<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string regularExpression,
+        string notExpectedTextContent,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotElementTextContent(selector, regularExpression, because, options);
+        pageModel.Value.Page.Should().HaveNotElementTextContent(selector, notExpectedTextContent, because, options);
         return pageModel.Value;
     }
 
@@ -126,12 +127,12 @@ public static partial class PageModelAssertions
     public static TPageModel HaveNotElementInnerHTML<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string regularExpression,
+        string notExpectedInnerHtml,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotElementInnerHTML(selector, regularExpression, because, options);
+        pageModel.Value.Page.Should().HaveNotElementInnerHTML(selector, notExpectedInnerHtml, because, options);
         return pageModel.Value;
     }
 
@@ -150,12 +151,12 @@ public static partial class PageModelAssertions
     public static TPageModel HaveNotElementInnerText<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string regularExpression,
+        string notExpectedInnerText,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotElementInnerText(selector, regularExpression, because, options);
+        pageModel.Value.Page.Should().HaveNotElementInnerText(selector, notExpectedInnerText, because, options);
         return pageModel.Value;
     }
 
@@ -174,12 +175,12 @@ public static partial class PageModelAssertions
     public static TPageModel HaveNotElementInputValue<TPageModel>(
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string selector,
-        string regularExpression,
+        string notExpectedInputValue,
         string because = "no reason given",
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Page.Should().HaveNotElementInputValue(selector, regularExpression, because, options);
+        pageModel.Value.Page.Should().HaveNotElementInputValue(selector, notExpectedInputValue, because, options);
         return pageModel.Value;
     }
 
@@ -324,7 +325,6 @@ public static partial class PageModelAssertions
         where TPageModel : PageModel
     {
         pageModel.Value.Should().HaveElementAttribute(selector, attributeName, because, options);
-
         return pageModel.Value;
     }
 
@@ -337,13 +337,7 @@ public static partial class PageModelAssertions
         PageGetAttributeOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Should().HaveElementAttributeValue(
-            selector,
-            attributeName,
-            expectedValue,
-            because,
-            options);
-
+        pageModel.Value.Should().HaveElementAttributeValue(selector, attributeName, expectedValue, because, options);
         return pageModel.Value;
     }
 
@@ -355,12 +349,7 @@ public static partial class PageModelAssertions
         PageGetAttributeOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Should().HaveNotElementAttribute(
-            selector, 
-            attributeName, 
-            because,
-            options);
-
+        pageModel.Value.Should().HaveNotElementAttribute(selector, attributeName, because, options);
         return pageModel.Value;
     }
 
@@ -373,13 +362,7 @@ public static partial class PageModelAssertions
         PageQuerySelectorOptions? options = null)
         where TPageModel : PageModel
     {
-        pageModel.Value.Should().HaveComputedStyle(
-            selector,
-            styleName,
-            expectedStyleValue,
-            because,
-            options);
-
+        pageModel.Value.Should().HaveComputedStyle(selector, styleName, expectedStyleValue, because, options);
         return pageModel.Value;
     }
 }
