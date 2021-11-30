@@ -752,6 +752,8 @@ public partial class BlockModel<TPageModel>
     protected virtual void Press(string key, string? selector = null, ElementHandlePressOptions? options = null)
     {
         this.PageModel.WaitPage();
+        this.BeforeUserAction();
+        this.BeforePress();
 
         if (selector is not null)
         {
@@ -764,6 +766,8 @@ public partial class BlockModel<TPageModel>
         }
 
         this.PageModel.WaitPage();
+        this.AfterUserAction();
+        this.AfterPress();
     }
 
     protected virtual byte[] Screenshot(string? selector = null)
@@ -799,6 +803,8 @@ public partial class BlockModel<TPageModel>
     protected virtual void SetChecked(bool checkedState, string? selector = null, ElementHandleSetCheckedOptions? options = null)
     {
         this.PageModel.WaitPage();
+        this.BeforeUserAction();
+        this.BeforeSetChecked();
 
         if (selector is not null)
         {
@@ -809,6 +815,10 @@ public partial class BlockModel<TPageModel>
         {
             this.Block.SetChecked(checkedState);
         }
+
+        this.PageModel.WaitPage();
+        this.AfterUserAction();
+        this.AfterSetChecked();
     }
 
     protected virtual void WaitForElementState(ElementState state, string? selector = null, ElementHandleWaitForElementStateOptions? options = null)

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playwright.PageObjectModel", "Playwright.PageObjectModel\Playwright.PageObjectModel.csproj", "{E0779916-CAD3-44A7-93AD-ED8283B119A2}"
 EndProject
@@ -10,6 +10,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playwright.PageObjectModel.MSTestSampleTests", "Playwright.PageObjectModel.MSTestSampleRunTests\Playwright.PageObjectModel.MSTestSampleTests.csproj", "{6FD0749D-693F-42DA-BA07-E901EC0665CF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playwright.PageObjectModel.NUnitSampleTests", "Playwright.PageObjectModel.NUnitSampleRunTests\Playwright.PageObjectModel.NUnitSampleTests.csproj", "{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E417B77A-B406-4137-87CF-7CD01281D452}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingPageObjectModel", "Tests\BingPageObjectModel\BingPageObjectModel.csproj", "{803F3519-3F1A-4D5F-AFE6-0A238C7260C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingSearchTests.MSTest", "Tests\BingSearchTests.MSTest\BingSearchTests.MSTest.csproj", "{642F3808-1510-4724-9587-F45CACED8195}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingSearchTests.NUnit", "Tests\BingSearchTests.NUnit\BingSearchTests.NUnit.csproj", "{DF9E8E01-ED88-46AD-8990-F3494CA8F2A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +41,26 @@ Global
 		{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D44ECD61-4925-43E4-BD5A-FAB8B3426A19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{803F3519-3F1A-4D5F-AFE6-0A238C7260C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{803F3519-3F1A-4D5F-AFE6-0A238C7260C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{803F3519-3F1A-4D5F-AFE6-0A238C7260C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{803F3519-3F1A-4D5F-AFE6-0A238C7260C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{642F3808-1510-4724-9587-F45CACED8195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{642F3808-1510-4724-9587-F45CACED8195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{642F3808-1510-4724-9587-F45CACED8195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{642F3808-1510-4724-9587-F45CACED8195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9E8E01-ED88-46AD-8990-F3494CA8F2A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9E8E01-ED88-46AD-8990-F3494CA8F2A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9E8E01-ED88-46AD-8990-F3494CA8F2A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9E8E01-ED88-46AD-8990-F3494CA8F2A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{803F3519-3F1A-4D5F-AFE6-0A238C7260C7} = {E417B77A-B406-4137-87CF-7CD01281D452}
+		{642F3808-1510-4724-9587-F45CACED8195} = {E417B77A-B406-4137-87CF-7CD01281D452}
+		{DF9E8E01-ED88-46AD-8990-F3494CA8F2A8} = {E417B77A-B406-4137-87CF-7CD01281D452}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B987D465-D819-4295-9511-D59DE5CB0498}

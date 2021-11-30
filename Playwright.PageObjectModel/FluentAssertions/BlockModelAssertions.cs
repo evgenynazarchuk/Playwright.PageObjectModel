@@ -26,21 +26,18 @@ using Playwright.PageObjectModel;
 using Playwright.Synchronous;
 using System;
 
-
 namespace Playwright.FluentAssertions;
 
 public static class BlockModelAssertions
 {
-    public static ReferenceTypeAssertion<T> Should<T>(this T blockModel)
-        where T : BlockModel<PageModel>
+    public static ReferenceTypeAssertion<TBlockModel> Should<TBlockModel>(this TBlockModel blockModel)
+        where TBlockModel : IBlockModel
     {
-        return new ReferenceTypeAssertion<T>(blockModel);
+        return new ReferenceTypeAssertion<TBlockModel>(blockModel);
     }
 
-    public static TBlockModel VerifyThat<TBlockModel>(
-        this TBlockModel blockModel,
-        Action<TBlockModel> action)
-        where TBlockModel : BlockModel<PageModel>
+    public static TBlockModel VerifyThat<TBlockModel>(this TBlockModel blockModel, Action<TBlockModel> action)
+        where TBlockModel : IBlockModel
     {
         action(blockModel);
         return blockModel;
@@ -51,7 +48,7 @@ public static class BlockModelAssertions
         string expectedTextContent,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -75,7 +72,7 @@ public static class BlockModelAssertions
         string notExpectedTextContent,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -99,7 +96,7 @@ public static class BlockModelAssertions
         string expectedInnerHtml,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -123,7 +120,7 @@ public static class BlockModelAssertions
         string notExpectedInnerHtml,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -147,7 +144,7 @@ public static class BlockModelAssertions
         string expectedInnerText,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -171,7 +168,7 @@ public static class BlockModelAssertions
         string notExpectedInnerText,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -195,7 +192,7 @@ public static class BlockModelAssertions
         string expectedInputValue,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -219,7 +216,7 @@ public static class BlockModelAssertions
         string notExpectedInputValue,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -242,7 +239,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -265,7 +262,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -288,7 +285,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -311,7 +308,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -334,7 +331,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -357,7 +354,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -380,7 +377,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -403,7 +400,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -426,7 +423,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -449,7 +446,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -472,7 +469,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -495,7 +492,7 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -519,7 +516,7 @@ public static class BlockModelAssertions
         string attributeName,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -543,7 +540,7 @@ public static class BlockModelAssertions
         string attributeName,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -568,7 +565,7 @@ public static class BlockModelAssertions
         string value,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 
@@ -593,7 +590,7 @@ public static class BlockModelAssertions
         string expectedStyleValue,
         string? selector = null,
         string because = "no reason given")
-        where TBlockModel : BlockModel<PageModel>
+        where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
 

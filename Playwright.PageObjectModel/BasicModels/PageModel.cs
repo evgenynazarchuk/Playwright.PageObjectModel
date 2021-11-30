@@ -26,12 +26,12 @@ using Microsoft.Playwright;
 
 namespace Playwright.PageObjectModel;
 
-public partial class PageModel
+public partial class PageModel : IPageModel
 {
     public PageModel(IPage page)
     {
         this.Page = page;
     }
 
-    public readonly IPage Page;
+    public IPage Page { get; }
 }

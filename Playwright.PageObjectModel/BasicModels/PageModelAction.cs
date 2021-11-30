@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Playwright.PageObjectModel;
 
@@ -811,18 +812,11 @@ public partial class PageModel
         this.AfterSetChecked();
     }
 
-    public virtual void Screenshot(PageScreenshotOptions? options = null)
-    {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeScreenshot();
-
-        this.Page.Screenshot(options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterScreenshot();
-    }
+    //public virtual void Screenshot(PageScreenshotOptions? options = null)
+    //{
+    //    this.WaitPage();
+    //    this.Page.Screenshot(options);
+    //}
 
     public virtual TPageModel ReloadPage<TPageModel>(PageReloadOptions? options = null)
         where TPageModel : PageModel

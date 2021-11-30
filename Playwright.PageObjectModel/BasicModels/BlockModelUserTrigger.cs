@@ -66,4 +66,12 @@ public partial class BlockModel<TPageModel>
     protected virtual void BeforeScreenshot() { }
 
     protected virtual void AfterScreenshot() { }
+
+    protected virtual void BeforePress() { }
+
+    protected virtual void AfterPress() { }
+
+    protected virtual void BeforeSetChecked() { }
+
+    protected virtual void AfterSetChecked() { }
 }

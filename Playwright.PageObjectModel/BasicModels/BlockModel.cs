@@ -26,34 +26,40 @@ using Microsoft.Playwright;
 
 namespace Playwright.PageObjectModel;
 
-public partial class BlockModel<TPageModel>
+public partial class BlockModel<TPageModel> : IBlockModel
     where TPageModel : PageModel
 {
     public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
     {
         this.PageModel = pageModel;
         this.Block = this.PageModel.FindElement(selector, options);
+        this.Page = this.PageModel.Page;
     }
 
     public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
     {
         this.PageModel = parentBlockModel.PageModel;
         this.Block = parentBlockModel.FindElement(selector);
+        this.Page = this.PageModel.Page;
     }
 
     public BlockModel(TPageModel pageModel, IElementHandle element)
     {
         this.PageModel = pageModel;
         this.Block = element;
+        this.Page = this.PageModel.Page;
     }
 
     public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
     {
         this.PageModel = parentBlockModel.PageModel;
         this.Block = element;
+        this.Page = this.PageModel.Page;
     }
+
+    public IElementHandle Block { get; }
 
     public readonly TPageModel PageModel;
 
-    public readonly IElementHandle Block;
+    public readonly IPage Page;
 }
