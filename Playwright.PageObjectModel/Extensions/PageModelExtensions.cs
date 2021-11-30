@@ -13,4 +13,13 @@ public static class PageModelExtensions
         pageModel.Page.Screenshot(options);
         return pageModel;
     }
+
+    public static TPageModel Click<TPageModel>(this TPageModel pageModel, string selector, PageClickOptions? options = null)
+        where TPageModel : PageModel
+
+    {
+        pageModel.WaitForLoadPage();
+        pageModel.Page.Click(selector, options);
+        return pageModel;
+    }
 }

@@ -51,19 +51,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector: {selector}");
-
-            element.Should().HaveTextContent(expectedTextContent, because);
-        }
-        else
-        {
-            block.Should().HaveTextContent(expectedTextContent, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveTextContent(expectedTextContent, because);
         return blockModel.Value;
     }
 
@@ -75,19 +64,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector {selector}");
-
-            element.Should().HaveNotTextContent(notExpectedTextContent, because);
-        }
-        else
-        {
-            block.Should().HaveNotTextContent(notExpectedTextContent, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveNotTextContent(notExpectedTextContent, because);
         return blockModel.Value;
     }
 
@@ -99,19 +77,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector {selector}");
-
-            element.Should().HaveInnerHTML(expectedInnerHtml, because);
-        }
-        else
-        {
-            block.Should().HaveInnerHTML(expectedInnerHtml, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveInnerHTML(expectedInnerHtml, because);
         return blockModel.Value;
     }
 
@@ -123,19 +90,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector {selector}");
-
-            element.Should().HaveNotInnerHTML(notExpectedInnerHtml, because);
-        }
-        else
-        {
-            block.Should().HaveNotInnerHTML(notExpectedInnerHtml, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveNotInnerHTML(notExpectedInnerHtml, because);
         return blockModel.Value;
     }
 
@@ -147,19 +103,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector {selector}");
-
-            element.Should().HaveInnerText(expectedInnerText, because);
-        }
-        else
-        {
-            block.Should().HaveInnerText(expectedInnerText, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveInnerText(expectedInnerText, because);
         return blockModel.Value;
     }
 
@@ -171,19 +116,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector {selector}");
-
-            element.Should().HaveNotInnerText(notExpectedInnerText, because);
-        }
-        else
-        {
-            block.Should().HaveNotInnerText(notExpectedInnerText, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveNotInnerText(notExpectedInnerText, because);
         return blockModel.Value;
     }
 
@@ -195,19 +129,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector {selector}");
-
-            element.Should().HaveInputValue(expectedInputValue, because);
-        }
-        else
-        {
-            block.Should().HaveInputValue(expectedInputValue, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveInputValue(expectedInputValue, because);
         return blockModel.Value;
     }
 
@@ -219,19 +142,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector {selector}");
-
-            element.Should().HaveNotInputValue(notExpectedInputValue, because);
-        }
-        else
-        {
-            block.Should().HaveNotInputValue(notExpectedInputValue, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveNotInputValue(notExpectedInputValue, because);
         return blockModel.Value;
     }
 
@@ -242,19 +154,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeChecked(because);
-        }
-        else
-        {
-            block.Should().BeChecked(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeChecked(because);
         return blockModel.Value;
     }
 
@@ -265,19 +166,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeNotChecked(because);
-        }
-        else
-        {
-            block.Should().BeNotChecked(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeNotChecked(because);
         return blockModel.Value;
     }
 
@@ -288,19 +178,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = blockModel.Value.Block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeDisabled(because);
-        }
-        else
-        {
-            block.Should().BeDisabled(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeDisabled(because);
         return blockModel.Value;
     }
 
@@ -311,19 +190,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeNotDisabled(because);
-        }
-        else
-        {
-            block.Should().BeNotDisabled(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeNotDisabled(because);
         return blockModel.Value;
     }
 
@@ -334,19 +202,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeEditable(because);
-        }
-        else
-        {
-            block.Should().BeEditable(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeEditable(because);
         return blockModel.Value;
     }
 
@@ -357,19 +214,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeNotEditable(because);
-        }
-        else
-        {
-            block.Should().BeNotEditable(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeNotEditable(because);
         return blockModel.Value;
     }
 
@@ -380,19 +226,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = blockModel.Value.Block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            block.Should().BeEnabled(because);
-        }
-        else
-        {
-            block.Should().BeEnabled(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeEnabled(because);
         return blockModel.Value;
     }
 
@@ -403,19 +238,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = blockModel.Value.Block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            block.Should().BeNotEnabled(because);
-        }
-        else
-        {
-            block.Should().BeNotEnabled(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeNotEnabled(because);
         return blockModel.Value;
     }
 
@@ -426,19 +250,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = blockModel.Value.Block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeHidden(because);
-        }
-        else
-        {
-            block.Should().BeHidden(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeHidden(because);
         return blockModel.Value;
     }
 
@@ -449,19 +262,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = blockModel.Value.Block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeNotHidden(because);
-        }
-        else
-        {
-            block.Should().BeNotHidden(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeNotHidden(because);
         return blockModel.Value;
     }
 
@@ -472,19 +274,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = blockModel.Value.Block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeVisible(because);
-        }
-        else
-        {
-            block.Should().BeVisible(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeVisible(because);
         return blockModel.Value;
     }
 
@@ -495,19 +286,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = blockModel.Value.Block.QuerySelector(selector);
-            if (element is null) throw new ApplicationException($"Element not found. Selector {selector}");
-
-            element.Should().BeNotVisible(because);
-        }
-        else
-        {
-            block.Should().BeNotVisible(because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().BeNotVisible(because);
         return blockModel.Value;
     }
 
@@ -519,19 +299,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
-
-            element.Should().HaveAttribute(attributeName, because);
-        }
-        else
-        {
-            block.Should().HaveAttribute(attributeName, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveAttribute(attributeName, because);
         return blockModel.Value;
     }
 
@@ -543,19 +312,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
-
-            element.Should().HaveNotAttribute(attributeName, because);
-        }
-        else
-        {
-            block.Should().HaveNotAttribute(attributeName, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveNotAttribute(attributeName, because);
         return blockModel.Value;
     }
 
@@ -568,19 +326,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($@"Element not found. Selector {selector}");
-
-            element.Should().HaveAttributeValue(attributeName, value, because);
-        }
-        else
-        {
-            block.Should().HaveAttributeValue(attributeName, value, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveAttributeValue(attributeName, value, because);
         return blockModel.Value;
     }
 
@@ -593,19 +340,8 @@ public static class BlockModelAssertions
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-
-        if (selector is not null)
-        {
-            var element = block.QuerySelector(selector);
-            if (element is null) throw new AssertException($"Element not found. Selector: {selector}");
-
-            element.Should().HaveComputedStyle(styleName, expectedStyleValue, because);
-        }
-        else
-        {
-            block.Should().HaveComputedStyle(styleName, expectedStyleValue, because);
-        }
-
+        var element = selector is null ? block : block.FindElement(selector);
+        element.Should().HaveComputedStyle(styleName, expectedStyleValue, because);
         return blockModel.Value;
     }
 }

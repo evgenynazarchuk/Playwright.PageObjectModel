@@ -17,4 +17,13 @@ public static class BlockModelExtensions
         blockModel.Block.Screenshot(options);
         return blockModel;
     }
+
+    public static TBlockModel Click<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleClickOptions? options = null)
+        where TBlockModel : IBlockModel
+    {
+        blockModel.WaitForLoadPage();
+        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+        element.Click(options);
+        return blockModel;
+    }
 }

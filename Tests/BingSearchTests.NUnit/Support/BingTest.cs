@@ -23,6 +23,7 @@ public class BingTest : ContextTest
         var page = context.NewPage();
 
         page.Goto("https://bing.com");
+
         return new MainPage(page);
     }
 }
