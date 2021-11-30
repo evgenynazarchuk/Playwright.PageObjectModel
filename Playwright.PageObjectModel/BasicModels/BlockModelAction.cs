@@ -33,6 +33,11 @@ namespace Playwright.PageObjectModel;
 public partial class BlockModel<TPageModel>
     where TPageModel : PageModel
 {
+    public virtual void WaitForLoadPage() 
+    {
+        this.PageModel.WaitForLoadPage();
+    }
+
     public TPageModel UpToPage()
     {
         return this.PageModel;
@@ -40,7 +45,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual IElementHandle FindElement(string selector, string exceptionMessage = "Element not found")
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         var element = this.Block.QuerySelector(selector);
         if (element is null) throw new ApplicationException(exceptionMessage);
@@ -49,7 +54,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual IElementHandle? FindElementOrNull(string selector)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         var element = this.Block.QuerySelector(selector);
         return element;
@@ -57,7 +62,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual IReadOnlyList<IElementHandle> FindElements(string selector)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         var elements = this.Block.QuerySelectorAll(selector);
         return elements;
@@ -66,7 +71,7 @@ public partial class BlockModel<TPageModel>
     protected virtual TBlockModel FindBlock<TBlockModel>(string selector)
         where TBlockModel : class
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { typeof(BlockModel<TPageModel>), typeof(string) };
@@ -83,7 +88,7 @@ public partial class BlockModel<TPageModel>
     protected virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
         where TBlockModel : class
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
@@ -103,7 +108,7 @@ public partial class BlockModel<TPageModel>
     protected virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
         where TBlockModel : class
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         var elements = this.Block.QuerySelectorAll(selector);
         var blocks = new List<TBlockModel>();
@@ -125,9 +130,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void Click(string? selector = null, ElementHandleClickOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeClick();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -139,9 +142,7 @@ public partial class BlockModel<TPageModel>
             this.Block.Click(options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterClick();
+        this.WaitForLoadPage();
     }
 
     protected virtual TReturnPage Click<TReturnPage>(string? selector = null, ElementHandleClickOptions? options = null)
@@ -158,9 +159,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void DbClick(string? selector = null, ElementHandleDblClickOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeDbClick();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -172,16 +171,12 @@ public partial class BlockModel<TPageModel>
             this.Block.DblClick(options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterDbClick();
+        this.PageModel.WaitForLoadPage();
     }
 
     protected virtual void Hover(string? selector = null, ElementHandleHoverOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeHover();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -193,16 +188,12 @@ public partial class BlockModel<TPageModel>
             this.Block.Hover(options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterHover();
+        this.WaitForLoadPage();
     }
 
     protected virtual void Type(string? selector = null, string value = "", ElementHandleTypeOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeType();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -214,16 +205,12 @@ public partial class BlockModel<TPageModel>
             this.Block.Type(value, options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterType();
+        this.WaitForLoadPage();
     }
 
     protected virtual void Fill(string? selector = null, string value = "", ElementHandleFillOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeFill();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -235,16 +222,12 @@ public partial class BlockModel<TPageModel>
             this.Block.Fill(value, options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterFill();
+        this.WaitForLoadPage();
     }
 
     protected virtual void Check(string? selector = null, ElementHandleCheckOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeCheck();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -256,16 +239,12 @@ public partial class BlockModel<TPageModel>
             this.Block.Check(options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterCheck();
+        this.WaitForLoadPage();
     }
 
     protected virtual void Uncheck(string? selector = null, ElementHandleUncheckOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeUncheck();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -277,16 +256,12 @@ public partial class BlockModel<TPageModel>
             this.Block.Uncheck(options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterUncheck();
+        this.WaitForLoadPage();
     }
 
     protected virtual void SetInputFiles(string files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetInputFile();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -298,16 +273,12 @@ public partial class BlockModel<TPageModel>
             this.Block.SetInputFiles(files, options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetInputFile();
+        this.WaitForLoadPage();
     }
 
     protected virtual void SetInputFiles(FilePayload files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetInputFile();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -319,16 +290,12 @@ public partial class BlockModel<TPageModel>
             this.Block.SetInputFiles(files, options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetInputFile();
+        this.WaitForLoadPage();
     }
 
     protected virtual void SetInputFiles(IEnumerable<string> files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetInputFile();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -340,16 +307,12 @@ public partial class BlockModel<TPageModel>
             this.Block.SetInputFiles(files, options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetInputFile();
+        this.WaitForLoadPage();
     }
 
     protected virtual void SetInputFiles(IEnumerable<FilePayload> files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetInputFile();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -361,16 +324,12 @@ public partial class BlockModel<TPageModel>
             this.Block.SetInputFiles(files, options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetInputFile();
+        this.WaitForLoadPage();
     }
 
     protected virtual void Screenshot(string? selector = null, ElementHandleScreenshotOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeScreenshot();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -382,14 +341,12 @@ public partial class BlockModel<TPageModel>
             this.Block.Screenshot(options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterScreenshot();
+        this.WaitForLoadPage();
     }
 
     protected virtual string TextContent(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -404,7 +361,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual string InnerText(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -419,7 +376,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual string InnerHTML(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -434,7 +391,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual bool IsChecked(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -449,7 +406,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual bool IsDisabled(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -464,7 +421,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual bool IsEditable(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -479,7 +436,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual bool IsEnabled(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -494,7 +451,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual bool IsHidden(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -509,7 +466,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual bool IsVisible(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -524,7 +481,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual ElementHandleBoundingBoxResult? BoundingBox(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -539,7 +496,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual IFrame? ContentFrame(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -554,7 +511,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void Focus(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -569,7 +526,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual string InputValue(string? selector = null, ElementHandleInputValueOptions? options = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -584,97 +541,61 @@ public partial class BlockModel<TPageModel>
 
     protected virtual IReadOnlyList<string> SelectOption(string values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        this.PageModel.WaitPage();
-
-        if (selector is not null)
-        {
-            var element = this.FindElement(selector);
-            return element.SelectOption(values);
-        }
-        else
-        {
-            return this.Block.SelectOption(values);
-        }
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(IElementHandle values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        this.PageModel.WaitPage();
-
-        if (selector is not null)
-        {
-            var element = this.FindElement(selector);
-            return element.SelectOption(values);
-        }
-        else
-        {
-            return this.Block.SelectOption(values);
-        }
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(IEnumerable<string> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        this.PageModel.WaitPage();
-
-        if (selector is not null)
-        {
-            var element = this.FindElement(selector);
-            return element.SelectOption(values);
-        }
-        else
-        {
-            return this.Block.SelectOption(values);
-        }
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(SelectOptionValue values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        this.PageModel.WaitPage();
-
-        if (selector is not null)
-        {
-            var element = this.FindElement(selector);
-            return element.SelectOption(values);
-        }
-        else
-        {
-            return this.Block.SelectOption(values);
-        }
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(IEnumerable<IElementHandle> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        this.PageModel.WaitPage();
-
-        if (selector is not null)
-        {
-            var element = this.FindElement(selector);
-            return element.SelectOption(values);
-        }
-        else
-        {
-            return this.Block.SelectOption(values);
-        }
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(IEnumerable<SelectOptionValue> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        this.PageModel.WaitPage();
-
-        if (selector is not null)
-        {
-            var element = this.FindElement(selector);
-            return element.SelectOption(values);
-        }
-        else
-        {
-            return this.Block.SelectOption(values);
-        }
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
     }
 
     protected virtual void DispatchEvent(string type, string? selector = null, object? eventInit = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -689,24 +610,25 @@ public partial class BlockModel<TPageModel>
 
     protected virtual T EvalOnSelector<T>(string selector, string expression, object? arg = null)
     {
-        this.PageModel.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Block.EvalOnSelector<T>(selector, expression, arg);
     }
 
     protected virtual T EvalOnSelectorAll<T>(string selector, string expression, object? arg = null)
     {
+        this.WaitForLoadPage();
         return this.Block.EvalOnSelectorAll<T>(selector, expression, arg);
     }
 
     protected virtual JsonElement? EvalOnSelector(string selector, string expression, object? arg = null)
     {
+        this.WaitForLoadPage();
         return this.Block.EvalOnSelector(selector, expression, arg);
     }
 
     protected string? GetAttributeAsync(string name, string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -721,7 +643,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void Tap(string? selector = null, ElementHandleTapOptions? options = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -732,11 +654,13 @@ public partial class BlockModel<TPageModel>
         {
             this.Block.Tap(options);
         }
+
+        this.WaitForLoadPage();
     }
 
     protected virtual IFrame? OwnerFrame(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -751,9 +675,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void Press(string key, string? selector = null, ElementHandlePressOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforePress();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -765,14 +687,12 @@ public partial class BlockModel<TPageModel>
             this.Block.Press(key, options);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterPress();
+        this.WaitForLoadPage();
     }
 
     protected virtual byte[] Screenshot(string? selector = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -787,7 +707,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void SelectText(string? selector = null, ElementHandleSelectTextOptions? options = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -802,9 +722,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void SetChecked(bool checkedState, string? selector = null, ElementHandleSetCheckedOptions? options = null)
     {
-        this.PageModel.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetChecked();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -816,14 +734,12 @@ public partial class BlockModel<TPageModel>
             this.Block.SetChecked(checkedState);
         }
 
-        this.PageModel.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetChecked();
+        this.WaitForLoadPage();
     }
 
     protected virtual void WaitForElementState(ElementState state, string? selector = null, ElementHandleWaitForElementStateOptions? options = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
@@ -838,17 +754,19 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void ScrollIntoViewIfNeeded(string? selector = null, ElementHandleScrollIntoViewIfNeededOptions? options = null)
     {
-        this.PageModel.WaitPage();
+        this.WaitForLoadPage();
 
         if (selector is not null)
         {
             var element = this.FindElement(selector);
-            element.ScrollIntoViewIfNeeded();
+            element.ScrollIntoViewIfNeeded(options);
         }
         else
         {
-            this.Block.ScrollIntoViewIfNeeded();
+            this.Block.ScrollIntoViewIfNeeded(options);
         }
+
+        this.WaitForLoadPage();
     }
 
     protected virtual IElementHandle? WaitForSelector(string selector, ElementHandleWaitForSelectorOptions? options = null)

@@ -39,12 +39,11 @@ public partial class PageModel
         this.Page.GotoAsync(url, options).GetAwaiter().GetResult();
     }
 
-    public virtual void WaitPage() { }
+    public virtual void WaitForLoadPage() { }
 
     public virtual IElementHandle FindElement(string selector, PageQuerySelectorOptions? options = null, string exceptionMessage = "Element not found")
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         var element = this.Page.QuerySelectorAsync(selector, options).GetAwaiter().GetResult();
         if (element is null) throw new ApplicationException(exceptionMessage);
         else return element;
@@ -52,16 +51,14 @@ public partial class PageModel
 
     public virtual IElementHandle? FindElementOrNull(string selector, PageQuerySelectorOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         var element = this.Page.QuerySelector(selector, options);
         return element;
     }
 
     public virtual IReadOnlyCollection<IElementHandle> FindElements(string selector)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         var elements = this.Page.QuerySelectorAll(selector);
         return elements;
     }
@@ -69,7 +66,7 @@ public partial class PageModel
     public virtual TBlockModel FindBlock<TBlockModel>(string selector)
         where TBlockModel : class
     {
-        this.WaitPage();
+        this.WaitForLoadPage();
 
         var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
@@ -86,7 +83,7 @@ public partial class PageModel
     public virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
         where TBlockModel : class
     {
-        this.WaitPage();
+        this.WaitForLoadPage();
 
         var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
@@ -107,7 +104,7 @@ public partial class PageModel
     public virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
         where TBlockModel : class
     {
-        this.WaitPage();
+        this.WaitForLoadPage();
 
         var elements = this.Page.QuerySelectorAll(selector);
         var blocks = new List<TBlockModel>();
@@ -129,15 +126,9 @@ public partial class PageModel
 
     public virtual void Click(string selector, PageClickOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeClick();
-
+        this.WaitForLoadPage();
         this.Page.Click(selector, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterClick();
+        this.WaitForLoadPage();
     }
 
     public virtual TReturnPage Click<TReturnPage>(string selector, PageClickOptions? options = null)
@@ -154,448 +145,370 @@ public partial class PageModel
 
     public virtual void DblClick(string selector, PageDblClickOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeDbClick();
-
+        this.WaitForLoadPage();
         this.Page.DblClick(selector, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterDbClick();
+        this.WaitForLoadPage();
     }
 
     public virtual void Type(string selector, string value, PageTypeOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeType();
-
+        this.WaitForLoadPage();
         this.Page.Type(selector, value, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterType();
+        this.WaitForLoadPage();
     }
 
     public virtual void SetInputFiles(string selector, string files, PageSetInputFilesOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetInputFile();
-
+        this.WaitForLoadPage();
         this.Page.SetInputFiles(selector, files, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetInputFile();
+        this.WaitForLoadPage();
     }
 
     public virtual void SetInputFiles(string selector, FilePayload files, PageSetInputFilesOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetInputFile();
-
+        this.WaitForLoadPage();
         this.Page.SetInputFiles(selector, files, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetInputFile();
+        this.WaitForLoadPage();
     }
 
     public virtual void SetInputFiles(string selector, IEnumerable<string> files, PageSetInputFilesOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetInputFile();
-
+        this.WaitForLoadPage();
         this.Page.SetInputFiles(selector, files, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetInputFile();
+        this.WaitForLoadPage();
     }
 
     public virtual void SetInputFiles(string selector, IEnumerable<FilePayload> files, PageSetInputFilesOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetInputFile();
-
+        this.WaitForLoadPage();
         this.Page.SetInputFiles(selector, files, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetInputFile();
+        this.WaitForLoadPage();
     }
 
     public virtual void AddInitScript(string? script = null, string? scriptPath = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.AddInitScript(script, scriptPath);
     }
 
     public virtual void AddScriptTag(PageAddScriptTagOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.AddScriptTag(options);
     }
 
     public virtual void AddStyleTag(PageAddStyleTagOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.AddStyleTag(options);
     }
 
     public virtual void BringToFront()
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.BringToFront();
     }
 
     public virtual void Check(string selector, PageCheckOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeCheck();
-
+        this.WaitForLoadPage();
         this.Page.Check(selector, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterCheck();
+        this.WaitForLoadPage();
     }
 
     public virtual string Content()
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.Content();
     }
 
     public virtual void DispatchEvent(string selector, string type, object? eventInit = null, PageDispatchEventOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.DispatchEvent(selector, type, eventInit, options); ;
     }
 
     public virtual void DragAndDrop(string source, string target, PageDragAndDropOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeDragAndDrop();
-
+        this.WaitForLoadPage();
         this.Page.DragAndDrop(source, target, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterDragAndDrop();
+        this.WaitForLoadPage();
     }
 
     public virtual void EmulateMedia(PageEmulateMediaOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.EmulateMedia(options);
     }
 
     public virtual void EvalOnSelectorAll(string selector, string expression, object? arg = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.EvalOnSelectorAll(selector, expression, arg);
     }
 
     public virtual void EvalOnSelectorAll<T>(string selector, string expression, object? arg = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.EvalOnSelectorAll<T>(selector, expression, arg);
     }
 
     public virtual void EvalOnSelector(string selector, string expression, object? arg = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.EvalOnSelector(selector, expression, arg);
     }
 
     public virtual void EvalOnSelector<T>(string selector, string expression, object? arg = null, PageEvalOnSelectorOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.EvalOnSelector<T>(selector, expression, arg, options);
     }
 
     public virtual void Evaluate(string expression, object? arg = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.Evaluate(expression, arg);
     }
 
     public virtual void Evaluate<T>(string expression, object? arg = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.Evaluate<T>(expression, arg);
     }
 
     public virtual void EvaluateHandle(string expression, object? arg = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.EvaluateHandle(expression, arg);
     }
 
     public virtual void ExposeBinding(string name, Action callback, PageExposeBindingOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeBinding(name, callback, options);
     }
 
     public virtual void ExposeBinding<T>(string name, Action<BindingSource, T> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeBinding<T>(name, callback);
     }
 
     public virtual void ExposeBinding<TResult>(string name, Func<BindingSource, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeBinding<TResult>(name, callback);
     }
 
     public virtual void ExposeBinding<TResult>(string name, Func<BindingSource, IJSHandle, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeBinding<TResult>(name, callback);
     }
 
     public virtual void ExposeBinding<T, TResult>(string name, Func<BindingSource, T, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeBinding<T, TResult>(name, callback);
     }
 
     public virtual void ExposeBinding<T1, T2, TResult>(string name, Func<BindingSource, T1, T2, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeBinding<T1, T2, TResult>(name, callback);
     }
 
     public virtual void ExposeBinding<T1, T2, T3, TResult>(string name, Func<BindingSource, T1, T2, T3, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeBinding<T1, T2, T3, TResult>(name, callback);
     }
 
     public virtual void ExposeBinding<T1, T2, T3, T4, TResult>(string name, Func<BindingSource, T1, T2, T3, T4, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeBinding<T1, T2, T3, T4, TResult>(name, callback);
     }
 
     public virtual void ExposeFunction(string name, Action callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeFunction(name, callback);
     }
 
     public virtual void ExposeFunction<T>(string name, Action<T> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeFunction<T>(name, callback);
     }
 
     public virtual void ExposeFunction<TResult>(string name, Func<TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeFunction<TResult>(name, callback);
     }
 
     public virtual void ExposeFunction<T, TResult>(string name, Func<T, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeFunction<T, TResult>(name, callback);
     }
 
     public virtual void ExposeFunction<T1, T2, TResult>(string name, Func<T1, T2, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeFunction<T1, T2, TResult>(name, callback);
     }
 
     public virtual void ExposeFunction<T1, T2, T3, TResult>(string name, Func<T1, T2, T3, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeFunction<T1, T2, T3, TResult>(name, callback);
     }
 
     public virtual void ExposeFunction<T1, T2, T3, T4, TResult>(string name, Func<T1, T2, T3, T4, TResult> callback)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.ExposeFunction<T1, T2, T3, T4, TResult>(name, callback);
     }
 
     public virtual void Focus(string selector, PageFocusOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.Focus(selector, options);
     }
 
     public virtual IFrame? Frame(string name)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.Frame(name);
     }
 
     public virtual IFrame? FrameByUrl(string url)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.FrameByUrl(url);
     }
 
     public virtual IFrame? FrameByUrl(Regex url)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.FrameByUrl(url);
     }
 
     public virtual IFrame? FrameyUrl(Func<string, bool> url)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.FrameByUrl(url);
     }
 
     public virtual string? GetAttribute(string selector, string name, PageGetAttributeOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.GetAttribute(selector, name, options);
     }
 
-    public virtual void GoBack(PageGoBackOptions? options = null)
+    public virtual TPageModel GoBack<TPageModel>(PageGoBackOptions? options = null)
+        where TPageModel : PageModel
     {
         this.Page.GoBack(options);
+
+        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
+        if (ctor is null) throw new ApplicationException("Page Model not found");
+        var returnPage = ctor.Invoke(new[] { this.Page });
+
+        return (TPageModel)returnPage;
     }
 
-    public virtual void GoForward(PageGoForwardOptions? options = null)
+    public virtual TPageModel GoForward<TPageModel>(PageGoForwardOptions? options = null)
+        where TPageModel : PageModel
     {
         this.Page.GoForward(options);
+
+        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
+        if (ctor is null) throw new ApplicationException("Page Model not found");
+        var returnPage = ctor.Invoke(new[] { this.Page });
+
+        return (TPageModel)returnPage;
     }
 
-    public virtual void Goto(string url, PageGotoOptions? options = null)
+    public virtual TPageModel Goto<TPageModel>(string url, PageGotoOptions? options = null)
+        where TPageModel : PageModel
     {
         this.Page.Goto(url, options);
+
+        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
+        if (ctor is null) throw new ApplicationException("Page Model not found");
+        var returnPage = ctor.Invoke(new[] { this.Page });
+
+        return (TPageModel)returnPage;
     }
 
     public virtual void Hover(string selector, PageHoverOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeHover();
-
+        this.WaitForLoadPage();
         this.Page.Hover(selector, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterHover();
+        this.WaitForLoadPage();
     }
 
     public virtual string InnerHTML(string selector, PageInnerHTMLOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.InnerHTML(selector, options);
     }
 
     public virtual string InnerText(string selector, PageInnerTextOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.InnerText(selector, options);
     }
 
     public virtual string InputValue(string selector, PageInputValueOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.InputValue(selector, options);
     }
 
     public virtual bool IsChecked(string selector, PageIsCheckedOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.IsChecked(selector, options);
     }
 
     public virtual bool IsDisabled(string selector, PageIsDisabledOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.IsDisabled(selector, options);
     }
 
     public virtual bool IsEditable(string selector, PageIsEditableOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.IsEditable(selector, options);
     }
 
     public virtual bool IsEnabled(string selector, PageIsEnabledOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.IsEnabled(selector, options);
     }
 
     public virtual bool IsHidden(string selector, PageIsHiddenOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.IsHidden(selector, options);
     }
 
     public virtual bool IsVisible(string selector, PageIsVisibleOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.IsVisible(selector, options);
     }
 
     public virtual ILocator IsVisible(string selector)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.Locator(selector);
     }
 
@@ -611,22 +524,15 @@ public partial class PageModel
 
     public virtual byte[] Pdf(PagePdfOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.Pdf(options);
     }
 
     public virtual void Press(string selector, string key, PagePressOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforePress();
-
+        this.WaitForLoadPage();
         this.Page.Press(selector, key, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterPress();
+        this.WaitForLoadPage();
     }
 
     public virtual void Route(string url, Action<IRoute> handler, PageRouteOptions? options = null)
@@ -711,112 +617,64 @@ public partial class PageModel
 
     public virtual IReadOnlyList<string> SelectOption(string selector, string values, PageSelectOptionOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSelectOption();
-
+        this.WaitForLoadPage();
         var result = this.Page.SelectOption(selector, values, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSelectOption();
-
+        this.WaitForLoadPage();
         return result;
     }
 
     public virtual IReadOnlyList<string> SelectOption(string selector, IElementHandle values, PageSelectOptionOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSelectOption();
-
+        this.WaitForLoadPage();
         var result = this.Page.SelectOption(selector, values, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSelectOption();
-
+        this.WaitForLoadPage();
         return result;
     }
 
     public virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<string> values, PageSelectOptionOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSelectOption();
-
+        this.WaitForLoadPage();
         var result = this.Page.SelectOption(selector, values, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSelectOption();
-
+        this.WaitForLoadPage();
         return result;
     }
 
     public virtual IReadOnlyList<string> SelectOption(string selector, SelectOptionValue values, PageSelectOptionOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSelectOption();
-
+        this.WaitForLoadPage();
         var result = this.Page.SelectOption(selector, values, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSelectOption();
-
+        this.WaitForLoadPage();
         return result;
     }
 
     public virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<IElementHandle> values, PageSelectOptionOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSelectOption();
-
+        this.WaitForLoadPage();
         var result = this.Page.SelectOption(selector, values, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSelectOption();
-
+        this.WaitForLoadPage();
         return result;
     }
 
     public virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<SelectOptionValue> values, PageSelectOptionOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSelectOption();
-
+        this.WaitForLoadPage();
         var result = this.Page.SelectOption(selector, values, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSelectOption();
-
+        this.WaitForLoadPage();
         return result;
     }
 
     public virtual void SetChecked(string selector, bool checkedState, PageSetCheckedOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeSetChecked();
-
+        this.WaitForLoadPage();
         this.Page.SetChecked(selector, checkedState, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterSetChecked();
+        this.WaitForLoadPage();
     }
 
-    //public virtual void Screenshot(PageScreenshotOptions? options = null)
-    //{
-    //    this.WaitPage();
-    //    this.Page.Screenshot(options);
-    //}
+    public virtual void Screenshot(PageScreenshotOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.Screenshot(options);
+    }
 
     public virtual TPageModel ReloadPage<TPageModel>(PageReloadOptions? options = null)
         where TPageModel : PageModel
@@ -832,48 +690,38 @@ public partial class PageModel
 
     public virtual void Close(PageCloseOptions? options = null)
     {
-        this.WaitPage();
+        this.WaitForLoadPage();
         this.Page.ClosePage(options);
     }
 
     public virtual void FillAsync(string selector, string value, PageFillOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeFill();
-
+        this.WaitForLoadPage();
         this.Page.Fill(selector, value, options);
-
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeFill();
+        this.WaitForLoadPage();
     }
 
     public virtual IElementHandle? QuerySelector(string selector, PageQuerySelectorOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.QuerySelector(selector, options);
     }
 
     public virtual IReadOnlyList<IElementHandle> QuerySelectorAll(string selector)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.QuerySelectorAll(selector);
     }
 
     public virtual void Reload(PageReloadOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.Reload(options);
     }
 
     public virtual void SetContent(string html, PageSetContentOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         this.Page.SetContent(html, options);
     }
 
@@ -889,42 +737,28 @@ public partial class PageModel
 
     public virtual void Tap(string selector, PageTapOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeTap();
-
+        this.WaitForLoadPage();
         this.Page.Tap(selector, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterTap();
+        this.WaitForLoadPage();
     }
 
     public virtual string? TextContent(string selector, PageTextContentOptions? options = null)
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.TextContent(selector, options);
     }
 
     public virtual string Title()
     {
-        this.WaitPage();
-
+        this.WaitForLoadPage();
         return this.Page.Title();
     }
 
     public virtual void Uncheck(string selector, PageUncheckOptions? options = null)
     {
-        this.WaitPage();
-        this.BeforeUserAction();
-        this.BeforeUncheck();
-
+        this.WaitForLoadPage();
         this.Page.Uncheck(selector, options);
-
-        this.WaitPage();
-        this.AfterUserAction();
-        this.AfterUncheck();
+        this.WaitForLoadPage();
     }
 
     public virtual void Unroute(string url, Action<IRoute>? handler = null)

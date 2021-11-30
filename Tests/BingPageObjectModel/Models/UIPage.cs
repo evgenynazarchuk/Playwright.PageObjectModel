@@ -14,7 +14,7 @@ public class UIPage : PageModel
     public UIPage(IPage page)
         : base(page) { }
 
-    public override void WaitPage()
+    public override void WaitForLoadPage()
     {
         // wait for before and after all action
         Page.WaitForLoadState(LoadState.Load);

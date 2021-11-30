@@ -9,7 +9,7 @@ public static class PageModelExtensions
         where TPageModel : PageModel
 
     {
-        pageModel.WaitPage();
+        pageModel.WaitForLoadPage();
         pageModel.Page.Screenshot(options);
         return pageModel;
     }

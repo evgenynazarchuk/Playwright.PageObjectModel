@@ -26,7 +26,7 @@ using Microsoft.Playwright;
 
 namespace Playwright.PageObjectModel;
 
-public partial class BlockModel<TPageModel> : IBlockModel
+public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>
     where TPageModel : PageModel
 {
     public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
@@ -57,9 +57,9 @@ public partial class BlockModel<TPageModel> : IBlockModel
         this.Page = this.PageModel.Page;
     }
 
+    public IPage Page { get; }
+
     public IElementHandle Block { get; }
 
-    public readonly TPageModel PageModel;
-
-    public readonly IPage Page;
+    public TPageModel PageModel { get; }
 }
