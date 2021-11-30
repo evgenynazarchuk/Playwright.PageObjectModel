@@ -762,6 +762,8 @@ public partial class BlockModel<TPageModel>
         {
             this.Block.Press(key, options);
         }
+
+        this.PageModel.WaitPage();
     }
 
     protected virtual byte[] Screenshot(string? selector = null)
