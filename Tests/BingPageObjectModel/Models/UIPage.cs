@@ -11,12 +11,12 @@ namespace BingPageObjectModel.Models;
 
 public class UIPage : PageModel
 {
+    // default constructor
     public UIPage(IPage page)
         : base(page) { }
 
     public override void WaitForLoadPage()
     {
-        // wait for before and after all action
         Page.WaitForLoadState(LoadState.Load);
         //Page.WaitForLoadState(LoadState.DOMContentLoaded);
         //Page.WaitForLoadState(LoadState.NetworkIdle);

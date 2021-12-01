@@ -12,33 +12,45 @@ namespace BingSearchTests;
 
 public class Tests : BingTest
 {
-    [SetUp]
-    public void SetUp()
-    { 
-    }
-
+    // assert for page model
     [Test]
-    public void BingTitleWhenMainPage()
+    public void Test1()
     {
         OpenMainPage()
             .Should().HaveTitle("Bing");
     }
 
+    // assert for block model
+    // parameterized test
     [Test]
     [TestCase("playwright")]
     [TestCase("windows 11")]
-    public void BingTitleWhenSearchPlaywright(string searchText)
+    public void Test2(string searchText)
     {
         OpenMainPage()
-            .SearchBar.SearchByText(searchText)
-            .Should().HaveTitle($"{searchText} - Bing");
+            .SearchBar
+                .SearchByText($"{searchText}")
+                .Should().HaveTitle($"{searchText} - Bing")
+            .SearchBar
+                .SearchByText($"{searchText}")
+                .Should().HaveTitle($"{searchText} - Bing");
     }
 
+    // assert primitive types
     [Test]
-    public void SearchResultCountTest()
+    public void Test3()
     {
         OpenMainPage()
-            .SearchBar.SearchByText("playwright")
-            .SearchResult.Should().HaveInnerText("4 310 000 Results", "span.sb_count");
+            .SearchBar
+                .SearchByText("playwright")
+            .SearchResult
+                .VerifyThat(block =>
+                {
+                    block.ResultCount.Should().Be("4 310 000 results");
+                    // other tests for primitive types
+                })
+                .UpToPage()
+            .SearchBar
+                .VerifyThat(block => block.SearchText.Should().Be("playwright"));
     }
 }

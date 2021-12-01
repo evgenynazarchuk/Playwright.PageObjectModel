@@ -43,11 +43,11 @@ public partial class BlockModel<TPageModel>
         return this.PageModel;
     }
 
-    protected virtual IElementHandle FindElement(string selector, string exceptionMessage = "Element not found")
+    protected virtual IElementHandle FindElement(string selector)
     {
         this.WaitForLoadPage();
         var element = this.Block.QuerySelector(selector);
-        if (element is null) throw new ApplicationException(exceptionMessage);
+        if (element is null) throw new ApplicationException($"Element not found. Selector: {selector}");
         else return element;
     }
 
@@ -137,11 +137,12 @@ public partial class BlockModel<TPageModel>
         where TReturnPage : PageModel
     {
         this.Click(selector, options);
+        this.WaitForLoadPage();
 
         var ctor = typeof(TReturnPage).GetConstructor(new[] { typeof(IPage) });
         if (ctor is null) throw new ApplicationException("Page Model not found");
-
         var returnPage = ctor.Invoke(new[] { this.PageModel.Page });
+
         return (TReturnPage)returnPage;
     }
 
@@ -158,6 +159,14 @@ public partial class BlockModel<TPageModel>
         this.WaitForLoadPage();
         var element = selector is null ? this.Block : this.FindElement(selector);
         element.Hover(options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void ClearInput(string? selector = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        element.Evaluate("(element) => element.value =''", element);
         this.WaitForLoadPage();
     }
 
@@ -193,6 +202,45 @@ public partial class BlockModel<TPageModel>
         this.WaitForLoadPage();
     }
 
+    protected virtual void Focus(string? selector = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        element.Focus();
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void Tap(string? selector = null, ElementHandleTapOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        element.Tap(options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void Press(string key, string? selector = null, ElementHandlePressOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        element.Press(key, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void SelectText(string? selector = null, ElementHandleSelectTextOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        element.SelectText(options);
+    }
+
+    protected virtual void SetChecked(bool checkedState, string? selector = null, ElementHandleSetCheckedOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        element.SetChecked(checkedState);
+        this.WaitForLoadPage();
+    }
+
     protected virtual void SetInputFiles(string files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
         this.WaitForLoadPage();
@@ -225,6 +273,68 @@ public partial class BlockModel<TPageModel>
         this.WaitForLoadPage();
     }
 
+    protected virtual IReadOnlyList<string> SelectOption(string values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(IElementHandle values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<string> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(SelectOptionValue values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<IElementHandle> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<SelectOptionValue> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        var result = element.SelectOption(values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual void ScrollIntoViewIfNeeded(string? selector = null, ElementHandleScrollIntoViewIfNeededOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        element.ScrollIntoViewIfNeeded(options);
+        this.WaitForLoadPage();
+    }
+
     protected virtual void Screenshot(string? selector = null, ElementHandleScreenshotOptions? options = null)
     {
         this.WaitForLoadPage();
@@ -251,6 +361,13 @@ public partial class BlockModel<TPageModel>
         this.WaitForLoadPage();
         var element = selector is null ? this.Block : this.FindElement(selector);
         return element.InnerHTML();
+    }
+
+    protected virtual string InputValue(string? selector = null, ElementHandleInputValueOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : this.FindElement(selector);
+        return element.InputValue(options);
     }
 
     protected virtual bool IsChecked(string? selector = null)
@@ -309,75 +426,6 @@ public partial class BlockModel<TPageModel>
         return element.ContentFrame();
     }
 
-    protected virtual void Focus(string? selector = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        element.Focus();
-        this.WaitForLoadPage();
-    }
-
-    protected virtual string InputValue(string? selector = null, ElementHandleInputValueOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        return element.InputValue();
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(string values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        var result = element.SelectOption(values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(IElementHandle values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        var result = element.SelectOption(values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<string> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        var result = element.SelectOption(values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(SelectOptionValue values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        var result = element.SelectOption(values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<IElementHandle> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        var result = element.SelectOption(values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<SelectOptionValue> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        var result = element.SelectOption(values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
     protected virtual void DispatchEvent(string type, string? selector = null, object? eventInit = null)
     {
         this.WaitForLoadPage();
@@ -403,19 +451,11 @@ public partial class BlockModel<TPageModel>
         return this.Block.EvalOnSelector(selector, expression, arg);
     }
 
-    protected string? GetAttributeAsync(string name, string? selector = null)
+    protected string? GetAttributeValue(string name, string? selector = null)
     {
         this.WaitForLoadPage();
         var element = selector is null ? this.Block : this.FindElement(selector);
         return element.GetAttribute(name);
-    }
-
-    protected virtual void Tap(string? selector = null, ElementHandleTapOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        element.Tap(options);
-        this.WaitForLoadPage();
     }
 
     protected virtual IFrame? OwnerFrame(string? selector = null)
@@ -425,49 +465,11 @@ public partial class BlockModel<TPageModel>
         return element.OwnerFrame();
     }
 
-    protected virtual void Press(string key, string? selector = null, ElementHandlePressOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        element.Press(key, options);
-        this.WaitForLoadPage();
-    }
-
-    protected virtual byte[] Screenshot(string? selector = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        return element.Screenshot();
-    }
-
-    protected virtual void SelectText(string? selector = null, ElementHandleSelectTextOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        element.SelectText(options);
-    }
-
-    protected virtual void SetChecked(bool checkedState, string? selector = null, ElementHandleSetCheckedOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        element.SetChecked(checkedState);
-        this.WaitForLoadPage();
-    }
-
     protected virtual void WaitForElementState(ElementState state, string? selector = null, ElementHandleWaitForElementStateOptions? options = null)
     {
         this.WaitForLoadPage();
         var element = selector is null ? this.Block : this.FindElement(selector);
         element.WaitForElementState(state);
-    }
-
-    protected virtual void ScrollIntoViewIfNeeded(string? selector = null, ElementHandleScrollIntoViewIfNeededOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var element = selector is null ? this.Block : this.FindElement(selector);
-        element.ScrollIntoViewIfNeeded(options);
-        this.WaitForLoadPage();
     }
 
     protected virtual IElementHandle? WaitForSelector(string selector, ElementHandleWaitForSelectorOptions? options = null)

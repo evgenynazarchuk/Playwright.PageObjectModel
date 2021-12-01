@@ -15,6 +15,8 @@ public static class BlockModelExtensions
     {
         blockModel.WaitForLoadPage();
         blockModel.Block.Screenshot(options);
+        // TODO Save
+
         return blockModel;
     }
 

@@ -23,8 +23,10 @@
  */
 
 using Microsoft.Playwright;
+using Playwright.Synchronous;
 
 namespace Playwright.PageObjectModel;
+
 
 public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>
     where TPageModel : PageModel
@@ -32,7 +34,7 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
     public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
     {
         this.PageModel = pageModel;
-        this.Block = this.PageModel.FindElement(selector, options);
+        this.Block = this.PageModel.Page.FindElement(selector, options);
         this.Page = this.PageModel.Page;
     }
 

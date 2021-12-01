@@ -20,4 +20,10 @@
     <ProjectReference Include="..\BingPageObjectModel\BingPageObjectModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Playwright.FluentAssertions">
+      <HintPath>..\..\..\Playwright.FluentAssertions\Playwright.FluentAssertions\bin\Debug\net6.0\Playwright.FluentAssertions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
