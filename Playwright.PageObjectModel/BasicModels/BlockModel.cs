@@ -28,7 +28,7 @@ using Playwright.Synchronous;
 namespace Playwright.PageObjectModel;
 
 
-public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>
+public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>, IWaiter
     where TPageModel : PageModel
 {
     public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)

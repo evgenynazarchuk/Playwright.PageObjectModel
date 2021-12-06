@@ -33,7 +33,7 @@ namespace Playwright.PageObjectModel;
 public partial class BlockModel<TPageModel>
     where TPageModel : PageModel
 {
-    public virtual void WaitForLoadPage() 
+    public virtual void WaitForLoadPage()
     {
         this.PageModel.WaitForLoadPage();
     }

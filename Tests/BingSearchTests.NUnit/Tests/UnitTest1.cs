@@ -1,12 +1,6 @@
-﻿using NUnit.Framework;
-using BingSearchTests.NUnit.Support;
+﻿using BingSearchTests.NUnit.Support;
+using NUnit.Framework;
 using Playwright.FluentAssertions;
-using System;
-using Playwright.PageObjectModel;
-using Playwright.Synchronous;
-using BingPageObjectModel.Pages;
-using BingPageObjectModel.Blocks;
-using Microsoft.Playwright;
 
 namespace BingSearchTests;
 
@@ -16,8 +10,7 @@ public class Tests : BingTest
     [Test]
     public void Test1()
     {
-        OpenMainPage()
-            .Should().HaveTitle("Bing");
+        OpenMainPage().Should().HaveTitle("Bing");
     }
 
     // assert for block model
@@ -29,11 +22,11 @@ public class Tests : BingTest
     {
         OpenMainPage()
             .SearchBar
-                .SearchByText($"{searchText}")
-                .Should().HaveTitle($"{searchText} - Bing")
+            .SearchByText($"{searchText}")
+            .Should().HaveTitle($"{searchText} - Bing")
             .SearchBar
-                .SearchByText($"{searchText}")
-                .Should().HaveTitle($"{searchText} - Bing");
+            .SearchByText($"{searchText}")
+            .Should().HaveTitle($"{searchText} - Bing");
     }
 
     // assert primitive types
@@ -41,16 +34,13 @@ public class Tests : BingTest
     public void Test3()
     {
         OpenMainPage()
-            .SearchBar
-                .SearchByText("playwright")
-            .SearchResult
-                .VerifyThat(block =>
-                {
-                    block.ResultCount.Should().Be("4 310 000 results");
-                    // other tests for primitive types
-                })
-                .UpToPage()
-            .SearchBar
-                .VerifyThat(block => block.SearchText.Should().Be("playwright"));
+            .SearchBar.SearchByText("playwright")
+            .SearchResult.VerifyThat(block =>
+            {
+                block.ResultCount.Should().Be("4 310 000 results");
+                // other tests for primitive types
+            })
+            .UpToPage()
+            .SearchBar.VerifyThat(block => block.SearchText.Should().Be("playwright"));
     }
 }

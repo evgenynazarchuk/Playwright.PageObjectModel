@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BingPageObjectModel.Pages;
 using Microsoft.Playwright.MSTest;
 using Playwright.Synchronous;
-using BingPageObjectModel.Pages;
 
 namespace BingSearchTests.MSTest.Support;
 

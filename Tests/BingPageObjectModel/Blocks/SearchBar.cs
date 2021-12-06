@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BingPageObjectModel.Models;
+using BingPageObjectModel.Pages;
 using Microsoft.Playwright;
 using Playwright.PageObjectModel;
-using Playwright.FluentAssertions;
-using Playwright.Synchronous;
-using BingPageObjectModel.Pages;
-using BingPageObjectModel.Models;
 
 namespace BingPageObjectModel.Blocks;
 

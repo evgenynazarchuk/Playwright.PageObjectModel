@@ -1,6 +1,6 @@
+using BingSearchTests.MSTest.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Playwright.FluentAssertions;
-using BingSearchTests.MSTest.Support;
 
 namespace BingSearchTests.MSTest
 {

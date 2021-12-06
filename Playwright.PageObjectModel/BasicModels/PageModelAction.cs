@@ -28,7 +28,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.IO;
 
 namespace Playwright.PageObjectModel;
 
@@ -124,6 +123,18 @@ public partial class PageModel
         return blocks;
     }
 
+    protected virtual IElementHandle? QuerySelector(string selector, PageQuerySelectorOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        return this.Page.QuerySelector(selector, options);
+    }
+
+    protected virtual IReadOnlyList<IElementHandle> QuerySelectorAll(string selector)
+    {
+        this.WaitForLoadPage();
+        return this.Page.QuerySelectorAll(selector);
+    }
+
     protected virtual void Click(string selector, PageClickOptions? options = null)
     {
         this.WaitForLoadPage();
@@ -155,6 +166,164 @@ public partial class PageModel
         this.WaitForLoadPage();
         this.Page.Type(selector, value, options);
         this.WaitForLoadPage();
+    }
+
+    protected virtual void Check(string selector, PageCheckOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.Check(selector, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void Uncheck(string selector, PageUncheckOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.Uncheck(selector, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void SetChecked(string selector, bool checkedState, PageSetCheckedOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.SetChecked(selector, checkedState, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void Tap(string selector, PageTapOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.Tap(selector, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void DragAndDrop(string source, string target, PageDragAndDropOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.DragAndDrop(source, target, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void Focus(string selector, PageFocusOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.Focus(selector, options);
+    }
+
+    protected virtual void FillAsync(string selector, string value, PageFillOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.Fill(selector, value, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual TPageModel GoBack<TPageModel>(PageGoBackOptions? options = null)
+        where TPageModel : PageModel
+    {
+        this.Page.GoBack(options);
+
+        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
+        if (ctor is null) throw new ApplicationException("Page Model not found");
+        var returnPage = ctor.Invoke(new[] { this.Page });
+
+        return (TPageModel)returnPage;
+    }
+
+    protected virtual TPageModel GoForward<TPageModel>(PageGoForwardOptions? options = null)
+        where TPageModel : PageModel
+    {
+        this.Page.GoForward(options);
+
+        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
+        if (ctor is null) throw new ApplicationException("Page Model not found");
+        var returnPage = ctor.Invoke(new[] { this.Page });
+
+        return (TPageModel)returnPage;
+    }
+
+    protected virtual TPageModel Goto<TPageModel>(string url, PageGotoOptions? options = null)
+        where TPageModel : PageModel
+    {
+        this.Page.Goto(url, options);
+
+        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
+        if (ctor is null) throw new ApplicationException("Page Model not found");
+        var returnPage = ctor.Invoke(new[] { this.Page });
+
+        return (TPageModel)returnPage;
+    }
+
+    protected virtual TPageModel ReloadPage<TPageModel>(PageReloadOptions? options = null)
+        where TPageModel : PageModel
+    {
+        this.Page.ReloadAsync(options).GetAwaiter().GetResult();
+
+        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
+        if (ctor is null) throw new ApplicationException("Page Model not found");
+        var returnPage = ctor.Invoke(new[] { this.Page });
+
+        return (TPageModel)returnPage;
+    }
+
+    protected virtual void Hover(string selector, PageHoverOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.Hover(selector, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual void Press(string selector, string key, PagePressOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.Press(selector, key, options);
+        this.WaitForLoadPage();
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(string selector, string values, PageSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var result = this.Page.SelectOption(selector, values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(string selector, IElementHandle values, PageSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var result = this.Page.SelectOption(selector, values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<string> values, PageSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var result = this.Page.SelectOption(selector, values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(string selector, SelectOptionValue values, PageSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var result = this.Page.SelectOption(selector, values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<IElementHandle> values, PageSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var result = this.Page.SelectOption(selector, values, options);
+        this.WaitForLoadPage();
+        return result;
+    }
+
+    protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<SelectOptionValue> values, PageSelectOptionOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var result = this.Page.SelectOption(selector, values, options);
+        this.WaitForLoadPage();
+        return result;
     }
 
     protected virtual void SetInputFiles(string selector, string files, PageSetInputFilesOptions? options = null)
@@ -209,13 +378,6 @@ public partial class PageModel
         this.Page.BringToFront();
     }
 
-    protected virtual void Check(string selector, PageCheckOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.Check(selector, options);
-        this.WaitForLoadPage();
-    }
-
     protected virtual string Content()
     {
         this.WaitForLoadPage();
@@ -226,13 +388,6 @@ public partial class PageModel
     {
         this.WaitForLoadPage();
         this.Page.DispatchEvent(selector, type, eventInit, options); ;
-    }
-
-    protected virtual void DragAndDrop(string source, string target, PageDragAndDropOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.DragAndDrop(source, target, options);
-        this.WaitForLoadPage();
     }
 
     protected virtual void EmulateMedia(PageEmulateMediaOptions? options = null)
@@ -281,6 +436,11 @@ public partial class PageModel
     {
         this.WaitForLoadPage();
         this.Page.EvaluateHandle(expression, arg);
+    }
+
+    protected virtual void ExposeBinding(string name, Action<BindingSource> callback)
+    {
+        this.Page.ExposeBinding(name, callback);
     }
 
     protected virtual void ExposeBinding(string name, Action callback, PageExposeBindingOptions? options = null)
@@ -373,83 +533,10 @@ public partial class PageModel
         this.Page.ExposeFunction<T1, T2, T3, T4, TResult>(name, callback);
     }
 
-    protected virtual void Focus(string selector, PageFocusOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.Focus(selector, options);
-    }
-
-    protected virtual IFrame? Frame(string name)
-    {
-        this.WaitForLoadPage();
-        return this.Page.Frame(name);
-    }
-
-    protected virtual IFrame? FrameByUrl(string url)
-    {
-        this.WaitForLoadPage();
-        return this.Page.FrameByUrl(url);
-    }
-
-    protected virtual IFrame? FrameByUrl(Regex url)
-    {
-        this.WaitForLoadPage();
-        return this.Page.FrameByUrl(url);
-    }
-
-    protected virtual IFrame? FrameyUrl(Func<string, bool> url)
-    {
-        this.WaitForLoadPage();
-        return this.Page.FrameByUrl(url);
-    }
-
     protected virtual string? GetAttribute(string selector, string name, PageGetAttributeOptions? options = null)
     {
         this.WaitForLoadPage();
         return this.Page.GetAttribute(selector, name, options);
-    }
-
-    protected virtual TPageModel GoBack<TPageModel>(PageGoBackOptions? options = null)
-        where TPageModel : PageModel
-    {
-        this.Page.GoBack(options);
-
-        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
-        if (ctor is null) throw new ApplicationException("Page Model not found");
-        var returnPage = ctor.Invoke(new[] { this.Page });
-
-        return (TPageModel)returnPage;
-    }
-
-    protected virtual TPageModel GoForward<TPageModel>(PageGoForwardOptions? options = null)
-        where TPageModel : PageModel
-    {
-        this.Page.GoForward(options);
-
-        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
-        if (ctor is null) throw new ApplicationException("Page Model not found");
-        var returnPage = ctor.Invoke(new[] { this.Page });
-
-        return (TPageModel)returnPage;
-    }
-
-    protected virtual TPageModel Goto<TPageModel>(string url, PageGotoOptions? options = null)
-        where TPageModel : PageModel
-    {
-        this.Page.Goto(url, options);
-
-        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
-        if (ctor is null) throw new ApplicationException("Page Model not found");
-        var returnPage = ctor.Invoke(new[] { this.Page });
-
-        return (TPageModel)returnPage;
-    }
-
-    protected virtual void Hover(string selector, PageHoverOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.Hover(selector, options);
-        this.WaitForLoadPage();
     }
 
     protected virtual string InnerHTML(string selector, PageInnerHTMLOptions? options = null)
@@ -512,29 +599,6 @@ public partial class PageModel
         return this.Page.Locator(selector);
     }
 
-    protected virtual IPage? Opener()
-    {
-        return this.Page.Opener();
-    }
-
-    protected virtual void Pause()
-    {
-        this.Page.Pause();
-    }
-
-    protected virtual byte[] Pdf(PagePdfOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        return this.Page.Pdf(options);
-    }
-
-    protected virtual void Press(string selector, string key, PagePressOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.Press(selector, key, options);
-        this.WaitForLoadPage();
-    }
-
     protected virtual void Route(string url, Action<IRoute> handler, PageRouteOptions? options = null)
     {
         this.Page.Route(url, handler, options);
@@ -548,6 +612,45 @@ public partial class PageModel
     protected virtual void Route(Func<string, bool> url, Action<IRoute> handler, PageRouteOptions? options = null)
     {
         this.Page.Route(url, handler, options);
+    }
+
+    protected virtual void Unroute(string url, Action<IRoute>? handler = null)
+    {
+        this.Page.Unroute(url, handler);
+    }
+
+    protected virtual void Unroute(Regex url, Action<IRoute>? handler = null)
+    {
+        this.Page.Unroute(url, handler);
+    }
+
+    protected virtual void Unroute(Func<string, bool> url, Action<IRoute>? handler = null)
+    {
+        this.Page.Unroute(url, handler);
+    }
+
+    protected virtual IFrame? Frame(string name)
+    {
+        this.WaitForLoadPage();
+        return this.Page.Frame(name);
+    }
+
+    protected virtual IFrame? FrameByUrl(string url)
+    {
+        this.WaitForLoadPage();
+        return this.Page.FrameByUrl(url);
+    }
+
+    protected virtual IFrame? FrameByUrl(Regex url)
+    {
+        this.WaitForLoadPage();
+        return this.Page.FrameByUrl(url);
+    }
+
+    protected virtual IFrame? FrameyUrl(Func<string, bool> url)
+    {
+        this.WaitForLoadPage();
+        return this.Page.FrameByUrl(url);
     }
 
     protected virtual IConsoleMessage RunAndWaitForConsoleMessage(Func<Task> action, PageRunAndWaitForConsoleMessageOptions? options = null)
@@ -595,7 +698,7 @@ public partial class PageModel
         return this.Page.RunAndWaitForRequestFinished(action, options);
     }
 
-    protected virtual IResponse A(Func<Task> action, string urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
+    protected virtual IResponse RunAndWaitForResponse(Func<Task> action, string urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
     {
         return this.Page.RunAndWaitForResponse(action, urlOrPredicate, options);
     }
@@ -615,108 +718,16 @@ public partial class PageModel
         this.Page.RunAndWaitForWorker(action, options);
     }
 
-    protected virtual IReadOnlyList<string> SelectOption(string selector, string values, PageSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var result = this.Page.SelectOption(selector, values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(string selector, IElementHandle values, PageSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var result = this.Page.SelectOption(selector, values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<string> values, PageSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var result = this.Page.SelectOption(selector, values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(string selector, SelectOptionValue values, PageSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var result = this.Page.SelectOption(selector, values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<IElementHandle> values, PageSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var result = this.Page.SelectOption(selector, values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<SelectOptionValue> values, PageSelectOptionOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        var result = this.Page.SelectOption(selector, values, options);
-        this.WaitForLoadPage();
-        return result;
-    }
-
-    protected virtual void SetChecked(string selector, bool checkedState, PageSetCheckedOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.SetChecked(selector, checkedState, options);
-        this.WaitForLoadPage();
-    }
-
     protected virtual void Screenshot(PageScreenshotOptions? options = null)
     {
         this.WaitForLoadPage();
         this.Page.Screenshot(options);
     }
 
-    protected virtual TPageModel ReloadPage<TPageModel>(PageReloadOptions? options = null)
-        where TPageModel : PageModel
-    {
-        this.Page.ReloadAsync(options).GetAwaiter().GetResult();
-
-        var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
-        if (ctor is null) throw new ApplicationException("Page Model not found");
-        var returnPage = ctor.Invoke(new[] { this.Page });
-
-        return (TPageModel)returnPage;
-    }
-
-    protected virtual void Close(PageCloseOptions? options = null)
+    protected virtual byte[] Pdf(PagePdfOptions? options = null)
     {
         this.WaitForLoadPage();
-        this.Page.ClosePage(options);
-    }
-
-    protected virtual void FillAsync(string selector, string value, PageFillOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.Fill(selector, value, options);
-        this.WaitForLoadPage();
-    }
-
-    protected virtual IElementHandle? QuerySelector(string selector, PageQuerySelectorOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        return this.Page.QuerySelector(selector, options);
-    }
-
-    protected virtual IReadOnlyList<IElementHandle> QuerySelectorAll(string selector)
-    {
-        this.WaitForLoadPage();
-        return this.Page.QuerySelectorAll(selector);
-    }
-
-    protected virtual void Reload(PageReloadOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.Reload(options);
+        return this.Page.Pdf(options);
     }
 
     protected virtual void SetContent(string html, PageSetContentOptions? options = null)
@@ -735,13 +746,6 @@ public partial class PageModel
         this.Page.SetViewportSize(width, height);
     }
 
-    protected virtual void Tap(string selector, PageTapOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.Tap(selector, options);
-        this.WaitForLoadPage();
-    }
-
     protected virtual string? TextContent(string selector, PageTextContentOptions? options = null)
     {
         this.WaitForLoadPage();
@@ -752,28 +756,6 @@ public partial class PageModel
     {
         this.WaitForLoadPage();
         return this.Page.Title();
-    }
-
-    protected virtual void Uncheck(string selector, PageUncheckOptions? options = null)
-    {
-        this.WaitForLoadPage();
-        this.Page.Uncheck(selector, options);
-        this.WaitForLoadPage();
-    }
-
-    protected virtual void Unroute(string url, Action<IRoute>? handler = null)
-    {
-        this.Page.Unroute(url, handler);
-    }
-
-    protected virtual void Unroute(Regex url, Action<IRoute>? handler = null)
-    {
-        this.Page.Unroute(url, handler);
-    }
-
-    protected virtual void Unroute(Func<string, bool> url, Action<IRoute>? handler = null)
-    {
-        this.Page.Unroute(url, handler);
     }
 
     protected virtual IConsoleMessage WaitForConsoleMessage(PageWaitForConsoleMessageOptions? options = null)
@@ -846,11 +828,6 @@ public partial class PageModel
         return this.Page.WaitForResponse(urlOrPredicate, options);
     }
 
-    protected virtual IResponse RunAndWaitForResponse(Func<Task> action, string urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
-    {
-        return this.Page.RunAndWaitForResponse(action, urlOrPredicate, options);
-    }
-
     protected virtual IResponse RunAndWaitForResponse(Func<Task> action, Func<IResponse, bool> urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
     {
         return this.Page.RunAndWaitForResponse(action, urlOrPredicate, options);
@@ -886,8 +863,19 @@ public partial class PageModel
         return this.Page.WaitForWorker(options);
     }
 
-    protected virtual void ExposeBinding(string name, Action<BindingSource> callback)
+    protected virtual IPage? Opener()
     {
-        this.Page.ExposeBinding(name, callback);
+        return this.Page.Opener();
+    }
+
+    protected virtual void Pause()
+    {
+        this.Page.Pause();
+    }
+
+    protected virtual void Close(PageCloseOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        this.Page.ClosePage(options);
     }
 }
