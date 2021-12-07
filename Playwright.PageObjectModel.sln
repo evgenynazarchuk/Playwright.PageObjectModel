@@ -21,13 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingSearchTests.NUnit", "Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestParallelTests", "TestParallelTests", "{144B66DF-B45E-4216-8073-95405039FF05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParallel.PlaywrightAsyncMSTest", "TestParallel.PlaywrightAsyncMSTest\TestParallel.PlaywrightAsyncMSTest.csproj", "{24FCA9D2-B6BB-474A-A001-A8F58CB4B0CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestParallel.PlaywrightAsyncMSTest", "TestParallelTests\TestParallel.PlaywrightAsyncMSTest\TestParallel.PlaywrightAsyncMSTest.csproj", "{24FCA9D2-B6BB-474A-A001-A8F58CB4B0CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParallel.PlaywrightAsyncNUnit", "TestParallel.PlaywrightAsyncNUnit\TestParallel.PlaywrightAsyncNUnit.csproj", "{DC6BBF2F-0C1D-47EB-BDB1-B6784EB50796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestParallel.PlaywrightAsyncNUnit", "TestParallelTests\TestParallel.PlaywrightAsyncNUnit\TestParallel.PlaywrightAsyncNUnit.csproj", "{DC6BBF2F-0C1D-47EB-BDB1-B6784EB50796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParallel.PlaywrightSyncMSTest", "TestParallel.PlaywrightSyncMSTest\TestParallel.PlaywrightSyncMSTest.csproj", "{C7EA10DB-8C91-448E-9073-6CD30668D791}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestParallel.PlaywrightSyncMSTest", "TestParallelTests\TestParallel.PlaywrightSyncMSTest\TestParallel.PlaywrightSyncMSTest.csproj", "{C7EA10DB-8C91-448E-9073-6CD30668D791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParallel.PlaywrightSyncNUnit", "TestParallel.PlaywrightSyncNUnit\TestParallel.PlaywrightSyncNUnit.csproj", "{C17FB1AC-4CA5-4766-8D46-E01E86ECBBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestParallel.PlaywrightSyncNUnit", "TestParallelTests\TestParallel.PlaywrightSyncNUnit\TestParallel.PlaywrightSyncNUnit.csproj", "{C17FB1AC-4CA5-4766-8D46-E01E86ECBBCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParallel.ActionExtensions", "TestParallelTests\TestParallel.ActionExtensions\TestParallel.ActionExtensions.csproj", "{F53E593A-17CD-4962-88F5-3C8D57991815}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{C17FB1AC-4CA5-4766-8D46-E01E86ECBBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C17FB1AC-4CA5-4766-8D46-E01E86ECBBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C17FB1AC-4CA5-4766-8D46-E01E86ECBBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F53E593A-17CD-4962-88F5-3C8D57991815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F53E593A-17CD-4962-88F5-3C8D57991815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F53E593A-17CD-4962-88F5-3C8D57991815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F53E593A-17CD-4962-88F5-3C8D57991815}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{DC6BBF2F-0C1D-47EB-BDB1-B6784EB50796} = {144B66DF-B45E-4216-8073-95405039FF05}
 		{C7EA10DB-8C91-448E-9073-6CD30668D791} = {144B66DF-B45E-4216-8073-95405039FF05}
 		{C17FB1AC-4CA5-4766-8D46-E01E86ECBBCC} = {144B66DF-B45E-4216-8073-95405039FF05}
+		{F53E593A-17CD-4962-88F5-3C8D57991815} = {144B66DF-B45E-4216-8073-95405039FF05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B987D465-D819-4295-9511-D59DE5CB0498}
