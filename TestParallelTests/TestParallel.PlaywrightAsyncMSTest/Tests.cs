@@ -1,13 +1,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
-using Microsoft.Playwright.MSTest;
 using Microsoft.Playwright;
 using TestParallel.ActionExtensions;
 
 namespace TestParallel.PlaywrightAsyncMSTest;
 
 [TestClass]
-public class Tests : PageTest
+public class Tests : DesktopPage
 {
     [TestMethod]
     public async Task TestMethod1()
@@ -15,7 +14,6 @@ public class Tests : PageTest
         // Act
         await Page.GotoAsync("https://bing.com");
         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
-
         // Assert
         var title = await Page.TitleAsync();
         Assert.AreEqual("Bing", title);

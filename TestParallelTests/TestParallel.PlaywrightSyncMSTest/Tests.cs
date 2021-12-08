@@ -1,13 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Playwright.MSTest;
-using System.Threading.Tasks;
 using Playwright.Synchronous;
 using TestParallel.ActionExtensions;
 
 namespace TestParallel.PlaywrightSyncMSTest;
 
 [TestClass]
-public class Tests : PageTest
+public class Tests : DesktopPage
 {
     [TestMethod]
     public void TestMethod1()

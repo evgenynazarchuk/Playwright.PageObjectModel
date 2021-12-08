@@ -14,15 +14,20 @@ public static class BingAsyncActionExtensions
     public static async Task ClearSearchTextAsync(this IPage page)
     {
         var searchInputElement = await page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await page.EvaluateAsync("(e) => e.value = ''", searchInputElement);
 
-        await page.FocusAsync("input#sb_form_q");
-        await page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await page.Keyboard.PressAsync("Backspace");
-        }
+        //var inputValue = await page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
+        //var inputLength = inputValue.Length;
+        //
+        //await page.FocusAsync("input#sb_form_q");
+        //await page.Keyboard.PressAsync("End");
+        //for (var i = 0; i < inputLength; i++)
+        //{
+        //    await page.Keyboard.PressAsync("Backspace");
+        //}
+        //await page.Keyboard.PressAsync("Backspace");
+        //await page.Keyboard.PressAsync("Backspace"); 
+        //await page.Keyboard.PressAsync("Backspace");
     }
 
     public static async Task OpenBingComAsync(this IPage page)
