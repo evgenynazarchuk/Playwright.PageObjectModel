@@ -23,19 +23,37 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Playwright.MSTest;
+using System;
+using System.Linq;
 
-namespace TestParallel.PlaywrightAsyncMSTest;
+namespace TestParallel.PlaywrightAsyncMSTest.Support;
 
-public class DesktopPage : PageTest
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+public class UITestAttribute : TestMethodAttribute
 {
-    public DesktopPage()
-        : base() { }
+    public UITestAttribute() { }
 
-    [TestInitialize]
-    public void Init()
+    public UITestAttribute(string name)
+        : base(name) { }
+
+    public override TestResult[] Execute(ITestMethod testMethod)
     {
-        Page.SetDefaultNavigationTimeout(300 * 1000);
-        Page.SetDefaultTimeout(300 * 1000);
+        TestResult[]? result = null;
+        var retryAttribute = testMethod.GetAttributes<RestartOnException>(false).FirstOrDefault();
+
+        if (retryAttribute is null)
+        {
+            return base.Execute(testMethod);
+        }
+        else
+        {
+            for (int i = 0; i < retryAttribute.Value; i++)
+            {
+                result = base.Execute(testMethod);
+                if (result[0].Outcome == UnitTestOutcome.Passed) break;
+            }
+
+            return result!;
+        }
     }
 }

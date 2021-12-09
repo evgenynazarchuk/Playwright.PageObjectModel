@@ -22,20 +22,17 @@
  * SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Playwright.MSTest;
+using System;
 
-namespace TestParallel.PlaywrightAsyncMSTest;
+namespace TestParallel.PlaywrightSyncMSTest.Support;
 
-public class DesktopPage : PageTest
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+public class RestartOnException : Attribute
 {
-    public DesktopPage()
-        : base() { }
-
-    [TestInitialize]
-    public void Init()
+    public RestartOnException(int count)
     {
-        Page.SetDefaultNavigationTimeout(300 * 1000);
-        Page.SetDefaultTimeout(300 * 1000);
+        this.Value = count;
     }
+
+    public readonly int Value;
 }

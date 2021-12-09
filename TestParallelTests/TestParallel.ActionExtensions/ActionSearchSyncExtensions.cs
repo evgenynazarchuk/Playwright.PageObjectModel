@@ -3,18 +3,24 @@ using Playwright.Synchronous;
 
 namespace TestParallel.ActionExtensions;
 
-public static class BingSyncActionExtensions
+public static class ActionSearchSyncExtensions
 {
+    public static void OpenSearchPage(this IPage page)
+    {
+        page.Goto("https://www.google.com/?hl=en");
+        page.WaitForLoadState(LoadState.NetworkIdle);
+    }
+
     public static void SearchByText(this IPage page, string searchText)
     {
-        page.Type("input#sb_form_q", searchText);
-        page.Press("input#sb_form_q", "Enter");
-        page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        page.Type("div+input[name='q']", searchText);
+        page.Press("div+input[name='q']", "Enter");
+        page.WaitForLoadState(LoadState.NetworkIdle);
     }
 
     public static void ClearSearchText(this IPage page)
     {
-        var searchInputElement = page.QuerySelector("input#sb_form_q");
+        var searchInputElement = page.QuerySelector("div+input[name='q']");
         page.Evaluate("(e) => e.value = ''", searchInputElement);
 
         //var inputValue = page.Evaluate<string>("(e) => e.value", searchInputElement);
@@ -29,11 +35,5 @@ public static class BingSyncActionExtensions
         //page.Keyboard.Press("Backspace");
         //page.Keyboard.Press("Backspace");
         //page.Keyboard.Press("Backspace");
-    }
-
-    public static void OpenBingCom(this IPage page)
-    {
-        page.Goto("https://bing.com");
-        page.WaitForLoadState(LoadState.NetworkIdle);
     }
 }

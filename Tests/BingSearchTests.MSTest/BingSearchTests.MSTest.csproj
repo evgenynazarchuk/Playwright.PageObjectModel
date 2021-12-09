@@ -16,8 +16,4 @@
     <PackageReference Include="Playwright.FluentAssertions" Version="1.17.0.11" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BingPageObjectModel\BingPageObjectModel.csproj" />
-  </ItemGroup>
-
 </Project>

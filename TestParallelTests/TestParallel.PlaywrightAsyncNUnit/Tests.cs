@@ -1,39 +1,42 @@
-using NUnit.Framework;
-using Microsoft.Playwright.NUnit;
+﻿using NUnit.Framework;
 using System.Threading.Tasks;
 using TestParallel.ActionExtensions;
 using Microsoft.Playwright;
+using TestParallel.PlaywrightAsyncNUnit.Support;
 
 namespace TestParallel.PlaywrightAsyncNUnit;
 
-[Parallelizable(ParallelScope.Self)]
-public class Test1 : DesktopPage
+[Parallelizable(ParallelScope.All)]
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
+public class Tests : DesktopPage
 {
     [Test]
+    [RestartOnException(3)]
     public async Task TestMethod1()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
+        await Page.GotoAsync("https://www.google.com/?hl=en");
         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
+        await Page.TypeAsync("div+input[name='q']", "wikipedia");
+        await Page.PressAsync("div+input[name='q']", "Enter");
         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
+        var searchInputElement = await Page.QuerySelectorAsync("div+input[name='q']");
         var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
         var inputLength = inputValue.Length;
 
-        await Page.FocusAsync("input#sb_form_q");
+        await Page.FocusAsync("div+input[name='q']");
         await Page.Keyboard.PressAsync("End");
         for (var i = 0; i < inputLength; i++)
         {
@@ -41,368 +44,61 @@ public class Test1 : DesktopPage
         }
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test2 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test3 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test4 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test5 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test6 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test7 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test8 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test9 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test10 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod()
-    {
-        // Act
-        await Page.OpenBingComAsync();
-
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.SearchByTextAsync("wikipedia");
-
-        // Assert
-        title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
-
-        // Arrange
-        await Page.ClearSearchTextAsync();
-
-        // Act
-        await Page.SearchByTextAsync("archive");
-
-        // Arrange
-        title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
-    }
-}
-
-[Parallelizable(ParallelScope.Self)]
-public class Test11 : DesktopPage
-{
-    [Test]
-    public async Task TestMethod1()
-    {
-        // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
-        // Assert
-        var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
-
-        // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
+        await Page.TypeAsync("div+input[name='q']", "archive");
+        await Page.PressAsync("div+input[name='q']", "Enter");
         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
+    }
 
-        // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod2()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test12 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod3()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -410,31 +106,28 @@ public class Test12 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test13 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod4()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -442,31 +135,28 @@ public class Test13 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test14 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod5()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -474,31 +164,28 @@ public class Test14 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test15 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod6()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -506,31 +193,28 @@ public class Test15 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test16 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod7()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -538,31 +222,28 @@ public class Test16 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test17 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod8()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -570,31 +251,28 @@ public class Test17 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test18 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod9()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -602,31 +280,28 @@ public class Test18 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test19 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod10()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -634,31 +309,28 @@ public class Test19 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test20 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod11()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -666,76 +338,86 @@ public class Test20 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test21 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod12()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
+
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod13()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
+
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test22 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod14()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -743,31 +425,28 @@ public class Test22 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test23 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod15()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -775,31 +454,28 @@ public class Test23 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test24 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod16()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -807,31 +483,28 @@ public class Test24 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test25 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod17()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -839,31 +512,28 @@ public class Test25 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test26 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod18()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -871,31 +541,28 @@ public class Test26 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test27 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod19()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -903,31 +570,28 @@ public class Test27 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test28 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod20()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -935,31 +599,28 @@ public class Test28 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test29 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod21()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -967,31 +628,28 @@ public class Test29 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test30 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod22()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -999,76 +657,86 @@ public class Test30 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test31 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod23()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod24()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
+
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test32 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod25()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1076,31 +744,28 @@ public class Test32 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test33 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod26()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1108,31 +773,28 @@ public class Test33 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test34 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod27()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1140,31 +802,28 @@ public class Test34 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test35 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod28()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1172,31 +831,28 @@ public class Test35 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test36 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod29()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1204,31 +860,28 @@ public class Test36 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test37 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod30()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1236,31 +889,28 @@ public class Test37 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test38 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod31()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1268,31 +918,28 @@ public class Test38 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test39 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod32()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1300,121 +947,144 @@ public class Test39 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test40 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod33()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
+
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod34()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
+
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test41 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod35()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
+
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod36()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
+
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test42 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod37()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1422,31 +1092,28 @@ public class Test42 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test43 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod38()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1454,31 +1121,28 @@ public class Test43 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test44 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod39()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1486,31 +1150,28 @@ public class Test44 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test45 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod40()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1518,31 +1179,28 @@ public class Test45 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test46 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod41()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1550,31 +1208,28 @@ public class Test46 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test47 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod42()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1582,31 +1237,28 @@ public class Test47 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test48 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod43()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1614,31 +1266,28 @@ public class Test48 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test49 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod44()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1646,31 +1295,28 @@ public class Test49 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test50 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod45()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1678,76 +1324,86 @@ public class Test50 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test51 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod46()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
+
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod47()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test52 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod48()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1755,31 +1411,28 @@ public class Test52 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test53 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod49()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1787,31 +1440,28 @@ public class Test53 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test54 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod50()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1819,31 +1469,28 @@ public class Test54 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test55 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod51()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1851,31 +1498,28 @@ public class Test55 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test56 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod52()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1883,31 +1527,28 @@ public class Test56 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test57 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod53()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1915,31 +1556,28 @@ public class Test57 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test58 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod54()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1947,31 +1585,28 @@ public class Test58 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test59 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod55()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1979,31 +1614,28 @@ public class Test59 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test60 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod56()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2011,76 +1643,86 @@ public class Test60 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test61 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod57()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
+
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod58()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
+
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test62 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod59()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2088,31 +1730,28 @@ public class Test62 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test63 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod60()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2120,31 +1759,28 @@ public class Test63 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test64 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod61()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2152,31 +1788,28 @@ public class Test64 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test65 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod62()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2184,31 +1817,28 @@ public class Test65 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test66 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod63()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2216,31 +1846,28 @@ public class Test66 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test67 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod64()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2248,31 +1875,28 @@ public class Test67 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test68 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod65()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2280,31 +1904,28 @@ public class Test68 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test69 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod66()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2312,31 +1933,28 @@ public class Test69 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test70 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod67()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2344,76 +1962,86 @@ public class Test70 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test71 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod68()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
+
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod69()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
+
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test72 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod70()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2421,31 +2049,28 @@ public class Test72 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test73 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod71()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2453,31 +2078,28 @@ public class Test73 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test74 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod72()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2485,31 +2107,28 @@ public class Test74 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test75 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod73()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2517,31 +2136,28 @@ public class Test75 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test76 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod74()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2549,31 +2165,28 @@ public class Test76 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test77 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod75()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2581,31 +2194,28 @@ public class Test77 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test78 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod76()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2613,31 +2223,28 @@ public class Test78 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test79 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod77()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2645,31 +2252,28 @@ public class Test79 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test80 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod78()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2677,76 +2281,86 @@ public class Test80 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test81 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod79()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod80()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
+
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test82 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod81()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2754,31 +2368,28 @@ public class Test82 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test83 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod82()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2786,31 +2397,28 @@ public class Test83 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test84 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod83()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2818,31 +2426,28 @@ public class Test84 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test85 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod84()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2850,31 +2455,28 @@ public class Test85 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test86 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod85()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2882,31 +2484,28 @@ public class Test86 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test87 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod86()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2914,31 +2513,28 @@ public class Test87 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test88 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod87()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2946,31 +2542,28 @@ public class Test88 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test89 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod88()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2978,31 +2571,28 @@ public class Test89 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test90 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod89()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3010,76 +2600,86 @@ public class Test90 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test91 : DesktopPage
-{
     [Test]
-    public async Task TestMethod1()
+    [RestartOnException(3)]
+    public async Task TestMethod90()
     {
         // Act
-        await Page.GotoAsync("https://bing.com");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
+
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "wikipedia");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("input#sb_form_q");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("archive - Google Search", title);
+    }
+
+    [Test]
+    [RestartOnException(3)]
+    public async Task TestMethod91()
+    {
+        // Act
+        await Page.OpenSearchPageAsync();
 
-        await Page.FocusAsync("input#sb_form_q");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        // Assert
+        var title = await Page.TitleAsync();
+        Assert.AreEqual("Google", title);
 
         // Act
-        await Page.TypeAsync("input#sb_form_q", "archive");
-        await Page.PressAsync("input#sb_form_q", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
+
+        // Assert
+        title = await Page.TitleAsync();
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
+        await Page.ClearSearchTextAsync();
+
+        // Act
+        await Page.SearchByTextAsync("archive");
+
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test92 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod92()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3087,31 +2687,28 @@ public class Test92 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test93 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod93()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3119,31 +2716,28 @@ public class Test93 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test94 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod94()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3151,31 +2745,28 @@ public class Test94 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test95 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod95()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3183,31 +2774,28 @@ public class Test95 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test96 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod96()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3215,31 +2803,28 @@ public class Test96 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test97 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod97()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3247,31 +2832,28 @@ public class Test97 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test98 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod98()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3279,31 +2861,28 @@ public class Test98 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test99 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod99()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3311,31 +2890,28 @@ public class Test99 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
-}
 
-[Parallelizable(ParallelScope.Self)]
-public class Test100 : DesktopPage
-{
     [Test]
-    public async Task TestMethod()
+    [RestartOnException(3)]
+    public async Task TestMethod100()
     {
         // Act
-        await Page.OpenBingComAsync();
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Bing", title);
+        Assert.AreEqual("Google", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Bing", title);
+        Assert.AreEqual("wikipedia - Google Search", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -3343,8 +2919,8 @@ public class Test100 : DesktopPage
         // Act
         await Page.SearchByTextAsync("archive");
 
-        // Arrange
+        // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Bing", title);
+        Assert.AreEqual("archive - Google Search", title);
     }
 }

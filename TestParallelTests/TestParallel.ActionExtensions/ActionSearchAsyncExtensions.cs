@@ -2,18 +2,24 @@
 
 namespace TestParallel.ActionExtensions;
 
-public static class BingAsyncActionExtensions
+public static class ActionSearchAsyncExtensions
 {
+    public static async Task OpenSearchPageAsync(this IPage page)
+    {
+        await page.GotoAsync("https://www.google.com/?hl=en");
+        await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+    }
+
     public static async Task SearchByTextAsync(this IPage page, string searchText)
     {
-        await page.TypeAsync("input#sb_form_q", searchText);
-        await page.PressAsync("input#sb_form_q", "Enter");
+        await page.TypeAsync("div+input[name='q']", searchText);
+        await page.PressAsync("div+input[name='q']", "Enter");
         await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
     }
 
     public static async Task ClearSearchTextAsync(this IPage page)
     {
-        var searchInputElement = await page.QuerySelectorAsync("input#sb_form_q");
+        var searchInputElement = await page.QuerySelectorAsync("div+input[name='q']");
         await page.EvaluateAsync("(e) => e.value = ''", searchInputElement);
 
         //var inputValue = await page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
@@ -26,13 +32,7 @@ public static class BingAsyncActionExtensions
         //    await page.Keyboard.PressAsync("Backspace");
         //}
         //await page.Keyboard.PressAsync("Backspace");
-        //await page.Keyboard.PressAsync("Backspace"); 
         //await page.Keyboard.PressAsync("Backspace");
-    }
-
-    public static async Task OpenBingComAsync(this IPage page)
-    {
-        await page.GotoAsync("https://bing.com");
-        await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        //await page.Keyboard.PressAsync("Backspace");
     }
 }

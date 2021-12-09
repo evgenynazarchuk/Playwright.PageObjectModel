@@ -17,8 +17,4 @@
     <PackageReference Include="Playwright.Synchronous" Version="1.17.0.7" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BingPageObjectModel\BingPageObjectModel.csproj" />
-  </ItemGroup>
-
 </Project>

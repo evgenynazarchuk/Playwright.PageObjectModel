@@ -34,11 +34,11 @@ public class InitBlockTest : PageTest
         Action act = () => testPage.NotFoundBlock();
 
         // Assert
-        act.Should().Throw<ApplicationException>().WithMessage("Element not found");
+        act.Should().Throw<ApplicationException>().WithMessage("Element not found. Selector: .not_found_block");
     }
 
     [TestMethod]
-    public void TestMethod3()
+    public void NotInitInnerBlockOnPageModelTest()
     {
         // Arrange
         var testPage = new PageTesting(this.Page!);
@@ -48,7 +48,7 @@ public class InitBlockTest : PageTest
         Action act = () => testPage.Block1.NotFoundBlock();
 
         // Assert
-        act.Should().Throw<ApplicationException>().WithMessage("Element not found");
+        act.Should().Throw<ApplicationException>().WithMessage("Element not found. Selector: .not_found_block");
     }
 
     class PageTesting : PageModel

@@ -1,14 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Playwright.MSTest;
+﻿using NUnit.Framework;
+using Microsoft.Playwright.NUnit;
 
-namespace TestParallel.PlaywrightSyncMSTest;
+namespace TestParallel.PlaywrightSyncNUnit;
 
 public class DesktopPage : PageTest
 {
     public DesktopPage()
         : base() { }
 
-    [TestInitialize]
+    [SetUp]
     public void Init()
     {
         Page.SetDefaultNavigationTimeout(300 * 1000);
