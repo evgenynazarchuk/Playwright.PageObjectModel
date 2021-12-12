@@ -209,7 +209,7 @@ public partial class PageModel
         this.Page.Focus(selector, options);
     }
 
-    protected virtual void FillAsync(string selector, string value, PageFillOptions? options = null)
+    protected virtual void Fill(string selector, string value, PageFillOptions? options = null)
     {
         this.WaitForLoadPage();
         this.Page.Fill(selector, value, options);
@@ -877,5 +877,13 @@ public partial class PageModel
     {
         this.WaitForLoadPage();
         this.Page.ClosePage(options);
+    }
+
+    protected string GetComputedStyle(string selector, string name, PageQuerySelectorOptions? options = null)
+    {
+        this.WaitForLoadPage();
+        var element = this.FindElement(selector);
+        var value = element.Evaluate<string>($"e => getComputedStyle(e).{name}", element);
+        return value;
     }
 }

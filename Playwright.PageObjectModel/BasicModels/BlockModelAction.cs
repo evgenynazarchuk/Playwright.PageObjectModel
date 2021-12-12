@@ -458,6 +458,14 @@ public partial class BlockModel<TPageModel>
         return element.GetAttribute(name);
     }
 
+    protected string GetComputedStyle(string name, string? selector = null)
+    {
+        this.WaitForLoadPage();
+        var element = selector is null ? this.Block : FindElement(selector);
+        var value = Block.Evaluate<string>($"e => getComputedStyle(e).{name}", element);
+        return value;
+    }
+
     protected virtual IFrame? OwnerFrame(string? selector = null)
     {
         this.WaitForLoadPage();
