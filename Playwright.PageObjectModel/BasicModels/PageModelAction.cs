@@ -252,7 +252,7 @@ public partial class PageModel
         return (TPageModel)returnPage;
     }
 
-    protected virtual TPageModel ReloadPage<TPageModel>(PageReloadOptions? options = null)
+    protected virtual TPageModel ReloadToPage<TPageModel>(PageReloadOptions? options = null)
         where TPageModel : PageModel
     {
         this.Page.ReloadAsync(options).GetAwaiter().GetResult();
