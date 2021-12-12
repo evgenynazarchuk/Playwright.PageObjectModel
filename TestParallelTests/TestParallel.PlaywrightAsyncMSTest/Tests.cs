@@ -26,7 +26,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 using TestParallel.ActionExtensions;
-using TestParallel.PlaywrightAsyncMSTest.Support;
+using TestParallel.MSTestExtensions; 
 
 namespace TestParallel.PlaywrightAsyncMSTest;
 
@@ -38,42 +38,28 @@ public class Tests : DesktopPage
     public async Task TestMethod1()
     {
         // Act
-        await Page.GotoAsync("https://www.google.com/?hl=en");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.OpenSearchPageAsync();
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
-        await Page.TypeAsync("div+input[name='q']", "wikipedia");
-        await Page.PressAsync("div+input[name='q']", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
-        var searchInputElement = await Page.QuerySelectorAsync("div+input[name='q']");
-        var inputValue = await Page.EvaluateAsync<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
-
-        await Page.FocusAsync("div+input[name='q']");
-        await Page.Keyboard.PressAsync("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            await Page.Keyboard.PressAsync("Backspace");
-        }
+        await Page.ClearSearchTextAsync();
 
         // Act
-        await Page.TypeAsync("div+input[name='q']", "archive");
-        await Page.PressAsync("div+input[name='q']", "Enter");
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        await Page.SearchByTextAsync("archive");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -85,14 +71,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -102,7 +88,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -114,14 +100,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -131,7 +117,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -143,14 +129,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -160,7 +146,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -172,14 +158,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -189,7 +175,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -201,14 +187,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -218,7 +204,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -230,14 +216,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -247,7 +233,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -259,14 +245,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -276,7 +262,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -288,14 +274,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -305,7 +291,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -317,14 +303,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -334,7 +320,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -346,14 +332,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -363,7 +349,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -375,14 +361,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -392,7 +378,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -404,14 +390,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -421,7 +407,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -433,14 +419,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -450,7 +436,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -462,14 +448,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -479,7 +465,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -491,14 +477,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -508,7 +494,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -520,14 +506,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -537,7 +523,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -549,14 +535,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -566,7 +552,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -578,14 +564,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -595,7 +581,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -607,14 +593,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -624,7 +610,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -636,14 +622,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -653,7 +639,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -665,14 +651,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -682,7 +668,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -694,14 +680,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -711,7 +697,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -723,14 +709,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -740,7 +726,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -752,14 +738,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -769,7 +755,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -781,14 +767,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -798,7 +784,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -810,14 +796,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -827,7 +813,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -839,14 +825,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -856,7 +842,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -868,14 +854,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -885,7 +871,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -897,14 +883,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -914,7 +900,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -926,14 +912,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -943,7 +929,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -955,14 +941,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -972,7 +958,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -984,14 +970,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1001,7 +987,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1013,14 +999,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1030,7 +1016,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1042,14 +1028,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1059,7 +1045,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1071,14 +1057,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1088,7 +1074,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1100,14 +1086,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1117,7 +1103,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1129,14 +1115,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1146,7 +1132,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1158,14 +1144,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1175,7 +1161,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1187,14 +1173,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1204,7 +1190,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1216,14 +1202,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1233,7 +1219,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1245,14 +1231,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1262,7 +1248,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1274,14 +1260,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1291,7 +1277,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1303,14 +1289,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1320,7 +1306,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1332,14 +1318,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1349,7 +1335,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1361,14 +1347,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1378,7 +1364,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1390,14 +1376,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1407,7 +1393,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1419,14 +1405,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1436,7 +1422,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1448,14 +1434,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1465,7 +1451,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1477,14 +1463,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1494,7 +1480,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1506,14 +1492,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1523,7 +1509,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1535,14 +1521,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1552,7 +1538,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1564,14 +1550,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1581,7 +1567,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1593,14 +1579,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1610,7 +1596,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1622,14 +1608,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1639,7 +1625,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1651,14 +1637,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1668,7 +1654,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1680,14 +1666,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1697,7 +1683,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1709,14 +1695,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1726,7 +1712,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1738,14 +1724,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1755,7 +1741,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1767,14 +1753,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1784,7 +1770,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1796,14 +1782,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1813,7 +1799,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1825,14 +1811,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1842,7 +1828,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1854,14 +1840,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1871,7 +1857,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1883,14 +1869,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1900,7 +1886,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1912,14 +1898,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1929,7 +1915,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1941,14 +1927,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1958,7 +1944,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1970,14 +1956,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -1987,7 +1973,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1999,14 +1985,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2016,7 +2002,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2028,14 +2014,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2045,7 +2031,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2057,14 +2043,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2074,7 +2060,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2086,14 +2072,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2103,7 +2089,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2115,14 +2101,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2132,7 +2118,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2144,14 +2130,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2161,7 +2147,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2173,14 +2159,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2190,7 +2176,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2202,14 +2188,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2219,7 +2205,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2231,14 +2217,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2248,7 +2234,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2260,14 +2246,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2277,7 +2263,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2289,14 +2275,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2306,7 +2292,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2318,14 +2304,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2335,7 +2321,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2347,14 +2333,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2364,7 +2350,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2376,14 +2362,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2393,7 +2379,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2405,14 +2391,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2422,7 +2408,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2434,14 +2420,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2451,7 +2437,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2463,14 +2449,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2480,7 +2466,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2492,14 +2478,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2509,7 +2495,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2521,14 +2507,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2538,7 +2524,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2550,14 +2536,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2567,7 +2553,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2579,14 +2565,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2596,7 +2582,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2608,14 +2594,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2625,7 +2611,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2637,14 +2623,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2654,7 +2640,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2666,14 +2652,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2683,7 +2669,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2695,14 +2681,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2712,7 +2698,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2724,14 +2710,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2741,7 +2727,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2753,14 +2739,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2770,7 +2756,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2782,14 +2768,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2799,7 +2785,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2811,14 +2797,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2828,7 +2814,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2840,14 +2826,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2857,7 +2843,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2869,14 +2855,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2886,7 +2872,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2898,14 +2884,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2915,7 +2901,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2927,14 +2913,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = await Page.TitleAsync();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         await Page.SearchByTextAsync("wikipedia");
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         await Page.ClearSearchTextAsync();
@@ -2944,6 +2930,6 @@ public class Tests : DesktopPage
 
         // Assert
         title = await Page.TitleAsync();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 }

@@ -17,7 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TestParallel.MSTestExtensions\TestParallel.MSTestExtensions.csproj" />
     <ProjectReference Include="..\TestParallel.ActionExtensions\TestParallel.ActionExtensions.csproj" />
+    <ProjectReference Include="..\TestParallel.MSTestExtensions\TestParallel.MSTestExtensions.csproj" />
   </ItemGroup>
 
 </Project>

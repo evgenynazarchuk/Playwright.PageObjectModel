@@ -22,17 +22,38 @@
  * SOFTWARE.
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
-namespace TestParallel.PlaywrightSyncMSTest.Support;
+namespace TestParallel.MSTestExtensions;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public class RestartOnException : Attribute
+public class UITestAttribute : TestMethodAttribute
 {
-    public RestartOnException(int count)
-    {
-        this.Value = count;
-    }
+    public UITestAttribute() { }
 
-    public readonly int Value;
+    public UITestAttribute(string name)
+        : base(name) { }
+
+    public override TestResult[] Execute(ITestMethod testMethod)
+    {
+        TestResult[]? result = null;
+        var retryAttribute = testMethod.GetAttributes<RestartOnException>(false).FirstOrDefault();
+
+        if (retryAttribute is null)
+        {
+            return base.Execute(testMethod);
+        }
+        else
+        {
+            for (int i = 0; i < retryAttribute.Value; i++)
+            {
+                result = base.Execute(testMethod);
+                if (result[0].Outcome == UnitTestOutcome.Passed) break;
+            }
+
+            return result!;
+        }
+    }
 }

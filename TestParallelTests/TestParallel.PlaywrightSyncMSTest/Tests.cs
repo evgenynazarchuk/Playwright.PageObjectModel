@@ -2,7 +2,7 @@
 using Playwright.Synchronous;
 using TestParallel.ActionExtensions;
 using Microsoft.Playwright;
-using TestParallel.PlaywrightSyncMSTest.Support;
+using TestParallel.MSTestExtensions;
 
 namespace TestParallel.PlaywrightSyncMSTest;
 
@@ -14,42 +14,28 @@ public class Tests : DesktopPage
     public void TestMethod1()
     {
         // Act
-        Page.Goto("https://www.google.com/?hl=en");
-        Page.WaitForLoadState(LoadState.NetworkIdle);
+        Page.OpenSearchPage();
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);   
+        Assert.AreEqual("Bing", title);
 
         // Act
-        Page.Type("div+input[name='q']", "wikipedia");
-        Page.Press("div+input[name='q']", "Enter");
-        Page.WaitForLoadState(LoadState.NetworkIdle);
+        Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
-        var searchInputElement = Page.QuerySelector("div+input[name='q']");
-        var inputValue = Page.Evaluate<string>("(e) => e.value", searchInputElement);
-        var inputLength = inputValue.Length;
-
-        Page.Focus("div+input[name='q']");
-        Page.Keyboard.Press("End");
-        for (var i = 0; i < inputLength; i++)
-        {
-            Page.Keyboard.Press("Backspace");
-        }
+        Page.ClearSearchText();
 
         // Act
-        Page.Type("div+input[name='q']", "archive");
-        Page.Press("div+input[name='q']", "Enter");
-        Page.WaitForLoadState(LoadState.NetworkIdle);
+        Page.SearchByText("archive");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -61,14 +47,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -78,7 +64,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -90,14 +76,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -107,7 +93,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -119,14 +105,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -136,7 +122,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -148,14 +134,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -165,7 +151,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -177,14 +163,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -194,7 +180,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -206,14 +192,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -223,7 +209,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -235,14 +221,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -252,7 +238,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -264,14 +250,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -281,7 +267,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -293,14 +279,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -310,7 +296,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -322,14 +308,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -339,7 +325,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -351,14 +337,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -368,7 +354,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -380,14 +366,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -397,7 +383,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -409,14 +395,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -426,7 +412,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -438,14 +424,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -455,7 +441,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -467,14 +453,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -484,7 +470,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -496,14 +482,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -513,7 +499,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -525,14 +511,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -542,7 +528,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -554,14 +540,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -571,7 +557,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -583,14 +569,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -600,7 +586,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -612,14 +598,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -629,7 +615,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -641,14 +627,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -658,7 +644,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -670,14 +656,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -687,7 +673,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -699,14 +685,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -716,7 +702,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -728,14 +714,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -745,7 +731,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -757,14 +743,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -774,7 +760,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -786,14 +772,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -803,7 +789,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -815,14 +801,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -832,7 +818,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -844,14 +830,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -861,7 +847,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -873,14 +859,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -890,7 +876,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -902,14 +888,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -919,7 +905,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -931,14 +917,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -948,7 +934,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -960,14 +946,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -977,7 +963,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -989,14 +975,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1006,7 +992,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1018,14 +1004,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1035,7 +1021,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1047,14 +1033,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1064,7 +1050,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1076,14 +1062,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1093,7 +1079,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1105,14 +1091,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1122,7 +1108,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1134,14 +1120,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1151,7 +1137,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1163,14 +1149,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1180,7 +1166,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1192,14 +1178,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1209,7 +1195,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1221,14 +1207,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1238,7 +1224,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1250,14 +1236,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1267,7 +1253,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1279,14 +1265,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1296,7 +1282,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1308,14 +1294,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1325,7 +1311,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1337,14 +1323,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1354,7 +1340,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1366,14 +1352,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1383,7 +1369,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1395,14 +1381,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1412,7 +1398,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1424,14 +1410,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1441,7 +1427,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1453,14 +1439,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1470,7 +1456,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1482,14 +1468,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1499,7 +1485,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1511,14 +1497,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1528,7 +1514,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1540,14 +1526,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1557,7 +1543,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1569,14 +1555,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1586,7 +1572,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1598,14 +1584,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1615,7 +1601,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1627,14 +1613,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1644,7 +1630,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1656,14 +1642,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1673,7 +1659,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1685,14 +1671,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1702,7 +1688,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1714,14 +1700,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1731,7 +1717,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1743,14 +1729,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1760,7 +1746,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1772,14 +1758,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1789,7 +1775,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1801,14 +1787,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1818,7 +1804,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1830,14 +1816,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1847,7 +1833,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1859,14 +1845,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1876,7 +1862,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1888,14 +1874,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1905,7 +1891,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1917,14 +1903,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1934,7 +1920,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1946,14 +1932,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1963,7 +1949,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -1975,14 +1961,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -1992,7 +1978,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2004,14 +1990,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2021,7 +2007,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2033,14 +2019,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2050,7 +2036,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2062,14 +2048,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2079,7 +2065,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2091,14 +2077,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2108,7 +2094,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2120,14 +2106,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2137,7 +2123,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2149,14 +2135,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2166,7 +2152,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2178,14 +2164,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2195,7 +2181,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2207,14 +2193,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2224,7 +2210,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2236,14 +2222,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2253,7 +2239,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2265,14 +2251,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2282,7 +2268,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2294,14 +2280,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2311,7 +2297,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2323,14 +2309,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2340,7 +2326,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2352,14 +2338,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2369,7 +2355,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2381,14 +2367,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2398,7 +2384,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2410,14 +2396,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2427,7 +2413,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2439,14 +2425,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2456,7 +2442,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2468,14 +2454,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2485,7 +2471,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2497,14 +2483,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2514,7 +2500,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2526,14 +2512,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2543,7 +2529,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2555,14 +2541,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2572,7 +2558,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2584,14 +2570,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2601,7 +2587,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2613,14 +2599,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2630,7 +2616,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2642,14 +2628,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2659,7 +2645,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2671,14 +2657,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2688,7 +2674,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2700,14 +2686,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2717,7 +2703,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2729,14 +2715,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2746,7 +2732,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2758,14 +2744,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2775,7 +2761,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2787,14 +2773,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2804,7 +2790,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2816,14 +2802,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2833,7 +2819,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2845,14 +2831,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2862,7 +2848,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2874,14 +2860,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2891,7 +2877,7 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 
     [UITest]
@@ -2903,14 +2889,14 @@ public class Tests : DesktopPage
 
         // Assert
         var title = Page.Title();
-        Assert.AreEqual("Google", title);
+        Assert.AreEqual("Bing", title);
 
         // Act
         Page.SearchByText("wikipedia");
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("wikipedia - Google Search", title);
+        Assert.AreEqual("wikipedia - Bing", title);
 
         // Arrange
         Page.ClearSearchText();
@@ -2920,6 +2906,6 @@ public class Tests : DesktopPage
 
         // Assert
         title = Page.Title();
-        Assert.AreEqual("archive - Google Search", title);
+        Assert.AreEqual("archive - Bing", title);
     }
 }

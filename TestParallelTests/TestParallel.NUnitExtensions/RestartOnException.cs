@@ -4,7 +4,7 @@ using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
 using System;
 
-namespace TestParallel.PlaywrightAsyncNUnit.Support;
+namespace TestParallel.NUnitExtensions;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
 public class RestartOnException : PropertyAttribute, IWrapSetUpTearDown
