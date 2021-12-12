@@ -265,7 +265,7 @@ public static partial class PageModelAssertions
         PageQuerySelectorOptions? options = null)
         where TPageModel : IPageModel
     {
-        pageModel.Value.Should().HaveNotEnabledElement(selector, because, options);
+        pageModel.Value.Page.Should().HaveNotEnabledElement(selector, because, options);
         return pageModel.Value;
     }
 
@@ -318,10 +318,10 @@ public static partial class PageModelAssertions
         string selector,
         string attributeName,
         string because = "no reason given",
-        PageGetAttributeOptions? options = null)
+        PageQuerySelectorOptions? options = null)
         where TPageModel : IPageModel
     {
-        pageModel.Value.Should().HaveElementAttribute(selector, attributeName, because, options);
+        pageModel.Value.Page.Should().HaveElementAttribute(selector, attributeName, because, options);
         return pageModel.Value;
     }
 
@@ -331,10 +331,10 @@ public static partial class PageModelAssertions
         string attributeName,
         string expectedValue,
         string because = "no reason given",
-        PageGetAttributeOptions? options = null)
+        PageQuerySelectorOptions? options = null)
         where TPageModel : IPageModel
     {
-        pageModel.Value.Should().HaveElementAttributeValue(selector, attributeName, expectedValue, because, options);
+        pageModel.Value.Page.Should().HaveElementAttributeValue(selector, attributeName, expectedValue, because, options);
         return pageModel.Value;
     }
 
@@ -343,10 +343,10 @@ public static partial class PageModelAssertions
         string selector,
         string attributeName,
         string because = "no reason given",
-        PageGetAttributeOptions? options = null)
+        PageQuerySelectorOptions? options = null)
         where TPageModel : IPageModel
     {
-        pageModel.Value.Should().HaveNotElementAttribute(selector, attributeName, because, options);
+        pageModel.Value.Page.Should().HaveNotElementAttribute(selector, attributeName, because, options);
         return pageModel.Value;
     }
 
@@ -359,7 +359,7 @@ public static partial class PageModelAssertions
         PageQuerySelectorOptions? options = null)
         where TPageModel : IPageModel
     {
-        pageModel.Value.Should().HaveComputedStyle(selector, styleName, expectedStyleValue, because, options);
+        pageModel.Value.Page.Should().HaveElementComputedStyle(selector, styleName, expectedStyleValue, because, options);
         return pageModel.Value;
     }
 }
