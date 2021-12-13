@@ -27,20 +27,27 @@ using Playwright.Synchronous;
 
 namespace Playwright.PageObjectModel;
 
-public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>, IWaiter
+public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>, IWait
     where TPageModel : PageModel
 {
-    public BlockModel(TPageModel pageModel, string selector, PageQuerySelectorOptions? options = null)
+    public BlockModel(TPageModel pageModel, 
+        string selector, 
+        PageWaitForSelectorOptions? waitOptions = null, 
+        PageQuerySelectorOptions? queryOptions = null)
     {
+        this.PageModel.Page.WaitForSelector(selector, waitOptions);
+        this.Block = this.PageModel.Page.QuerySelector(selector, queryOptions);
         this.PageModel = pageModel;
-        this.Block = this.PageModel.Page.FindElement(selector, options);
         this.Page = this.PageModel.Page;
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, string selector)
+    public BlockModel(BlockModel<TPageModel> parentBlockModel, 
+        string selector, 
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
     {
+        parentBlockModel.WaitForSelector(selector, waitOptions);
+        this.Block = parentBlockModel.GetElement(selector);
         this.PageModel = parentBlockModel.PageModel;
-        this.Block = parentBlockModel.FindElement(selector);
         this.Page = this.PageModel.Page;
     }
 

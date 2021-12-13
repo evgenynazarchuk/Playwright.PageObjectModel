@@ -88,17 +88,17 @@ public class FindBlockTest : PageTest
 
         public Block1<PageTesting> FindBlock1()
         {
-            return this.FindBlock<Block1<PageTesting>>(".block1");
+            return this.GetBlock<Block1<PageTesting>>(".block1");
         }
 
         public Block3<PageTesting> FindBlock3()
         {
-            return this.FindBlock<Block3<PageTesting>>(".block3");
+            return this.GetBlock<Block3<PageTesting>>(".block3");
         }
 
         public Block1<PageTesting>? NotFoundBlock()
         {
-            return this.FindBlock<Block1<PageTesting>>(".not_found_block");
+            return this.GetBlock<Block1<PageTesting>>(".not_found_block");
         }
     }
 

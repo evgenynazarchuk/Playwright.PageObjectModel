@@ -44,9 +44,9 @@ public class FindBlocksTest : PageTest
     {
         public PageTesting(IPage page) : base(page) { }
 
-        public IReadOnlyCollection<Block<PageTesting>> FindBlocks() => this.FindBlocks<Block<PageTesting>>("body>.block");
+        public IReadOnlyCollection<Block<PageTesting>> FindBlocks() => this.GetBlocks<Block<PageTesting>>("body>.block");
 
-        public BlocksCollection<PageTesting> FindBlockCollection() => this.FindBlock<BlocksCollection<PageTesting>>(".blocksCollection");
+        public BlocksCollection<PageTesting> FindBlockCollection() => this.GetBlock<BlocksCollection<PageTesting>>(".blocksCollection");
     }
 
     class Block<TPageModel> : BlockModel<TPageModel>

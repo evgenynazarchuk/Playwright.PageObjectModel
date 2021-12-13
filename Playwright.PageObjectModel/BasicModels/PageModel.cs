@@ -26,7 +26,7 @@ using Microsoft.Playwright;
 
 namespace Playwright.PageObjectModel;
 
-public partial class PageModel : IPageModel, IWaiter
+public partial class PageModel : IPageModel, IWait
 {
     public PageModel(IPage page)
     {

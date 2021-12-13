@@ -24,7 +24,7 @@
 
 namespace Playwright.PageObjectModel;
 
-public interface IWaiter
+public interface IWait
 {
-    void WaitForLoadPage();
+    void Wait();
 }

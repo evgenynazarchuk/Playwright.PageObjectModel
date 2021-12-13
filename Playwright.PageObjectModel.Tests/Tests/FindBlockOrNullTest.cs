@@ -74,12 +74,12 @@ public class FindBlockOrNullTest : PageTest
 
         public Block1<PageTesting>? FindBlock1WhenNotNull()
         {
-            return this.FindBlock<Block1<PageTesting>>(".block1");
+            return this.GetBlock<Block1<PageTesting>>(".block1");
         }
 
         public Block1<PageTesting>? FindBlock1WhenNull()
         {
-            return this.FindBlockOrNull<Block1<PageTesting>>(".not_found_block");
+            return this.GetBlockOrNull<Block1<PageTesting>>(".not_found_block");
         }
     }
 

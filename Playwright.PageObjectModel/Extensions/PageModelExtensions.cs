@@ -33,17 +33,17 @@ public static class PageModelExtensions
         where TPageModel : PageModel
 
     {
-        pageModel.WaitForLoadPage();
+        pageModel.Wait();
         pageModel.Page.Screenshot(options);
         return pageModel;
     }
 
     public static TPageModel Reload<TPageModel>(this TPageModel pageModel)
-        where TPageModel : PageModel, IWaiter
+        where TPageModel : PageModel, IWait
     {
-        pageModel.WaitForLoadPage();
+        pageModel.Wait();
         pageModel.Page.Reload();
-        pageModel.WaitForLoadPage();
+        pageModel.Wait();
         return pageModel;
     }
 }
