@@ -38,6 +38,8 @@ public class ClickTest : PageTest
 
     class PageTesting1 : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public PageTesting1(IPage page) : base(page) { }
 
         public PageTesting2 ClickToPage2() => this.Click<PageTesting2>(".link");
@@ -47,6 +49,8 @@ public class ClickTest : PageTest
 
     class PageTesting2 : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public PageTesting2(IPage page) : base(page) { }
 
         public PageTesting1 ClickToPage1() => this.Click<PageTesting1>(".link");
@@ -57,6 +61,8 @@ public class ClickTest : PageTest
     class Page1Block<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Page1Block(TPageModel pageModel, string selector)
             : base(pageModel, selector) { }
 
@@ -69,6 +75,8 @@ public class ClickTest : PageTest
     class Page2Block<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Page2Block(TPageModel pageModel, string selector)
             : base(pageModel, selector) { }
 

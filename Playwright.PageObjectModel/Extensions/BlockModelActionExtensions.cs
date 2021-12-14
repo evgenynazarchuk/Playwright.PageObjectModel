@@ -26,245 +26,400 @@ using Microsoft.Playwright;
 using Playwright.Synchronous;
 using System.Collections.Generic;
 
-namespace Playwright.PageObjectModel.ActionExtensions;
+namespace Playwright.PageObjectModel;
 
 public static class BlockModelActionExtensions
 {
-    public static TBlockModel Click<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleClickOptions? options = null)
+    public static TBlockModel Click<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        ElementHandleClickOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Click(options);
         return blockModel;
     }
 
-    public static TBlockModel DbClick<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleDblClickOptions? options = null)
+    public static TBlockModel DbClick<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        ElementHandleDblClickOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.DblClick(options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel Hover<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleHoverOptions? options = null)
+    public static TBlockModel Hover<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        ElementHandleHoverOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Hover(options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel ClearInput<TBlockModel>(this TBlockModel blockModel, string? selector = null)
+    public static TBlockModel ClearInput<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Evaluate("(element) => element.value =''", element);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel Type<TBlockModel>(this TBlockModel blockModel, string? selector = null, string value = "", ElementHandleTypeOptions? options = null)
+    public static TBlockModel Type<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        string value = "", 
+        ElementHandleTypeOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Type(value, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel Fill<TBlockModel>(this TBlockModel blockModel, string? selector = null, string value = "", ElementHandleFillOptions? options = null)
+    public static TBlockModel Fill<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        string value = "", 
+        ElementHandleFillOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Fill(value, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel Check<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleCheckOptions? options = null)
+    public static TBlockModel Check<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        ElementHandleCheckOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Check(options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel Uncheck<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleUncheckOptions? options = null)
+    public static TBlockModel Uncheck<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        ElementHandleUncheckOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Uncheck(options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel Focus<TBlockModel>(this TBlockModel blockModel, string? selector = null)
+    public static TBlockModel Focus<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Focus();
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel Tap<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleTapOptions? options = null)
+    public static TBlockModel Tap<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        ElementHandleTapOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Tap(options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel Press<TBlockModel>(this TBlockModel blockModel, string key, string? selector = null, ElementHandlePressOptions? options = null)
+    public static TBlockModel Press<TBlockModel>(
+        this TBlockModel blockModel, 
+        string key, 
+        string? selector = null, 
+        ElementHandlePressOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.Press(key, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SelectText<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleSelectTextOptions? options = null)
+    public static TBlockModel SelectText<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        ElementHandleSelectTextOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SelectText(options);
         return blockModel;
     }
 
-    public static TBlockModel SetChecked<TBlockModel>(this TBlockModel blockModel, bool checkedState, string? selector = null, ElementHandleSetCheckedOptions? options = null)
+    public static TBlockModel SetChecked<TBlockModel>(
+        this TBlockModel blockModel, 
+        bool checkedState, 
+        string? selector = null, 
+        ElementHandleSetCheckedOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
-        element.SetChecked(checkedState);
-        blockModel.Wait();
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
+        element.SetChecked(checkedState, options);
         return blockModel;
     }
 
-    public static TBlockModel SetInputFiles<TBlockModel>(this TBlockModel blockModel, string files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
+    public static TBlockModel SetInputFiles<TBlockModel>(
+        this TBlockModel blockModel, 
+        string files, 
+        string? selector = null, 
+        ElementHandleSetInputFilesOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SetInputFiles(files, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SetInputFiles<TBlockModel>(this TBlockModel blockModel, FilePayload files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
+    public static TBlockModel SetInputFiles<TBlockModel>(
+        this TBlockModel blockModel, 
+        FilePayload files, 
+        string? selector = null, 
+        ElementHandleSetInputFilesOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SetInputFiles(files, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SetInputFiles<TBlockModel>(this TBlockModel blockModel, IEnumerable<string> files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
+    public static TBlockModel SetInputFiles<TBlockModel>(
+        this TBlockModel blockModel, 
+        IEnumerable<string> files, 
+        string? selector = null, 
+        ElementHandleSetInputFilesOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SetInputFiles(files, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SetInputFiles<TBlockModel>(this TBlockModel blockModel, IEnumerable<FilePayload> files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
+    public static TBlockModel SetInputFiles<TBlockModel>(
+        this TBlockModel blockModel, 
+        IEnumerable<FilePayload> files, 
+        string? selector = null, 
+        ElementHandleSetInputFilesOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SetInputFiles(files, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SelectOption<TBlockModel>(this TBlockModel blockModel, string values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    public static TBlockModel SelectOption<TBlockModel>(
+        this TBlockModel blockModel, 
+        string values, 
+        string? selector = null, 
+        ElementHandleSelectOptionOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SelectOption(values, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SelectOption<TBlockModel>(this TBlockModel blockModel, IElementHandle values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    public static TBlockModel SelectOption<TBlockModel>(
+        this TBlockModel blockModel, 
+        IElementHandle values, 
+        string? selector = null, 
+        ElementHandleSelectOptionOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SelectOption(values, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SelectOption<TBlockModel>(this TBlockModel blockModel, IEnumerable<string> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    public static TBlockModel SelectOption<TBlockModel>(
+        this TBlockModel blockModel, 
+        IEnumerable<string> values, 
+        string? selector = null, 
+        ElementHandleSelectOptionOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SelectOption(values, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SelectOption<TBlockModel>(this TBlockModel blockModel, SelectOptionValue values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    public static TBlockModel SelectOption<TBlockModel>(
+        this TBlockModel blockModel, 
+        SelectOptionValue values, 
+        string? selector = null, 
+        ElementHandleSelectOptionOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SelectOption(values, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SelectOption<TBlockModel>(this TBlockModel blockModel, IEnumerable<IElementHandle> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    public static TBlockModel SelectOption<TBlockModel>(
+        this TBlockModel blockModel, 
+        IEnumerable<IElementHandle> values, 
+        string? selector = null, 
+        ElementHandleSelectOptionOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SelectOption(values, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel SelectOption<TBlockModel>(this TBlockModel blockModel, IEnumerable<SelectOptionValue> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    public static TBlockModel SelectOption<TBlockModel>(
+        this TBlockModel blockModel, 
+        IEnumerable<SelectOptionValue> values, 
+        string? selector = null, 
+        ElementHandleSelectOptionOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.SelectOption(values, options);
-        blockModel.Wait();
         return blockModel;
     }
 
-    public static TBlockModel ScrollIntoViewIfNeeded<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleScrollIntoViewIfNeededOptions? options = null)
+    public static TBlockModel ScrollIntoViewIfNeeded<TBlockModel>(
+        this TBlockModel blockModel, 
+        string? selector = null, 
+        ElementHandleScrollIntoViewIfNeededOptions? options = null,
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel, IWait
     {
         blockModel.Wait();
-        var element = selector is null ? blockModel.Block : blockModel.Block.FindElement(selector);
+
+        if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
+
         element.ScrollIntoViewIfNeeded(options);
-        blockModel.Wait();
         return blockModel;
     }
 }

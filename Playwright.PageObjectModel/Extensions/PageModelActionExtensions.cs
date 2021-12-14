@@ -26,7 +26,7 @@ using Microsoft.Playwright;
 using Playwright.Synchronous;
 using System.Collections.Generic;
 
-namespace Playwright.PageObjectModel.ActionExtensions;
+namespace Playwright.PageObjectModel;
 
 public static class PageModelActionExtensions
 {
@@ -34,8 +34,7 @@ public static class PageModelActionExtensions
         where TPageModel : PageModel, IWait
     {
         pageModel.Wait();
-        pageModel.Click(selector, options);
-        pageModel.Wait();
+        pageModel.Page.Click(selector, options);
         return pageModel;
     }
 
@@ -44,7 +43,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.DblClick(selector, options);
-        pageModel.Wait();
         return pageModel;
 
     }
@@ -54,7 +52,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.Type(selector, value, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -63,7 +60,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.Check(selector, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -72,7 +68,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.Uncheck(selector, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -81,7 +76,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SetChecked(selector, checkedState, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -90,7 +84,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.Tap(selector, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -99,7 +92,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.DragAndDrop(source, target, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -116,14 +108,14 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.Fill(selector, value, options);
-        pageModel.Wait();
         return pageModel;
     }
 
     public static TPageModel ReloadPage<TPageModel>(this TPageModel pageModel, PageReloadOptions? options = null)
         where TPageModel : PageModel, IWait
     {
-        pageModel.Page.ReloadAsync(options).GetAwaiter().GetResult();
+        pageModel.Wait();
+        pageModel.Page.Reload(options);
         return pageModel;
     }
 
@@ -132,7 +124,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.Hover(selector, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -141,7 +132,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.Press(selector, key, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -150,7 +140,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SelectOption(selector, values, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -159,7 +148,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SelectOption(selector, values, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -168,7 +156,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SelectOption(selector, values, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -177,7 +164,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SelectOption(selector, values, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -186,7 +172,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SelectOption(selector, values, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -194,8 +179,7 @@ public static class PageModelActionExtensions
         where TPageModel : PageModel, IWait
     {
         pageModel.Wait();
-        var result = pageModel.Page.SelectOption(selector, values, options);
-        pageModel.Wait();
+        pageModel.Page.SelectOption(selector, values, options);
         return pageModel;
     }
 
@@ -204,7 +188,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SetInputFiles(selector, files, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -213,7 +196,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SetInputFiles(selector, files, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -222,7 +204,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SetInputFiles(selector, files, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -231,7 +212,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.SetInputFiles(selector, files, options);
-        pageModel.Wait();
         return pageModel;
     }
 
@@ -240,7 +220,6 @@ public static class PageModelActionExtensions
     {
         pageModel.Wait();
         pageModel.Page.Reload();
-        pageModel.Wait();
         return pageModel;
     }
 }

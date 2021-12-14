@@ -69,6 +69,8 @@ public class FindBlockOrNullTest : PageTest
 
     class PageTesting : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public PageTesting(IPage page)
             : base(page) { }
 
@@ -79,24 +81,26 @@ public class FindBlockOrNullTest : PageTest
 
         public Block1<PageTesting>? FindBlock1WhenNull()
         {
-            return this.GetBlockOrNull<Block1<PageTesting>>(".not_found_block");
+            return this.GetBlockModelOrNull<Block1<PageTesting>>(".not_found_block");
         }
     }
 
     class Block1<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block1(TPageModel page, string selector)
             : base(page, selector) { }
 
         public Block2<PageTesting>? FindBlock2WhenNotNull()
         {
-            return this.FindBlockOrNull<Block2<PageTesting>>(".block2");
+            return this.GetBlockModelOrNull<Block2<PageTesting>>(".block2");
         }
 
         public Block2<PageTesting>? FindBlock2WhenNull()
         {
-            return this.FindBlockOrNull<Block2<PageTesting>>(".not_found_block");
+            return this.GetBlockModelOrNull<Block2<PageTesting>>(".not_found_block");
         }
 
         public string Text => this.InnerText();
@@ -105,17 +109,19 @@ public class FindBlockOrNullTest : PageTest
     class Block2<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block2(BlockModel<TPageModel> parentBlockModel, string selector)
             : base(parentBlockModel, selector) { }
 
         public Block3<PageTesting>? FindBlock3WhenNotNull()
         {
-            return this.FindBlockOrNull<Block3<PageTesting>>(".block3");
+            return this.GetBlockModelOrNull<Block3<PageTesting>>(".block3");
         }
 
         public Block2<PageTesting>? FindBlock3WhenNull()
         {
-            return this.FindBlockOrNull<Block2<PageTesting>>(".not_found_block");
+            return this.GetBlockModelOrNull<Block2<PageTesting>>(".not_found_block");
         }
 
         public string Text => this.InnerText();
@@ -124,6 +130,8 @@ public class FindBlockOrNullTest : PageTest
     class Block3<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block3(BlockModel<TPageModel> parentBlockModel, string selector)
             : base(parentBlockModel, selector) { }
 

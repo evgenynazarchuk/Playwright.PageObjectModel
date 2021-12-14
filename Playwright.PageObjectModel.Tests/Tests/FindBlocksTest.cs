@@ -42,6 +42,8 @@ public class FindBlocksTest : PageTest
 
     class PageTesting : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public PageTesting(IPage page) : base(page) { }
 
         public IReadOnlyCollection<Block<PageTesting>> FindBlocks() => this.GetBlocks<Block<PageTesting>>("body>.block");
@@ -52,6 +54,8 @@ public class FindBlocksTest : PageTest
     class Block<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block(TPageModel pageModel, string selector)
             : base(pageModel, selector) { }
 
@@ -62,12 +66,14 @@ public class FindBlocksTest : PageTest
     class BlocksCollection<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public BlocksCollection(TPageModel page, string selector)
             : base(page, selector) { }
 
         public BlocksCollection(BlockModel<TPageModel> parentBlock, string selector)
             : base(parentBlock, selector) { }
 
-        public IReadOnlyCollection<Block<PageTesting>> FindBlocks() => this.FindBlocks<Block<PageTesting>>(".block");
+        public IReadOnlyCollection<Block<PageTesting>> FindBlocks() => this.GetBlocks<Block<PageTesting>>(".block");
     }
 }

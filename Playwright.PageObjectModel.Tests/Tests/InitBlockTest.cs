@@ -53,6 +53,8 @@ public class InitBlockTest : PageTest
 
     class PageTesting : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public PageTesting(IPage page)
             : base(page) { }
 
@@ -64,6 +66,8 @@ public class InitBlockTest : PageTest
     class Block1<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block1(TPageModel page, string selector)
             : base(page, selector) { }
 
@@ -75,6 +79,8 @@ public class InitBlockTest : PageTest
     class Block2<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block2(BlockModel<TPageModel> parentBlockModel, string selector)
             : base(parentBlockModel, selector) { }
 
@@ -84,6 +90,8 @@ public class InitBlockTest : PageTest
     class Block3<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block3(BlockModel<TPageModel> parentBlockModel, string selector)
             : base(parentBlockModel, selector) { }
     }

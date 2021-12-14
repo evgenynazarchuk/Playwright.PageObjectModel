@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+using Microsoft.Playwright;
 using Playwright.PageObjectModel;
 using Playwright.Synchronous;
 using System;
@@ -47,11 +48,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string expectedTextContent,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if(selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveTextContent(expectedTextContent, because);
         return blockModel.Value;
     }
@@ -60,11 +65,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string notExpectedTextContent,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveNotTextContent(notExpectedTextContent, because);
         return blockModel.Value;
     }
@@ -73,11 +82,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string expectedInnerHtml,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveInnerHTML(expectedInnerHtml, because);
         return blockModel.Value;
     }
@@ -86,11 +99,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string notExpectedInnerHtml,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveNotInnerHTML(notExpectedInnerHtml, because);
         return blockModel.Value;
     }
@@ -99,11 +116,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string expectedInnerText,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveInnerText(expectedInnerText, because);
         return blockModel.Value;
     }
@@ -112,11 +133,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string notExpectedInnerText,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveNotInnerText(notExpectedInnerText, because);
         return blockModel.Value;
     }
@@ -125,11 +150,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string expectedInputValue,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveInputValue(expectedInputValue, because);
         return blockModel.Value;
     }
@@ -138,11 +167,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string notExpectedInputValue,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveNotInputValue(notExpectedInputValue, because);
         return blockModel.Value;
     }
@@ -150,11 +183,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveChecked<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeChecked(because);
         return blockModel.Value;
     }
@@ -162,11 +199,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveNotChecked<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeNotChecked(because);
         return blockModel.Value;
     }
@@ -174,11 +215,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveDisabled<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeDisabled(because);
         return blockModel.Value;
     }
@@ -186,11 +231,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveNotDisabled<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeNotDisabled(because);
         return blockModel.Value;
     }
@@ -198,11 +247,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveEditable<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeEditable(because);
         return blockModel.Value;
     }
@@ -210,11 +263,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveNotEditable<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeNotEditable(because);
         return blockModel.Value;
     }
@@ -222,11 +279,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveEnabled<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeEnabled(because);
         return blockModel.Value;
     }
@@ -234,11 +295,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveNotEnabled<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeNotEnabled(because);
         return blockModel.Value;
     }
@@ -246,11 +311,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveHidden<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeHidden(because);
         return blockModel.Value;
     }
@@ -258,11 +327,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveNotHidden<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeNotHidden(because);
         return blockModel.Value;
     }
@@ -270,11 +343,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveVisible<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeVisible(because);
         return blockModel.Value;
     }
@@ -282,11 +359,15 @@ public static class BlockModelAssertions
     public static TBlockModel HaveNotVisible<TBlockModel>(
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().BeNotVisible(because);
         return blockModel.Value;
     }
@@ -295,11 +376,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string attributeName,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveAttribute(attributeName, because);
         return blockModel.Value;
     }
@@ -308,11 +393,15 @@ public static class BlockModelAssertions
         this ReferenceTypeAssertion<TBlockModel> blockModel,
         string attributeName,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveNotAttribute(attributeName, because);
         return blockModel.Value;
     }
@@ -322,11 +411,15 @@ public static class BlockModelAssertions
         string attributeName,
         string value,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveAttributeValue(attributeName, value, because);
         return blockModel.Value;
     }
@@ -336,11 +429,15 @@ public static class BlockModelAssertions
         string styleName,
         string expectedStyleValue,
         string? selector = null,
-        string because = "no reason given")
+        string because = "no reason given",
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : IBlockModel
     {
         var block = blockModel.Value.Block;
-        var element = selector is null ? block : block.FindElement(selector);
+
+        if (selector is not null) block.WaitForSelector(selector, waitOptions);
+        var element = selector is null ? block : block.QuerySelector(selector)!;
+
         element.Should().HaveComputedStyle(styleName, expectedStyleValue, because);
         return blockModel.Value;
     }

@@ -14,12 +14,20 @@
     <PackageReference Include="NUnit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
-    <PackageReference Include="Playwright.Synchronous" Version="1.17.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TestParallel.ActionExtensions\TestParallel.ActionExtensions.csproj" />
     <ProjectReference Include="..\TestParallel.NUnitExtensions\TestParallel.NUnitExtensions.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Playwright.FluentAssertions">
+			<HintPath>..\..\..\Playwright.FluentAssertions\Playwright.FluentAssertions\bin\Release\net6.0\Playwright.FluentAssertions.dll</HintPath>
+		</Reference>
+		<Reference Include="Playwright.Synchronous">
+			<HintPath>..\..\..\Playwright.Synchronous\Playwright.Synchronous\bin\Release\net6.0\Playwright.Synchronous.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>

@@ -61,6 +61,21 @@ public partial class PageModel
         return (TBlockModel)block;
     }
 
+    private TBlockModel CreateBlockModel<TBlockModel>(IElementHandle element)
+        where TBlockModel : class
+    {
+        var blockType = typeof(TBlockModel);
+        var ctorArgs = new[] { this.GetType(), typeof(IElementHandle) };
+
+        var ctor = blockType.GetConstructor(ctorArgs);
+        if (ctor is null) throw new ApplicationException("Block Model not found");
+
+        var block = ctor.Invoke(new[] { this, (object)element });
+        if (block is null) throw new ApplicationException("Block Model not created");
+
+        return (TBlockModel)block;
+    }
+
     protected virtual TPageModel Goto<TPageModel>(string url, PageGotoOptions? options = null)
         where TPageModel : PageModel
     {
@@ -93,28 +108,31 @@ public partial class PageModel
         return page;
     }
 
+    protected virtual void Close(PageCloseOptions? options = null)
+    {
+        this.Page.ClosePage(options);
+    }
+
+    protected virtual IElementHandle? QuerySelector(string selector, PageQuerySelectorOptions? options = null)
+    {
+        return this.Page.QuerySelector(selector, options);
+    }
+
+    protected virtual IReadOnlyList<IElementHandle> QuerySelectorAll(string selector)
+    {
+        return this.Page.QuerySelectorAll(selector);
+    }
+
     protected virtual IElementHandle GetElement(
         string selector, 
         PageWaitForSelectorOptions? waitOptions = null, 
-        PageQuerySelectorOptions? queryOptions = null, 
-        string exceptionMessage = "Element not found")
+        PageQuerySelectorOptions? queryOptions = null)
     {
         this.Wait();
         this.Page.WaitForSelector(selector, waitOptions);
         var element = this.Page.QuerySelector(selector, queryOptions);
         return element!;
     }
-
-    //protected virtual IElementHandle? GetElementOrNull(
-    //    string selector, 
-    //    PageWaitForSelectorOptions? waitOptions = null, 
-    //    PageQuerySelectorOptions? queryOptions = null)
-    //{
-    //    this.Wait();
-    //    this.Page.WaitForSelector(selector, waitOptions);
-    //    var element = this.Page.FindElement(selector, queryOptions);
-    //    return element;
-    //}
 
     protected virtual IReadOnlyCollection<IElementHandle> GetElements(string selector, PageWaitForSelectorOptions? waitOptions = null)
     {
@@ -124,7 +142,6 @@ public partial class PageModel
         return elements;
     }
 
-    // TODO need test
     protected virtual TBlockModel GetBlock<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
@@ -134,29 +151,6 @@ public partial class PageModel
         return block;
     }
 
-    //protected virtual TBlockModel? GetBlockOrNull<TBlockModel>(string selector)
-    //    where TBlockModel : class
-    //{
-    //    this.Wait();
-    //
-    //    var blockType = typeof(TBlockModel);
-    //    var ctorArgs = new[] { this.GetType(), typeof(string) };
-    //
-    //    var ctor = blockType.GetConstructor(ctorArgs);
-    //    if (ctor is null) throw new ApplicationException("Block Model not found");
-    //
-    //    object? block = null;
-    //    try
-    //    {
-    //        block = ctor.Invoke(new[] { this, (object)selector });
-    //    }
-    //    catch { }
-    //
-    //    return (TBlockModel?)block;
-    //}
-
-    // TODO при создании блоков не используется уже найденные элементы, а только селекторы
-    // исправить создание блоков с аргументами элементов
     protected virtual IReadOnlyCollection<TBlockModel> GetBlocks<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
@@ -168,30 +162,50 @@ public partial class PageModel
 
         foreach (var element in elements)
         {
-            var blockType = typeof(TBlockModel);
-            var ctorArgs = new[] { this.GetType(), typeof(string) };
-            var ctor = blockType.GetConstructor(ctorArgs);
-            if (ctor is null) throw new ApplicationException("Block Model not found");
-
-            var block = ctor.Invoke(new[] { this, (object)selector });
-
-            blocks.Add((TBlockModel)block);
+            var block = this.CreateBlockModel<TBlockModel>(element);
+            blocks.Add(block);
         }
 
         return blocks;
     }
 
-    protected virtual IElementHandle? QuerySelector(string selector, PageQuerySelectorOptions? options = null)
+    protected virtual IElementHandle? GetElementOrNull(
+        string selector, 
+        PageWaitForSelectorOptions? waitOptions = null, 
+        PageQuerySelectorOptions? queryOptions = null)
     {
         this.Wait();
-        return this.Page.QuerySelector(selector, options);
+        this.Page.WaitForSelector(selector, waitOptions);
+        var element = this.Page.QuerySelector(selector, queryOptions);
+        return element;
     }
 
-    protected virtual IReadOnlyList<IElementHandle> QuerySelectorAll(string selector)
+
+
+    // TODO need test
+    protected virtual TBlockModel? GetBlockModelOrNull<TBlockModel>(string selector)
+        where TBlockModel : class
     {
         this.Wait();
-        return this.Page.QuerySelectorAll(selector);
+    
+        var blockType = typeof(TBlockModel);
+        var ctorArgs = new[] { this.GetType(), typeof(string) };
+    
+        var ctor = blockType.GetConstructor(ctorArgs);
+        if (ctor is null) throw new ApplicationException("Block Model not found");
+    
+        object? block = null;
+        try
+        {
+            block = ctor.Invoke(new[] { this, (object)selector });
+        }
+        catch { }
+    
+        return (TBlockModel?)block;
     }
+
+    // TODO при создании блоков не используется уже найденные элементы, а только селекторы
+    // исправить создание блоков с аргументами элементов
 
     protected virtual void Click(string selector, PageClickOptions? options = null)
     {
@@ -846,11 +860,6 @@ public partial class PageModel
     protected virtual void Pause()
     {
         this.Page.Pause();
-    }
-
-    protected virtual void Close(PageCloseOptions? options = null)
-    {
-        this.Page.ClosePage(options);
     }
 
     protected string GetComputedStyle(

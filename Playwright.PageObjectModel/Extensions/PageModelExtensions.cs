@@ -37,13 +37,4 @@ public static class PageModelExtensions
         pageModel.Page.Screenshot(options);
         return pageModel;
     }
-
-    public static TPageModel Reload<TPageModel>(this TPageModel pageModel)
-        where TPageModel : PageModel, IWait
-    {
-        pageModel.Wait();
-        pageModel.Page.Reload();
-        pageModel.Wait();
-        return pageModel;
-    }
 }

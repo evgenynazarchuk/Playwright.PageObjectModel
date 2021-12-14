@@ -51,22 +51,7 @@ public partial class BlockModel<TPageModel>
         return element!;
     }
 
-    //protected virtual IElementHandle? FindElementOrNull(string selector)
-    //{
-    //    this.Wait();
-    //    var element = this.Block.QuerySelector(selector);
-    //    return element;
-    //}
-
-    protected virtual IReadOnlyList<IElementHandle> GetElements(string selector, ElementHandleWaitForSelectorOptions? options = null)
-    {
-        this.Wait();
-        this.Block.WaitForSelector(selector, options);
-        var elements = this.Block.QuerySelectorAll(selector);
-        return elements;
-    }
-
-    protected virtual TBlockModel FindBlock<TBlockModel>(string selector)
+    protected virtual TBlockModel GetBlockModel<TBlockModel>(string selector)
         where TBlockModel : class
     {
         this.Wait();
@@ -83,27 +68,15 @@ public partial class BlockModel<TPageModel>
         return (TBlockModel)block;
     }
 
-    //protected virtual TBlockModel? FindBlockOrNull<TBlockModel>(string selector)
-    //    where TBlockModel : class
-    //{
-    //    this.Wait();
-    //
-    //    var blockType = typeof(TBlockModel);
-    //    var ctorArgs = new[] { this.GetType(), typeof(string) };
-    //    var ctor = blockType.GetConstructor(ctorArgs);
-    //    if (ctor is null) throw new ApplicationException("Block Model not found");
-    //
-    //    object? block = null;
-    //    try
-    //    {
-    //        block = ctor.Invoke(new[] { this, (object)selector });
-    //    }
-    //    catch { }
-    //
-    //    return (TBlockModel?)block;
-    //}
+    protected virtual IReadOnlyList<IElementHandle> GetElements(string selector, ElementHandleWaitForSelectorOptions? options = null)
+    {
+        this.Wait();
+        this.Block.WaitForSelector(selector, options);
+        var elements = this.Block.QuerySelectorAll(selector);
+        return elements;
+    }
 
-    protected virtual IReadOnlyCollection<TBlockModel> FindBlocks<TBlockModel>(string selector)
+    protected virtual IReadOnlyCollection<TBlockModel> GetBlocks<TBlockModel>(string selector)
         where TBlockModel : class
     {
         this.Wait();
@@ -124,6 +97,33 @@ public partial class BlockModel<TPageModel>
         }
 
         return blocks;
+    }
+
+    protected virtual IElementHandle? GetElementOrNull(string selector)
+    {
+        this.Wait();
+        var element = this.Block.QuerySelector(selector);
+        return element;
+    }
+
+    protected virtual TBlockModel? GetBlockModelOrNull<TBlockModel>(string selector)
+        where TBlockModel : class
+    {
+        this.Wait();
+    
+        var blockType = typeof(TBlockModel);
+        var ctorArgs = new[] { this.GetType(), typeof(string) };
+        var ctor = blockType.GetConstructor(ctorArgs);
+        if (ctor is null) throw new ApplicationException("Block Model not found");
+    
+        object? block = null;
+        try
+        {
+            block = ctor.Invoke(new[] { this, (object)selector });
+        }
+        catch { }
+    
+        return (TBlockModel?)block;
     }
 
     protected virtual void Click(string? selector = null, ElementHandleClickOptions? options = null)

@@ -35,8 +35,9 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
         PageWaitForSelectorOptions? waitOptions = null, 
         PageQuerySelectorOptions? queryOptions = null)
     {
+        this.PageModel = pageModel;
         this.PageModel.Page.WaitForSelector(selector, waitOptions);
-        this.Block = this.PageModel.Page.QuerySelector(selector, queryOptions);
+        this.Block = this.PageModel.Page.QuerySelector(selector, queryOptions)!;
         this.PageModel = pageModel;
         this.Page = this.PageModel.Page;
     }
@@ -45,6 +46,7 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
         string selector, 
         ElementHandleWaitForSelectorOptions? waitOptions = null)
     {
+        
         parentBlockModel.WaitForSelector(selector, waitOptions);
         this.Block = parentBlockModel.GetElement(selector);
         this.PageModel = parentBlockModel.PageModel;

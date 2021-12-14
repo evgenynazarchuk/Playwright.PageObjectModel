@@ -10,4 +10,13 @@
     <PackageReference Include="NUnit" Version="3.13.2" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Reference Include="Playwright.FluentAssertions">
+			<HintPath>..\..\..\Playwright.FluentAssertions\Playwright.FluentAssertions\bin\Release\net6.0\Playwright.FluentAssertions.dll</HintPath>
+		</Reference>
+		<Reference Include="Playwright.Synchronous">
+			<HintPath>..\..\..\Playwright.Synchronous\Playwright.Synchronous\bin\Release\net6.0\Playwright.Synchronous.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
 </Project>

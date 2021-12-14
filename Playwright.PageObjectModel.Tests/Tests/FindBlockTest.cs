@@ -83,6 +83,8 @@ public class FindBlockTest : PageTest
 
     class PageTesting : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public PageTesting(IPage page)
             : base(page) { }
 
@@ -105,6 +107,8 @@ public class FindBlockTest : PageTest
     class Block1<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block1(TPageModel page, string selector)
             : base(page, selector) { }
 
@@ -112,18 +116,20 @@ public class FindBlockTest : PageTest
 
         public Block2<PageTesting> FindBlock2()
         {
-            return this.FindBlock<Block2<PageTesting>>(".block2");
+            return this.GetBlockModel<Block2<PageTesting>>(".block2");
         }
 
         public Block2<PageTesting>? NotFoundBlock()
         {
-            return this.FindBlock<Block2<PageTesting>>(".not_found_block");
+            return this.GetBlockModel<Block2<PageTesting>>(".not_found_block");
         }
     }
 
     class Block2<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block2(TPageModel page, string selector)
             : base(page, selector) { }
 
@@ -136,6 +142,8 @@ public class FindBlockTest : PageTest
     class Block3<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block3(TPageModel page, string selector)
             : base(page, selector) { }
 
@@ -144,13 +152,15 @@ public class FindBlockTest : PageTest
 
         public Block5<TPageModel> FindBlock5()
         {
-            return this.FindBlock<Block5<TPageModel>>(".block5");
+            return this.GetBlockModel<Block5<TPageModel>>(".block5");
         }
     }
 
     class Block4<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block4(TPageModel page, string selector)
             : base(page, selector) { }
 
@@ -159,13 +169,15 @@ public class FindBlockTest : PageTest
 
         public Block5<TPageModel> FindBlock5()
         {
-            return this.FindBlock<Block5<TPageModel>>(".block5");
+            return this.GetBlockModel<Block5<TPageModel>>(".block5");
         }
     }
 
     class Block5<TPageModel> : BlockModel<TPageModel>
         where TPageModel : PageModel
     {
+        public void Open(string url) => Page.GotoAsync(url).Wait();
+
         public Block5(TPageModel page, string selector)
             : base(page, selector) { }
 
