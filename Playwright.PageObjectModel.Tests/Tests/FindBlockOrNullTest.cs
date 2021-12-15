@@ -76,7 +76,7 @@ public class FindBlockOrNullTest : PageTest
 
         public Block1<PageTesting>? FindBlock1WhenNotNull()
         {
-            return this.GetBlock<Block1<PageTesting>>(".block1");
+            return this.GetBlockModel<Block1<PageTesting>>(".block1");
         }
 
         public Block1<PageTesting>? FindBlock1WhenNull()

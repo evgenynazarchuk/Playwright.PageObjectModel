@@ -34,7 +34,7 @@ public class InitBlockTest : PageTest
         Action act = () => testPage.NotFoundBlock();
 
         // Assert
-        act.Should().Throw<ApplicationException>().WithMessage("Element not found. Selector: .not_found_block");
+        act.Should().Throw<TimeoutException>();
     }
 
     [TestMethod]
@@ -48,7 +48,7 @@ public class InitBlockTest : PageTest
         Action act = () => testPage.Block1.NotFoundBlock();
 
         // Assert
-        act.Should().Throw<ApplicationException>().WithMessage("Element not found. Selector: .not_found_block");
+        act.Should().Throw<TimeoutException>();
     }
 
     class PageTesting : PageModel

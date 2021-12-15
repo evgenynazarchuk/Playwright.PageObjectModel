@@ -142,7 +142,7 @@ public partial class PageModel
         return elements;
     }
 
-    protected virtual TBlockModel GetBlock<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
+    protected virtual TBlockModel GetBlockModel<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
         this.Wait();
@@ -151,7 +151,7 @@ public partial class PageModel
         return block;
     }
 
-    protected virtual IReadOnlyCollection<TBlockModel> GetBlocks<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
+    protected virtual IReadOnlyCollection<TBlockModel> GetBlockModels<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
         this.Wait();

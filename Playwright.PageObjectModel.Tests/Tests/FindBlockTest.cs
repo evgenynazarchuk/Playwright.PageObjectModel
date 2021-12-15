@@ -51,7 +51,7 @@ public class FindBlockTest : PageTest
         Action act = () => testing.NotFoundBlock();
 
         // Assert
-        act.Should().Throw<ApplicationException>("Element not found");
+        act.Should().Throw<TimeoutException>();
     }
 
     [TestMethod]
@@ -90,17 +90,17 @@ public class FindBlockTest : PageTest
 
         public Block1<PageTesting> FindBlock1()
         {
-            return this.GetBlock<Block1<PageTesting>>(".block1");
+            return this.GetBlockModel<Block1<PageTesting>>(".block1");
         }
 
         public Block3<PageTesting> FindBlock3()
         {
-            return this.GetBlock<Block3<PageTesting>>(".block3");
+            return this.GetBlockModel<Block3<PageTesting>>(".block3");
         }
 
         public Block1<PageTesting>? NotFoundBlock()
         {
-            return this.GetBlock<Block1<PageTesting>>(".not_found_block");
+            return this.GetBlockModel<Block1<PageTesting>>(".not_found_block");
         }
     }
 
