@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestParallel.PlaywrightSync
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestParallel.ActionExtensions", "TestParallelTests\TestParallel.ActionExtensions\TestParallel.ActionExtensions.csproj", "{F53E593A-17CD-4962-88F5-3C8D57991815}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParallel.MSTestExtensions", "TestParallelTests\TestParallel.MSTestExtensions\TestParallel.MSTestExtensions.csproj", "{7E086DD6-1B61-4C5F-BC7F-4F576F4812DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestParallel.MSTestExtensions", "TestParallelTests\TestParallel.MSTestExtensions\TestParallel.MSTestExtensions.csproj", "{7E086DD6-1B61-4C5F-BC7F-4F576F4812DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParallel.NUnitExtensions", "TestParallelTests\TestParallel.NUnitExtensions\TestParallel.NUnitExtensions.csproj", "{9DE2FDFD-DC34-4F1A-A764-9DF2B9A8953C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestParallel.NUnitExtensions", "TestParallelTests\TestParallel.NUnitExtensions\TestParallel.NUnitExtensions.csproj", "{9DE2FDFD-DC34-4F1A-A764-9DF2B9A8953C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playwright.PageObjectModel.Samples", "Playwright.PageObjectModel.Samples\Playwright.PageObjectModel.Samples.csproj", "{586F36DC-3F9C-418E-A5F5-08BD8D9AD04E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{9DE2FDFD-DC34-4F1A-A764-9DF2B9A8953C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DE2FDFD-DC34-4F1A-A764-9DF2B9A8953C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DE2FDFD-DC34-4F1A-A764-9DF2B9A8953C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{586F36DC-3F9C-418E-A5F5-08BD8D9AD04E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{586F36DC-3F9C-418E-A5F5-08BD8D9AD04E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{586F36DC-3F9C-418E-A5F5-08BD8D9AD04E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{586F36DC-3F9C-418E-A5F5-08BD8D9AD04E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
