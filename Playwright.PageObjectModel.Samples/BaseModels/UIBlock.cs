@@ -1,12 +1,10 @@
 ﻿using Microsoft.Playwright;
-using Playwright.PageObjectModel;
 
 namespace Playwright.PageObjectModel.Samples.BaseModels;
 
 public class UIBlock<TPageModel> : BlockModel<TPageModel>
     where TPageModel : PageModel
 {
-    // create default constructors
     public UIBlock(TPageModel pageModel, IElementHandle element) : base(pageModel, element)
     {
     }

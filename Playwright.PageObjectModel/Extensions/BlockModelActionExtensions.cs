@@ -35,14 +35,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleClickOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Click(options);
+
         return blockModel;
     }
 
@@ -51,14 +49,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleDblClickOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.DblClick(options);
+
         return blockModel;
     }
 
@@ -67,26 +63,22 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleHoverOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Hover(options);
+
         return blockModel;
     }
 
     public static TBlockModel ClearInput<TBlockModel>(this TBlockModel blockModel, string? selector = null, ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Evaluate("(element) => element.value =''", element);
+
         return blockModel;
     }
 
@@ -96,14 +88,12 @@ public static class BlockModelActionExtensions
         string value = "", 
         ElementHandleTypeOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Type(value, options);
+
         return blockModel;
     }
 
@@ -113,14 +103,12 @@ public static class BlockModelActionExtensions
         string value = "", 
         ElementHandleFillOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Fill(value, options);
+
         return blockModel;
     }
 
@@ -129,14 +117,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleCheckOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Check(options);
+
         return blockModel;
     }
 
@@ -145,14 +131,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleUncheckOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Uncheck(options);
+
         return blockModel;
     }
 
@@ -160,14 +144,12 @@ public static class BlockModelActionExtensions
         this TBlockModel blockModel, 
         string? selector = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Focus();
+
         return blockModel;
     }
 
@@ -176,14 +158,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleTapOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Tap(options);
+
         return blockModel;
     }
 
@@ -193,14 +173,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandlePressOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.Press(key, options);
+
         return blockModel;
     }
 
@@ -209,14 +187,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSelectTextOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SelectText(options);
+
         return blockModel;
     }
 
@@ -226,14 +202,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSetCheckedOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SetChecked(checkedState, options);
+
         return blockModel;
     }
 
@@ -243,14 +217,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSetInputFilesOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SetInputFiles(files, options);
+
         return blockModel;
     }
 
@@ -260,14 +232,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSetInputFilesOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SetInputFiles(files, options);
+
         return blockModel;
     }
 
@@ -277,14 +247,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSetInputFilesOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SetInputFiles(files, options);
+
         return blockModel;
     }
 
@@ -294,14 +262,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSetInputFilesOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SetInputFiles(files, options);
+
         return blockModel;
     }
 
@@ -311,14 +277,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSelectOptionOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SelectOption(values, options);
+
         return blockModel;
     }
 
@@ -328,14 +292,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSelectOptionOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SelectOption(values, options);
+
         return blockModel;
     }
 
@@ -345,14 +307,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSelectOptionOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SelectOption(values, options);
+
         return blockModel;
     }
 
@@ -362,14 +322,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSelectOptionOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SelectOption(values, options);
+
         return blockModel;
     }
 
@@ -379,14 +337,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSelectOptionOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SelectOption(values, options);
+
         return blockModel;
     }
 
@@ -396,14 +352,12 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleSelectOptionOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.SelectOption(values, options);
+
         return blockModel;
     }
 
@@ -412,14 +366,40 @@ public static class BlockModelActionExtensions
         string? selector = null, 
         ElementHandleScrollIntoViewIfNeededOptions? options = null,
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
-
         if (selector is not null) blockModel.Block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? blockModel.Block : blockModel.Block.QuerySelector(selector)!;
-
         element.ScrollIntoViewIfNeeded(options);
+
+        return blockModel;
+    }
+
+    public static TBlockModel WaitPage<TBlockModel>(this TBlockModel blockModel, PageWaitForLoadStateOptions? options = null)
+        where TBlockModel : IBlockModel, ITypedBlockModel<PageModel>
+    {
+        blockModel.PageModel.WaitPage(options);
+        return blockModel;
+    }
+
+    public static TBlockModel WaitForLoad<TBlockModel>(this TBlockModel blockModel, PageWaitForLoadStateOptions? options = null)
+        where TBlockModel : IBlockModel
+    {
+        blockModel.Page.WaitForLoadState(LoadState.Load, options);
+        return blockModel;
+    }
+
+    public static TBlockModel WaitForDOM<TBlockModel>(this TBlockModel blockModel, PageWaitForLoadStateOptions? options = null)
+        where TBlockModel : IBlockModel
+    {
+        blockModel.Page.WaitForLoadState(LoadState.DOMContentLoaded, options);
+        return blockModel;
+    }
+
+    public static TBlockModel WaitForNetworkIdle<TBlockModel>(this TBlockModel blockModel, PageWaitForLoadStateOptions? options = null)
+        where TBlockModel : IBlockModel
+    {
+        blockModel.Page.WaitForLoadState(LoadState.NetworkIdle, options);
         return blockModel;
     }
 }

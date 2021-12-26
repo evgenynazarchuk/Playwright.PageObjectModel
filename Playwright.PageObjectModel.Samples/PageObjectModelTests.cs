@@ -4,7 +4,7 @@ using Playwright.FluentAssertions;
 
 namespace Playwright.PageObjectModel.Samples;
 
-public class Tests : UITest
+public class PageObjectModelTests : UITest
 {
     [Test]
     public void StartPageTest()
@@ -34,8 +34,6 @@ public class Tests : UITest
         Open()
             .Menu.Docs()
             .Should().HaveTitle("Getting started | Playwright");
-
-        System.Threading.Thread.Sleep(5000);
     }
 
     [Test]
@@ -44,7 +42,5 @@ public class Tests : UITest
         Open()
             .Menu.API()
             .Should().HaveTitle("Playwright Library | Playwright");
-
-        System.Threading.Thread.Sleep(5000);
     }
 }

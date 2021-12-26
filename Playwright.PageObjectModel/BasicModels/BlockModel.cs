@@ -27,7 +27,7 @@ using Playwright.Synchronous;
 
 namespace Playwright.PageObjectModel;
 
-public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>, IWait
+public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>
     where TPageModel : PageModel
 {
     public BlockModel(TPageModel pageModel, 
@@ -47,8 +47,8 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
         ElementHandleWaitForSelectorOptions? waitOptions = null)
     {
         
-        parentBlockModel.WaitForSelector(selector, waitOptions);
-        this.Block = parentBlockModel.GetElement(selector);
+        //parentBlockModel.WaitForSelector(selector, waitOptions);
+        this.Block = parentBlockModel.GetElement(selector, waitOptions);
         this.PageModel = parentBlockModel.PageModel;
         this.Page = this.PageModel.Page;
     }

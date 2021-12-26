@@ -26,7 +26,7 @@ using Microsoft.Playwright;
 
 namespace Playwright.PageObjectModel;
 
-public interface IPageModel
+public interface IPageModel : IWait
 {
     IPage Page { get; }
 }

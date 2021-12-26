@@ -35,6 +35,21 @@ public partial class PageModel
 {
     public virtual void Wait() { }
 
+    protected virtual void WaitForLoad(PageWaitForLoadStateOptions? options = null)
+    {
+        this.Page.WaitForLoadState(LoadState.Load, options);
+    }
+
+    protected virtual void WaitForNetworkIdle(PageWaitForLoadStateOptions? options = null)
+    {
+        this.Page.WaitForLoadState(LoadState.NetworkIdle, options);
+    }
+
+    protected virtual void WaitForDOM(PageWaitForLoadStateOptions? options = null)
+    {
+        this.Page.WaitForLoadState(LoadState.DOMContentLoaded, options);
+    }
+
     private TPageModel CreatePageModel<TPageModel>()
         where TPageModel : PageModel
     {
@@ -42,6 +57,7 @@ public partial class PageModel
         if (ctor is null) throw new ApplicationException("Page Model not found");
         var returnPage = ctor.Invoke(new[] { this.Page });
         var page = (TPageModel)returnPage;
+
         return page;
     }
 
@@ -128,7 +144,6 @@ public partial class PageModel
         PageWaitForSelectorOptions? waitOptions = null, 
         PageQuerySelectorOptions? queryOptions = null)
     {
-        this.Wait();
         this.Page.WaitForSelector(selector, waitOptions);
         var element = this.Page.QuerySelector(selector, queryOptions);
         return element!;
@@ -136,7 +151,6 @@ public partial class PageModel
 
     protected virtual IReadOnlyCollection<IElementHandle> GetElements(string selector, PageWaitForSelectorOptions? waitOptions = null)
     {
-        this.Wait();
         this.Page.WaitForSelector(selector, waitOptions);
         var elements = this.Page.QuerySelectorAll(selector);
         return elements;
@@ -145,7 +159,6 @@ public partial class PageModel
     protected virtual TBlockModel GetBlockModel<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
-        this.Wait();
         this.Page.WaitForSelector(selector, waitOptions);
         var block = this.CreateBlockModel<TBlockModel>(selector);
         return block;
@@ -154,7 +167,6 @@ public partial class PageModel
     protected virtual IReadOnlyCollection<TBlockModel> GetBlockModels<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
-        this.Wait();
         this.Page.WaitForSelector(selector, waitOptions);
 
         var elements = this.Page.QuerySelectorAll(selector);
@@ -174,7 +186,6 @@ public partial class PageModel
         PageWaitForSelectorOptions? waitOptions = null, 
         PageQuerySelectorOptions? queryOptions = null)
     {
-        this.Wait();
         this.Page.WaitForSelector(selector, waitOptions);
         var element = this.Page.QuerySelector(selector, queryOptions);
         return element;
@@ -186,8 +197,6 @@ public partial class PageModel
     protected virtual TBlockModel? GetBlockModelOrNull<TBlockModel>(string selector)
         where TBlockModel : class
     {
-        this.Wait();
-    
         var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
     
@@ -204,19 +213,14 @@ public partial class PageModel
         return (TBlockModel?)block;
     }
 
-    // TODO при создании блоков не используется уже найденные элементы, а только селекторы
-    // исправить создание блоков с аргументами элементов
-
     protected virtual void Click(string selector, PageClickOptions? options = null)
     {
-        this.Wait();
         this.Page.Click(selector, options);
     }
 
     protected virtual TReturnPage Click<TReturnPage>(string selector, PageClickOptions? options = null)
         where TReturnPage : PageModel
     {
-        this.Wait();
         this.Click(selector, options);
         var page = this.CreatePageModel<TReturnPage>();
         return page;
@@ -224,133 +228,112 @@ public partial class PageModel
 
     protected virtual void DblClick(string selector, PageDblClickOptions? options = null)
     {
-        this.Wait();
         this.Page.DblClick(selector, options);
     }
 
     protected virtual void Type(string selector, string value, PageTypeOptions? options = null)
     {
-        this.Wait();
         this.Page.Type(selector, value, options);
     }
 
     protected virtual void Check(string selector, PageCheckOptions? options = null)
     {
-        this.Wait();
         this.Page.Check(selector, options);
     }
 
     protected virtual void Uncheck(string selector, PageUncheckOptions? options = null)
     {
-        this.Wait();
         this.Page.Uncheck(selector, options);
     }
 
     protected virtual void SetChecked(string selector, bool checkedState, PageSetCheckedOptions? options = null)
     {
-        this.Wait();
         this.Page.SetChecked(selector, checkedState, options);
     }
 
     protected virtual void Tap(string selector, PageTapOptions? options = null)
     {
-        this.Wait();
         this.Page.Tap(selector, options);
     }
 
     protected virtual void DragAndDrop(string source, string target, PageDragAndDropOptions? options = null)
     {
-        this.Wait();
         this.Page.DragAndDrop(source, target, options);
     }
 
     protected virtual void Focus(string selector, PageFocusOptions? options = null)
     {
-        this.Wait();
         this.Page.Focus(selector, options);
     }
 
     protected virtual void Fill(string selector, string value, PageFillOptions? options = null)
     {
-        this.Wait();
         this.Page.Fill(selector, value, options);
     }
 
     protected virtual void Hover(string selector, PageHoverOptions? options = null)
     {
-        this.Wait();
         this.Page.Hover(selector, options);
     }
 
     protected virtual void Press(string selector, string key, PagePressOptions? options = null)
     {
-        this.Wait();
         this.Page.Press(selector, key, options);
     }
 
     protected virtual IReadOnlyList<string> SelectOption(string selector, string values, PageSelectOptionOptions? options = null)
     {
-        this.Wait();
         var result = this.Page.SelectOption(selector, values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(string selector, IElementHandle values, PageSelectOptionOptions? options = null)
     {
-        this.Wait();
         var result = this.Page.SelectOption(selector, values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<string> values, PageSelectOptionOptions? options = null)
     {
-        this.Wait();
         var result = this.Page.SelectOption(selector, values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(string selector, SelectOptionValue values, PageSelectOptionOptions? options = null)
     {
-        this.Wait();
         var result = this.Page.SelectOption(selector, values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<IElementHandle> values, PageSelectOptionOptions? options = null)
     {
-        this.Wait();
         var result = this.Page.SelectOption(selector, values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(string selector, IEnumerable<SelectOptionValue> values, PageSelectOptionOptions? options = null)
     {
-        this.Wait();
         var result = this.Page.SelectOption(selector, values, options);
         return result;
     }
 
     protected virtual void SetInputFiles(string selector, string files, PageSetInputFilesOptions? options = null)
     {
-        this.Wait();
         this.Page.SetInputFiles(selector, files, options);
     }
 
     protected virtual void SetInputFiles(string selector, FilePayload files, PageSetInputFilesOptions? options = null)
     {
-        this.Wait();
         this.Page.SetInputFiles(selector, files, options);
     }
 
     protected virtual void SetInputFiles(string selector, IEnumerable<string> files, PageSetInputFilesOptions? options = null)
     {
-        this.Wait();
         this.Page.SetInputFiles(selector, files, options);
     }
 
     protected virtual void SetInputFiles(string selector, IEnumerable<FilePayload> files, PageSetInputFilesOptions? options = null)
     {
-        this.Wait();
         this.Page.SetInputFiles(selector, files, options);
     }
 
@@ -376,7 +359,6 @@ public partial class PageModel
 
     protected virtual string Content()
     {
-        this.Wait();
         var content = this.Page.Content();
         return content;
     }
@@ -508,71 +490,58 @@ public partial class PageModel
 
     protected virtual string? GetAttribute(string selector, string name, PageWaitForSelectorOptions? waitOptions = null, PageGetAttributeOptions? queryOptions = null)
     {
-        this.Wait();
-        // TODO need wait for selector?
         this.Page.WaitForSelector(selector, waitOptions);
         return this.Page.GetAttribute(selector, name, queryOptions);
     }
 
     protected virtual string InnerHTML(string selector, PageWaitForSelectorOptions? waitOptions = null, PageInnerHTMLOptions? queryOptions = null)
     {
-        this.Wait();
-        // TODO need wait for selector?
         this.Page.WaitForSelector(selector, waitOptions);
         return this.Page.InnerHTML(selector, queryOptions);
     }
 
     protected virtual string InnerText(string selector, PageInnerTextOptions? queryOptions = null)
     {
-        this.Wait();
         return this.Page.InnerText(selector, queryOptions);
     }
 
     protected virtual string InputValue(string selector, PageInputValueOptions? queryOptions = null)
     {
-        this.Wait();
         return this.Page.InputValue(selector, queryOptions);
     }
 
     protected virtual bool IsChecked(string selector, PageIsCheckedOptions? queryOptions = null)
     {
-        this.Wait();
         return this.Page.IsChecked(selector, queryOptions);
     }
 
     protected virtual bool IsDisabled(string selector, PageIsDisabledOptions? options = null)
     {
-        this.Wait();
         return this.Page.IsDisabled(selector, options);
     }
 
     protected virtual bool IsEditable(string selector, PageIsEditableOptions? options = null)
     {
-        this.Wait();
         return this.Page.IsEditable(selector, options);
     }
 
     protected virtual bool IsEnabled(string selector, PageIsEnabledOptions? options = null)
     {
-        this.Wait();
         return this.Page.IsEnabled(selector, options);
     }
 
     protected virtual bool IsHidden(string selector, PageIsHiddenOptions? options = null)
     {
-        this.Wait();
         return this.Page.IsHidden(selector, options);
     }
 
     protected virtual bool IsVisible(string selector, PageIsVisibleOptions? options = null)
     {
-        this.Wait();
         return this.Page.IsVisible(selector, options);
     }
 
     protected virtual ILocator IsVisible(string selector)
     {
-        this.Wait();
         return this.Page.Locator(selector);
     }
 
@@ -608,115 +577,96 @@ public partial class PageModel
 
     protected virtual IFrame? Frame(string name)
     {
-        this.Wait();
         return this.Page.Frame(name);
     }
 
     protected virtual IFrame? FrameByUrl(string url)
     {
-        this.Wait();
         return this.Page.FrameByUrl(url);
     }
 
     protected virtual IFrame? FrameByUrl(Regex url)
     {
-        this.Wait();
         return this.Page.FrameByUrl(url);
     }
 
     protected virtual IFrame? FrameyUrl(Func<string, bool> url)
     {
-        this.Wait();
         return this.Page.FrameByUrl(url);
     }
 
     protected virtual IConsoleMessage RunAndWaitForConsoleMessage(Func<Task> action, PageRunAndWaitForConsoleMessageOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForConsoleMessage(action, options);
     }
 
     protected virtual IDownload RunAndWaitForDownload(Func<Task> action, PageRunAndWaitForDownloadOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForDownload(action, options);
     }
 
     protected virtual IFileChooser RunAndWaitForFileChooser(Func<Task> action, PageRunAndWaitForFileChooserOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForFileChooser(action, options);
     }
 
     protected virtual IResponse? RunAndWaitForNavigation(Func<Task> action, PageRunAndWaitForNavigationOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForNavigation(action, options);
     }
 
     protected virtual IPage RunAndWaitForPopup(Func<Task> action, PageRunAndWaitForPopupOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForPopup(action, options);
     }
 
     protected virtual IRequest RunAndWaitForRequest(Func<Task> action, string urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForRequest(action, urlOrPredicate, options);
     }
 
     protected virtual IRequest RunAndWaitForRequest(Func<Task> action, Regex urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForRequest(action, urlOrPredicate, options);
     }
 
     protected virtual IRequest RunAndWaitForRequest(Func<Task> action, Func<IRequest, bool> urlOrPredicate, PageRunAndWaitForRequestOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForRequest(action, urlOrPredicate, options);
     }
 
     protected virtual IRequest RunAndWaitForRequestFinished(Func<Task> action, PageRunAndWaitForRequestFinishedOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForRequestFinished(action, options);
     }
 
     protected virtual IResponse RunAndWaitForResponse(Func<Task> action, string urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForResponse(action, urlOrPredicate, options);
     }
 
     protected virtual IResponse RunAndWaitForResponse(Func<Task> action, Regex urlOrPredicate, PageRunAndWaitForResponseOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForResponse(action, urlOrPredicate, options);
     }
 
     protected virtual IWebSocket RunAndWaitForWebSocket(Func<Task> action, PageRunAndWaitForWebSocketOptions? options = null)
     {
-        this.Wait();
         return this.Page.RunAndWaitForWebSocket(action, options);
     }
 
     protected virtual void RunAndWaitForWorker(Func<Task> action, PageRunAndWaitForWorkerOptions? options = null)
     {
-        this.Wait();
         this.Page.RunAndWaitForWorker(action, options);
     }
 
     protected virtual void Screenshot(PageScreenshotOptions? options = null)
     {
-        this.Wait();
         this.Page.Screenshot(options);
     }
 
     protected virtual byte[] Pdf(PagePdfOptions? options = null)
     {
-        this.Wait();
         return this.Page.Pdf(options);
     }
 
@@ -737,13 +687,11 @@ public partial class PageModel
 
     protected virtual string? TextContent(string selector, PageTextContentOptions? options = null)
     {
-        this.Wait();
         return this.Page.TextContent(selector, options);
     }
 
     protected virtual string Title()
     {
-        this.Wait();
         return this.Page.Title();
     }
 

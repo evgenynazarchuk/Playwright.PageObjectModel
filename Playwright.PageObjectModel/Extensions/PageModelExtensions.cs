@@ -33,7 +33,6 @@ public static class PageModelExtensions
         where TPageModel : PageModel
 
     {
-        pageModel.Wait();
         pageModel.Page.Screenshot(options);
         return pageModel;
     }

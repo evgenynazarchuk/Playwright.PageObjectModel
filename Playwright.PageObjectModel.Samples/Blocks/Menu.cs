@@ -1,5 +1,6 @@
 ﻿using Playwright.PageObjectModel.Samples.BaseModels;
 using Playwright.PageObjectModel.Samples.Pages;
+using Playwright.Synchronous;
 using Microsoft.Playwright;
 
 namespace Playwright.PageObjectModel.Samples.Blocks;
@@ -29,7 +30,15 @@ public class Menu<TPageModel> : UIBlock<TPageModel>
         return PageModel;
     }
 
-    public DocsPage Docs() => Click<DocsPage>("//a[text()='Docs']");
+    public DocsPage Docs()
+    {
+        Click("//a[text()='Docs']");
+        return new DocsPage(this.Page);
+    }
 
-    public ApiPage API() => Click<ApiPage>("//a[text()='API']");
+    public ApiPage API()
+    {
+        Click("//a[text()='API']");
+        return new ApiPage(this.Page);
+    }
 }

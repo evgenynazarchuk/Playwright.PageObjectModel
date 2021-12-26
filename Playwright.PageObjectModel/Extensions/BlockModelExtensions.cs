@@ -30,10 +30,10 @@ namespace Playwright.PageObjectModel;
 public static class BlockModelExtensions
 {
     public static TBlockModel Screenshot<TBlockModel>(this TBlockModel blockModel, ElementHandleScreenshotOptions? options = null)
-        where TBlockModel : IBlockModel, IWait
+        where TBlockModel : IBlockModel
     {
-        blockModel.Wait();
         blockModel.Block.Screenshot(options);
+
         return blockModel;
     }
 }

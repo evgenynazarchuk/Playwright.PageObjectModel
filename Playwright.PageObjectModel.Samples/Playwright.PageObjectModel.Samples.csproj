@@ -15,8 +15,11 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
     <PackageReference Include="Playwright.FluentAssertions" Version="1.17.3.1" />
-    <PackageReference Include="Playwright.PageObjectModel" Version="1.17.3.1" />
     <PackageReference Include="Playwright.Synchronous" Version="1.17.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Playwright.PageObjectModel\Playwright.PageObjectModel.csproj" />
   </ItemGroup>
 
 </Project>
