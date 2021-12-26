@@ -46,8 +46,6 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
         string selector, 
         ElementHandleWaitForSelectorOptions? waitOptions = null)
     {
-        
-        //parentBlockModel.WaitForSelector(selector, waitOptions);
         this.Block = parentBlockModel.GetElement(selector, waitOptions);
         this.PageModel = parentBlockModel.PageModel;
         this.Page = this.PageModel.Page;
