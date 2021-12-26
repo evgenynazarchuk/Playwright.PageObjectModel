@@ -45,7 +45,7 @@ public partial class BlockModel<TPageModel>
 
     protected virtual void WaitForLoadNetworkIdle(PageWaitForLoadStateOptions? options = null)
     {
-        this.PageModel.WaitForLoad(options);
+        this.PageModel.WaitForNetworkIdle(options);
     }
 
     protected virtual void WaitForLoadDOM(PageWaitForLoadStateOptions? options = null)
