@@ -33,6 +33,12 @@ namespace Playwright.PageObjectModel;
 public partial class ElementModel<TPageModel> : IElementModel, ITypedElementModel<TPageModel>
     where TPageModel : PageModel
 {
+    public IPage Page { get; }
+
+    public IElementHandle Element { get; }
+
+    public TPageModel PageModel { get; }
+
     public ElementModel(TPageModel pageModel, 
         string selector, 
         PageWaitForSelectorOptions? waitOptions = null, 
@@ -45,12 +51,12 @@ public partial class ElementModel<TPageModel> : IElementModel, ITypedElementMode
         this.Page = this.PageModel.Page;
     }
 
-    public ElementModel(ElementModel<TPageModel> parenTElementModel, 
+    public ElementModel(ElementModel<TPageModel> parentElementModel, 
         string selector, 
         ElementHandleWaitForSelectorOptions? waitOptions = null)
     {
-        this.Element = parenTElementModel.GetElement(selector, waitOptions);
-        this.PageModel = parenTElementModel.PageModel;
+        this.Element = parentElementModel.GetElement(selector, waitOptions);
+        this.PageModel = parentElementModel.PageModel;
         this.Page = this.PageModel.Page;
     }
 
@@ -68,22 +74,6 @@ public partial class ElementModel<TPageModel> : IElementModel, ITypedElementMode
         this.Page = this.PageModel.Page;
     }
 
-    public IPage Page { get; }
-
-    public IElementHandle Element { get; }
-
-    public TPageModel PageModel { get; }
-
-    public virtual void Wait()
-    {
-        this.PageModel.Wait();
-    }
-
-    protected virtual void WaitForLoad(LoadState loadState, PageWaitForLoadStateOptions? options = null)
-    {
-        this.PageModel.WaitForLoadState(loadState, options);
-    }
-
     public TPageModel UpToPage()
     {
         return this.PageModel;
@@ -96,8 +86,20 @@ public partial class ElementModel<TPageModel> : IElementModel, ITypedElementMode
         return element!;
     }
 
-    protected virtual TElementModel GeTElementModel<TElementModel>(string selector)
-        where TElementModel : class
+    protected virtual IElementHandle? GetElementOrNull(string selector)
+    {
+        var element = this.Element.QuerySelector(selector);
+        return element;
+    }
+
+    protected virtual IReadOnlyList<IElementHandle> GetElements(string selector, ElementHandleWaitForSelectorOptions? options = null)
+    {
+        var elements = this.Element.QuerySelectorAll(selector);
+        return elements;
+    }
+
+    protected virtual TElementModel GetElementModel<TElementModel>(string selector)
+        where TElementModel : ITypedElementModel<TPageModel>
     {
         var blockType = typeof(TElementModel);
         var ctorArgs = new[] { typeof(ElementModel<TPageModel>), typeof(string) };
@@ -111,15 +113,8 @@ public partial class ElementModel<TPageModel> : IElementModel, ITypedElementMode
         return (TElementModel)block;
     }
 
-    protected virtual IReadOnlyList<IElementHandle> GetElements(string selector, ElementHandleWaitForSelectorOptions? options = null)
-    {
-        this.Element.WaitForSelector(selector, options);
-        var elements = this.Element.QuerySelectorAll(selector);
-        return elements;
-    }
-
-    protected virtual IReadOnlyCollection<TElementModel> GetBlocks<TElementModel>(string selector)
-        where TElementModel : class
+    protected virtual IReadOnlyCollection<TElementModel> GetElementModels<TElementModel>(string selector)
+        where TElementModel : ITypedElementModel<TPageModel>
     {
         var elements = this.Element.QuerySelectorAll(selector);
         var blocks = new List<TElementModel>();
@@ -139,30 +134,6 @@ public partial class ElementModel<TPageModel> : IElementModel, ITypedElementMode
         return blocks;
     }
 
-    protected virtual IElementHandle? GetElementOrNull(string selector)
-    {
-        var element = this.Element.QuerySelector(selector);
-        return element;
-    }
-
-    protected virtual TElementModel? GeTElementModelOrNull<TElementModel>(string selector)
-        where TElementModel : class
-    {
-        var blockType = typeof(TElementModel);
-        var ctorArgs = new[] { this.GetType(), typeof(string) };
-        var ctor = blockType.GetConstructor(ctorArgs);
-        if (ctor is null) throw new ApplicationException("Block Model not found");
-
-        object? block = null;
-        try
-        {
-            block = ctor.Invoke(new[] { this, (object)selector });
-        }
-        catch { }
-
-        return (TElementModel?)block;
-    }
-
     protected virtual void Click(string? selector = null, ElementHandleClickOptions? options = null)
     {
         var element = selector is null ? this.Element : this.GetElement(selector);
@@ -177,6 +148,7 @@ public partial class ElementModel<TPageModel> : IElementModel, ITypedElementMode
         var ctor = typeof(TReturnPage).GetConstructor(new[] { typeof(IPage) });
         if (ctor is null) throw new ApplicationException("Page Model not found");
         var returnPage = ctor.Invoke(new[] { this.PageModel.Page });
+        if (returnPage is null) throw new ApplicationException("Page Model not created");
 
         return (TReturnPage)returnPage;
     }
@@ -277,46 +249,40 @@ public partial class ElementModel<TPageModel> : IElementModel, ITypedElementMode
         element.SetInputFiles(files, options);
     }
 
-    protected virtual IReadOnlyList<string> SelectOption(string values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    protected virtual void SelectOption(string values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
         var element = selector is null ? this.Element : this.GetElement(selector);
-        var result = element.SelectOption(values, options);
-        return result;
+        element.SelectOption(values, options);
     }
 
-    protected virtual IReadOnlyList<string> SelectOption(IElementHandle values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    protected virtual void SelectOption(IElementHandle values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
         var element = selector is null ? this.Element : this.GetElement(selector);
-        var result = element.SelectOption(values, options);
-        return result;
+        element.SelectOption(values, options);
     }
 
-    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<string> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    protected virtual void SelectOption(IEnumerable<string> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
         var element = selector is null ? this.Element : this.GetElement(selector);
-        var result = element.SelectOption(values, options);
-        return result;
+        element.SelectOption(values, options);
     }
 
-    protected virtual IReadOnlyList<string> SelectOption(SelectOptionValue values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    protected virtual void SelectOption(SelectOptionValue values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
         var element = selector is null ? this.Element : this.GetElement(selector);
-        var result = element.SelectOption(values, options);
-        return result;
+        element.SelectOption(values, options);
     }
 
-    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<IElementHandle> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    protected virtual void SelectOption(IEnumerable<IElementHandle> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
         var element = selector is null ? this.Element : this.GetElement(selector);
-        var result = element.SelectOption(values, options);
-        return result;
+        element.SelectOption(values, options);
     }
 
-    protected virtual IReadOnlyList<string> SelectOption(IEnumerable<SelectOptionValue> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
+    protected virtual void SelectOption(IEnumerable<SelectOptionValue> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
         var element = selector is null ? this.Element : this.GetElement(selector);
-        var result = element.SelectOption(values, options);
-        return result;
+        element.SelectOption(values, options);
     }
 
     protected virtual void ScrollIntoViewIfNeeded(string? selector = null, ElementHandleScrollIntoViewIfNeededOptions? options = null)

@@ -22,8 +22,12 @@
  * SOFTWARE.
  */
 
+using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.Playwright;
 using Playwright.Synchronous;
+using System.Collections.Generic;
 
 namespace Playwright.PageObjectModel;
 
@@ -31,7 +35,6 @@ public static class PageModelExtensions
 {
     public static TPageModel Screenshot<TPageModel>(this TPageModel pageModel, PageScreenshotOptions? options = null)
         where TPageModel : PageModel
-
     {
         pageModel.Page.Screenshot(options);
         return pageModel;

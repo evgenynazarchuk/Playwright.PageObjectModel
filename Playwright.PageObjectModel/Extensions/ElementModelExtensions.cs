@@ -24,6 +24,7 @@
 
 using Microsoft.Playwright;
 using Playwright.Synchronous;
+using System.Collections.Generic;
 
 namespace Playwright.PageObjectModel;
 
@@ -33,7 +34,6 @@ public static class ElementModelExtensions
         where TElementModel : IElementModel
     {
         elementModel.Element.Screenshot(options);
-
         return elementModel;
     }
 }

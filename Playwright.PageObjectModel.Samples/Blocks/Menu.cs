@@ -27,21 +27,21 @@ public class Menu<TPageModel> : UIBlock<TPageModel>
     public TPageModel ToggleTheme()
     {
         Click(".toggleTrackThumb_xI_Z");
-        WaitForLoadNetworkIdle();
+        //WaitForLoadNetworkIdle();
         return PageModel;
     }
 
     public DocsPage Docs()
     {
         Click("//a[text()='Docs']");
-        WaitForLoadNetworkIdle();
+        //WaitForLoadNetworkIdle();
         return new DocsPage(this.Page);
     }
 
     public ApiPage API()
     {
         Click("//a[text()='API']");
-        WaitForLoadNetworkIdle();
+        //WaitForLoadNetworkIdle();
         return new ApiPage(this.Page);
     }
 }

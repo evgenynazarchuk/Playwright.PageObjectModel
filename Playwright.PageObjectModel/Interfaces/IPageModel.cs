@@ -1,7 +1,7 @@
 ﻿/*
  * MIT License
  *
- * Copyright (c) Evgeny Naazarchuk.
+ * Copyright (c) Evgeny Nazarchuk.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +22,11 @@
  * SOFTWARE.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Playwright;
 
-namespace Playwright.PageObjectModel.Interfaces.ModelActions;
+namespace Playwright.PageObjectModel;
 
-public interface IElementModelActions
+public interface IPageModel
 {
+    IPage Page { get; }
 }

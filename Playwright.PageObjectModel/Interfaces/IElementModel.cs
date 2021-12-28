@@ -22,9 +22,13 @@
  * SOFTWARE.
  */
 
+using Microsoft.Playwright;
+
 namespace Playwright.PageObjectModel;
 
-public interface IWait
+public interface IElementModel
 {
-    void Wait();
+    IPage Page { get; }
+
+    IElementHandle Element { get; }
 }
