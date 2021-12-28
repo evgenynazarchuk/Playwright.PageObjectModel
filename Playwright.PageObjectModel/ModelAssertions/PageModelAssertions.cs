@@ -60,7 +60,7 @@ public static partial class PageModelAssertions
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string notExpectedTitle,
         string because = "no reason given")
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotTitle(notExpectedTitle, because);
         return pageModel.Value;
@@ -70,7 +70,7 @@ public static partial class PageModelAssertions
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string expectedContent,
         string because = "no reason given")
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveContent(expectedContent, because);
         return pageModel.Value;
@@ -80,7 +80,7 @@ public static partial class PageModelAssertions
         this ReferenceTypeAssertion<TPageModel> pageModel,
         string notExpectedContent,
         string because = "no reason given")
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotContent(notExpectedContent, because);
         return pageModel.Value;
@@ -93,7 +93,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? queryOptions = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveElementTextContent(selector, expectedTextContent, because, waitOptions, queryOptions);
         return pageModel.Value;
@@ -106,7 +106,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? queryOptions = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotElementTextContent(selector, notExpectedTextContent, because, waitOptions, queryOptions);
         return pageModel.Value;
@@ -119,7 +119,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveElementInnerHTML(selector, expectedInnerHtml, because, waitOptions, options);
         return pageModel.Value;
@@ -132,7 +132,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotElementInnerHTML(selector, notExpectedInnerHtml, because, waitOptions, options);
         return pageModel.Value;
@@ -158,7 +158,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotElementInnerText(selector, notExpectedInnerText, because, waitOptions, options);
         return pageModel.Value;
@@ -171,7 +171,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveElementInputValue(selector, expectedInputValue, because, waitOptions, options);
         return pageModel.Value;
@@ -184,7 +184,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotElementInputValue(selector, notExpectedInputValue, because, waitOptions, options);
         return pageModel.Value;
@@ -196,7 +196,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveCheckedElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -208,7 +208,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotCheckedElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -220,7 +220,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveDisabledElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -232,7 +232,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotDisabledElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -244,7 +244,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveEditableElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -256,7 +256,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotEditableElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -268,7 +268,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveEnabledElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -280,7 +280,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotEnabledElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -292,7 +292,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveHiddenElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -304,7 +304,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotHiddenElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -316,7 +316,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveVisibleElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -328,7 +328,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotVisibleElement(selector, because, waitOptions, options);
         return pageModel.Value;
@@ -341,7 +341,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveElementAttribute(selector, attributeName, because, waitOptions, options);
         return pageModel.Value;
@@ -355,7 +355,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveElementAttributeValue(selector, attributeName, expectedValue, because, waitOptions, options);
         return pageModel.Value;
@@ -368,7 +368,7 @@ public static partial class PageModelAssertions
         string because = "no reason given",
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? options = null)
-        where TPageModel : IPageModel, IWait
+        where TPageModel : PageModel
     {
         pageModel.Value.Page.Should().HaveNotElementAttribute(selector, attributeName, because, waitOptions, options);
         return pageModel.Value;

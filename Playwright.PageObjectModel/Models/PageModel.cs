@@ -1,7 +1,7 @@
 ﻿/*
  * MIT License
  *
- * Copyright (c) Evgeny Nazarchuk.
+ * Copyright (c) Evgeny Naazarchuk.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
  */
 
 using Microsoft.Playwright;
+using Microsoft.Playwright;
 using Playwright.Synchronous;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,15 @@ using System.Threading.Tasks;
 
 namespace Playwright.PageObjectModel;
 
-public partial class PageModel
+public partial class PageModel : IPageModel
 {
+    public PageModel(IPage page)
+    {
+        this.Page = page;
+    }
+
+    public IPage Page { get; }
+
     public virtual void Wait() { }
 
     protected virtual void WaitForLoad(PageWaitForLoadStateOptions? options = null)
@@ -140,8 +148,8 @@ public partial class PageModel
     }
 
     protected virtual IElementHandle GetElement(
-        string selector, 
-        PageWaitForSelectorOptions? waitOptions = null, 
+        string selector,
+        PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? queryOptions = null)
     {
         this.Page.WaitForSelector(selector, waitOptions);
@@ -182,8 +190,8 @@ public partial class PageModel
     }
 
     protected virtual IElementHandle? GetElementOrNull(
-        string selector, 
-        PageWaitForSelectorOptions? waitOptions = null, 
+        string selector,
+        PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? queryOptions = null)
     {
         this.Page.WaitForSelector(selector, waitOptions);
@@ -199,17 +207,17 @@ public partial class PageModel
     {
         var blockType = typeof(TBlockModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
-    
+
         var ctor = blockType.GetConstructor(ctorArgs);
         if (ctor is null) throw new ApplicationException("Block Model not found");
-    
+
         object? block = null;
         try
         {
             block = ctor.Invoke(new[] { this, (object)selector });
         }
         catch { }
-    
+
         return (TBlockModel?)block;
     }
 
@@ -811,9 +819,9 @@ public partial class PageModel
     }
 
     protected string GetComputedStyle(
-        string selector, 
-        string styleName, 
-        PageWaitForSelectorOptions? waitOptions = null, 
+        string selector,
+        string styleName,
+        PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? queryOptions = null)
     {
         this.Wait();
