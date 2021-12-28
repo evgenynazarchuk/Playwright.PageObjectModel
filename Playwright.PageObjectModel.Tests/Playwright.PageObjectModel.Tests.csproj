@@ -21,27 +21,6 @@
     <ProjectReference Include="..\Playwright.PageObjectModel\Playwright.PageObjectModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Tests\ClickTest1.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Tests\ClickTest2.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Tests\FindBlockTest.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Tests\FindBlockOrNullTest.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Tests\FindBlocksTest.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Tests\InitBlockTest.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 	<ItemGroup>
 		<Reference Include="Playwright.FluentAssertions">
 			<HintPath>..\..\Playwright.FluentAssertions\Playwright.FluentAssertions\bin\Release\net6.0\Playwright.FluentAssertions.dll</HintPath>

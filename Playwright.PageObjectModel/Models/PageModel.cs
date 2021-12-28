@@ -28,23 +28,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Playwright.PageObjectModel.Interfaces.ModelActions;
-using Playwright.PageObjectModel.ModelActions;
 
 namespace Playwright.PageObjectModel;
 
 public partial class PageModel : IPageModel
 {
+    public IPage Page { get; }
+
     public PageModel(IPage page)
     {
         this.Page = page;
     }
 
-    public IPage Page { get; }
-
-    public IPageModelActions Actions { get; protected set; } = new PageModelActions();
-
-    protected virtual void Wait() { }
+    protected virtual void Wait() 
+    {
+    }
 
     protected virtual void WaitForLoadState(LoadState loadState, PageWaitForLoadStateOptions? options = null)
     {
@@ -92,7 +90,7 @@ public partial class PageModel : IPageModel
         return (TBlockModel)block;
     }
 
-    protected virtual TPageModel Goto<TPageModel>(string url, PageGotoOptions? options = null)
+    public virtual TPageModel Goto<TPageModel>(string url, PageGotoOptions? options = null)
         where TPageModel : PageModel
     {
         this.Page.Goto(url, options);
@@ -100,7 +98,7 @@ public partial class PageModel : IPageModel
         return page;
     }
 
-    protected virtual TPageModel GoBack<TPageModel>(PageGoBackOptions? options = null)
+    public virtual TPageModel GoBack<TPageModel>(PageGoBackOptions? options = null)
         where TPageModel : PageModel
     {
         this.Page.GoBack(options);
@@ -108,7 +106,7 @@ public partial class PageModel : IPageModel
         return page;
     }
 
-    protected virtual TPageModel GoForward<TPageModel>(PageGoForwardOptions? options = null)
+    public virtual TPageModel GoForward<TPageModel>(PageGoForwardOptions? options = null)
         where TPageModel : PageModel
     {
         this.Page.GoForward(options);
@@ -116,7 +114,7 @@ public partial class PageModel : IPageModel
         return page;
     }
 
-    protected virtual TPageModel ReloadToPage<TPageModel>(PageReloadOptions? options = null)
+    public virtual TPageModel ReloadToPage<TPageModel>(PageReloadOptions? options = null)
         where TPageModel : PageModel
     {
         this.Page.ReloadAsync(options).GetAwaiter().GetResult();
@@ -155,14 +153,14 @@ public partial class PageModel : IPageModel
         return elements;
     }
 
-    protected virtual TBlockModel GetBlockModel<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
+    protected virtual TBlockModel GetElementModel<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
         var block = this.CreateBlockModel<TBlockModel>(selector);
         return block;
     }
 
-    protected virtual IReadOnlyCollection<TBlockModel> GetBlockModels<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
+    protected virtual IReadOnlyCollection<TBlockModel> GetElementModels<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
         var elements = this.Page.QuerySelectorAll(selector);
@@ -184,25 +182,6 @@ public partial class PageModel : IPageModel
     {
         var element = this.Page.QuerySelector(selector, queryOptions);
         return element;
-    }
-
-    protected virtual TBlockModel? GetBlockModelOrNull<TBlockModel>(string selector)
-        where TBlockModel : class
-    {
-        var blockType = typeof(TBlockModel);
-        var ctorArgs = new[] { this.GetType(), typeof(string) };
-
-        var ctor = blockType.GetConstructor(ctorArgs);
-        if (ctor is null) throw new ApplicationException("Block Model not found");
-
-        object? block = null;
-        try
-        {
-            block = ctor.Invoke(new[] { this, (object)selector });
-        }
-        catch { }
-
-        return (TBlockModel?)block;
     }
 
     protected virtual void Click(string selector, PageClickOptions? options = null)
