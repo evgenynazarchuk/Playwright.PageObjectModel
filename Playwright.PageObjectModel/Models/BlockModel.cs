@@ -30,9 +30,50 @@ using System.Text.Json;
 
 namespace Playwright.PageObjectModel;
 
-public partial class BlockModel<TPageModel>
+public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>
     where TPageModel : PageModel
 {
+    public BlockModel(TPageModel pageModel, 
+        string selector, 
+        PageWaitForSelectorOptions? waitOptions = null, 
+        PageQuerySelectorOptions? queryOptions = null)
+    {
+        this.PageModel = pageModel;
+        this.PageModel.Page.WaitForSelector(selector, waitOptions);
+        this.Block = this.PageModel.Page.QuerySelector(selector, queryOptions)!;
+        this.PageModel = pageModel;
+        this.Page = this.PageModel.Page;
+    }
+
+    public BlockModel(BlockModel<TPageModel> parentBlockModel, 
+        string selector, 
+        ElementHandleWaitForSelectorOptions? waitOptions = null)
+    {
+        this.Block = parentBlockModel.GetElement(selector, waitOptions);
+        this.PageModel = parentBlockModel.PageModel;
+        this.Page = this.PageModel.Page;
+    }
+
+    public BlockModel(TPageModel pageModel, IElementHandle element)
+    {
+        this.PageModel = pageModel;
+        this.Block = element;
+        this.Page = this.PageModel.Page;
+    }
+
+    public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
+    {
+        this.PageModel = parentBlockModel.PageModel;
+        this.Block = element;
+        this.Page = this.PageModel.Page;
+    }
+
+    public IPage Page { get; }
+
+    public IElementHandle Block { get; }
+
+    public TPageModel PageModel { get; }
+
     public virtual void Wait()
     {
         this.PageModel.Wait();
@@ -121,14 +162,14 @@ public partial class BlockModel<TPageModel>
         var ctorArgs = new[] { this.GetType(), typeof(string) };
         var ctor = blockType.GetConstructor(ctorArgs);
         if (ctor is null) throw new ApplicationException("Block Model not found");
-    
+
         object? block = null;
         try
         {
             block = ctor.Invoke(new[] { this, (object)selector });
         }
         catch { }
-    
+
         return (TBlockModel?)block;
     }
 
