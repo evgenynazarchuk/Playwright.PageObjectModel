@@ -2,18 +2,18 @@
 
 namespace Playwright.PageObjectModel.Samples.BaseModels;
 
-public class UIBlock<TPageModel> : BlockModel<TPageModel>
+public class UIBlock<TPageModel> : ElementModel<TPageModel>
     where TPageModel : PageModel
 {
     public UIBlock(TPageModel pageModel, IElementHandle element) : base(pageModel, element)
     {
     }
 
-    public UIBlock(BlockModel<TPageModel> parentBlockModel, IElementHandle element) : base(parentBlockModel, element)
+    public UIBlock(ElementModel<TPageModel> parentBlockModel, IElementHandle element) : base(parentBlockModel, element)
     {
     }
 
-    public UIBlock(BlockModel<TPageModel> parentBlockModel, string selector, ElementHandleWaitForSelectorOptions? waitOptions = null) : base(parentBlockModel, selector, waitOptions)
+    public UIBlock(ElementModel<TPageModel> parentBlockModel, string selector, ElementHandleWaitForSelectorOptions? waitOptions = null) : base(parentBlockModel, selector, waitOptions)
     {
     }
 

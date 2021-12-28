@@ -90,21 +90,21 @@ public class FindBlockTest : PageTest
 
         public Block1<PageTesting> FindBlock1()
         {
-            return this.GetBlockModel<Block1<PageTesting>>(".block1");
+            return this.GeTElementModel<Block1<PageTesting>>(".block1");
         }
 
         public Block3<PageTesting> FindBlock3()
         {
-            return this.GetBlockModel<Block3<PageTesting>>(".block3");
+            return this.GeTElementModel<Block3<PageTesting>>(".block3");
         }
 
         public Block1<PageTesting>? NotFoundBlock()
         {
-            return this.GetBlockModel<Block1<PageTesting>>(".not_found_block");
+            return this.GeTElementModel<Block1<PageTesting>>(".not_found_block");
         }
     }
 
-    class Block1<TPageModel> : BlockModel<TPageModel>
+    class Block1<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -116,16 +116,16 @@ public class FindBlockTest : PageTest
 
         public Block2<PageTesting> FindBlock2()
         {
-            return this.GetBlockModel<Block2<PageTesting>>(".block2");
+            return this.GeTElementModel<Block2<PageTesting>>(".block2");
         }
 
         public Block2<PageTesting>? NotFoundBlock()
         {
-            return this.GetBlockModel<Block2<PageTesting>>(".not_found_block");
+            return this.GeTElementModel<Block2<PageTesting>>(".not_found_block");
         }
     }
 
-    class Block2<TPageModel> : BlockModel<TPageModel>
+    class Block2<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -133,13 +133,13 @@ public class FindBlockTest : PageTest
         public Block2(TPageModel page, string selector)
             : base(page, selector) { }
 
-        public Block2(BlockModel<TPageModel> parentBlockModel, string selector)
-            : base(parentBlockModel, selector) { }
+        public Block2(ElementModel<TPageModel> parenTElementModel, string selector)
+            : base(parenTElementModel, selector) { }
 
         public string Text => this.InnerText();
     }
 
-    class Block3<TPageModel> : BlockModel<TPageModel>
+    class Block3<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -147,16 +147,16 @@ public class FindBlockTest : PageTest
         public Block3(TPageModel page, string selector)
             : base(page, selector) { }
 
-        public Block3(BlockModel<TPageModel> parentBlockModel, string selector)
-            : base(parentBlockModel, selector) { }
+        public Block3(ElementModel<TPageModel> parenTElementModel, string selector)
+            : base(parenTElementModel, selector) { }
 
         public Block5<TPageModel> FindBlock5()
         {
-            return this.GetBlockModel<Block5<TPageModel>>(".block5");
+            return this.GeTElementModel<Block5<TPageModel>>(".block5");
         }
     }
 
-    class Block4<TPageModel> : BlockModel<TPageModel>
+    class Block4<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -164,16 +164,16 @@ public class FindBlockTest : PageTest
         public Block4(TPageModel page, string selector)
             : base(page, selector) { }
 
-        public Block4(BlockModel<TPageModel> parentBlockModel, string selector)
-            : base(parentBlockModel, selector) { }
+        public Block4(ElementModel<TPageModel> parenTElementModel, string selector)
+            : base(parenTElementModel, selector) { }
 
         public Block5<TPageModel> FindBlock5()
         {
-            return this.GetBlockModel<Block5<TPageModel>>(".block5");
+            return this.GeTElementModel<Block5<TPageModel>>(".block5");
         }
     }
 
-    class Block5<TPageModel> : BlockModel<TPageModel>
+    class Block5<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -181,7 +181,7 @@ public class FindBlockTest : PageTest
         public Block5(TPageModel page, string selector)
             : base(page, selector) { }
 
-        public Block5(BlockModel<TPageModel> parentBlockModel, string selector)
-            : base(parentBlockModel, selector) { }
+        public Block5(ElementModel<TPageModel> parenTElementModel, string selector)
+            : base(parenTElementModel, selector) { }
     }
 }

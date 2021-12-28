@@ -58,7 +58,7 @@ public class ClickTest : PageTest
         public Page2Block<PageTesting2> BlockLink => new Page2Block<PageTesting2>(this, ".page2_block");
     }
 
-    class Page1Block<TPageModel> : BlockModel<TPageModel>
+    class Page1Block<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -66,13 +66,13 @@ public class ClickTest : PageTest
         public Page1Block(TPageModel pageModel, string selector)
             : base(pageModel, selector) { }
 
-        public Page1Block(BlockModel<TPageModel> parentBlockModel, string selector)
-            : base(parentBlockModel, selector) { }
+        public Page1Block(ElementModel<TPageModel> parenTElementModel, string selector)
+            : base(parenTElementModel, selector) { }
 
         public PageTesting2 ToPage2() => this.Click<PageTesting2>(".block-link");
     }
 
-    class Page2Block<TPageModel> : BlockModel<TPageModel>
+    class Page2Block<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -80,8 +80,8 @@ public class ClickTest : PageTest
         public Page2Block(TPageModel pageModel, string selector)
             : base(pageModel, selector) { }
 
-        public Page2Block(BlockModel<TPageModel> parentBlockModel, string selector)
-            : base(parentBlockModel, selector) { }
+        public Page2Block(ElementModel<TPageModel> parenTElementModel, string selector)
+            : base(parenTElementModel, selector) { }
 
         public PageTesting1 ToPage1() => this.Click<PageTesting1>(".block-link");
     }

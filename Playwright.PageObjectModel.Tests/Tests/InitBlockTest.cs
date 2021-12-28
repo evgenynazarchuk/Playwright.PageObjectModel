@@ -63,7 +63,7 @@ public class InitBlockTest : PageTest
         public Block1<PageTesting> NotFoundBlock() => new Block1<PageTesting>(this, ".not_found_block");
     }
 
-    class Block1<TPageModel> : BlockModel<TPageModel>
+    class Block1<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -76,23 +76,23 @@ public class InitBlockTest : PageTest
         public Block2<TPageModel> NotFoundBlock() => new Block2<TPageModel>(this, ".not_found_block");
     }
 
-    class Block2<TPageModel> : BlockModel<TPageModel>
+    class Block2<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
 
-        public Block2(BlockModel<TPageModel> parentBlockModel, string selector)
+        public Block2(ElementModel<TPageModel> parentBlockModel, string selector)
             : base(parentBlockModel, selector) { }
 
         public Block3<TPageModel> Block3 => new Block3<TPageModel>(this, ".block3");
     }
 
-    class Block3<TPageModel> : BlockModel<TPageModel>
+    class Block3<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
 
-        public Block3(BlockModel<TPageModel> parentBlockModel, string selector)
+        public Block3(ElementModel<TPageModel> parentBlockModel, string selector)
             : base(parentBlockModel, selector) { }
     }
 }

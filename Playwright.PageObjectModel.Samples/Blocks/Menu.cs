@@ -12,11 +12,11 @@ public class Menu<TPageModel> : UIBlock<TPageModel>
     {
     }
 
-    public Menu(BlockModel<TPageModel> parentBlockModel, IElementHandle element) : base(parentBlockModel, element)
+    public Menu(ElementModel<TPageModel> parentBlockModel, IElementHandle element) : base(parentBlockModel, element)
     {
     }
 
-    public Menu(BlockModel<TPageModel> parentBlockModel, string selector, ElementHandleWaitForSelectorOptions? waitOptions = null) : base(parentBlockModel, selector, waitOptions)
+    public Menu(ElementModel<TPageModel> parentBlockModel, string selector, ElementHandleWaitForSelectorOptions? waitOptions = null) : base(parentBlockModel, selector, waitOptions)
     {
     }
 

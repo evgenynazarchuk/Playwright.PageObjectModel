@@ -22,10 +22,16 @@
  * SOFTWARE.
  */
 
+using Microsoft.Playwright;
+using Playwright.PageObjectModel.Interfaces.ModelActions;
+
 namespace Playwright.PageObjectModel;
 
-public interface ITypedBlockModel<TPageModel>
-    where TPageModel : PageModel
+public interface IElementModel
 {
-    TPageModel PageModel { get; }
+    IPage Page { get; }
+
+    IElementHandle Element { get; }
+
+    IElementModelActions Actions { get; protected set; }
 }

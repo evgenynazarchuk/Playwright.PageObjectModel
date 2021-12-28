@@ -29,416 +29,416 @@ using System;
 
 namespace Playwright.FluentAssertions;
 
-public static class BlockModelAssertions
+public static class ElementModelAssertions
 {
-    public static ReferenceTypeAssertion<TBlockModel> Should<TBlockModel>(this TBlockModel blockModel)
-        where TBlockModel : IBlockModel
+    public static ReferenceTypeAssertion<TElementModel> Should<TElementModel>(this TElementModel elementModel)
+        where TElementModel : IElementModel
     {
-        return new ReferenceTypeAssertion<TBlockModel>(blockModel);
+        return new ReferenceTypeAssertion<TElementModel>(elementModel);
     }
 
-    public static TBlockModel VerifyThat<TBlockModel>(this TBlockModel blockModel, Action<TBlockModel> action)
-        where TBlockModel : IBlockModel
+    public static TElementModel VerifyThat<TElementModel>(this TElementModel elementModel, Action<TElementModel> action)
+        where TElementModel : IElementModel
     {
-        action(blockModel);
-        return blockModel;
+        action(elementModel);
+        return elementModel;
     }
 
-    public static TBlockModel HaveTextContent<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveTextContent<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string expectedTextContent,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if(selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveTextContent(expectedTextContent, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotTextContent<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotTextContent<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string notExpectedTextContent,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveNotTextContent(notExpectedTextContent, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveInnerHTML<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveInnerHTML<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string expectedInnerHtml,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveInnerHTML(expectedInnerHtml, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotInnerHTML<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotInnerHTML<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string notExpectedInnerHtml,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveNotInnerHTML(notExpectedInnerHtml, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveInnerText<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveInnerText<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string expectedInnerText,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveInnerText(expectedInnerText, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotInnerText<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotInnerText<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string notExpectedInnerText,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveNotInnerText(notExpectedInnerText, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveInputValue<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveInputValue<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string expectedInputValue,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveInputValue(expectedInputValue, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotInputValue<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotInputValue<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string notExpectedInputValue,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveNotInputValue(notExpectedInputValue, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveChecked<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveChecked<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeChecked(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotChecked<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotChecked<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeNotChecked(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveDisabled<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveDisabled<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeDisabled(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotDisabled<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotDisabled<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeNotDisabled(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveEditable<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveEditable<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeEditable(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotEditable<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotEditable<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeNotEditable(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveEnabled<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveEnabled<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeEnabled(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotEnabled<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotEnabled<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeNotEnabled(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveHidden<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveHidden<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeHidden(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotHidden<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotHidden<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeNotHidden(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveVisible<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveVisible<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeVisible(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotVisible<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotVisible<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().BeNotVisible(because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveAttribute<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveAttribute<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string attributeName,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveAttribute(attributeName, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveNotAttribute<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveNotAttribute<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string attributeName,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveNotAttribute(attributeName, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveAttributeValue<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveAttributeValue<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string attributeName,
         string value,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveAttributeValue(attributeName, value, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 
-    public static TBlockModel HaveComputedStyle<TBlockModel>(
-        this ReferenceTypeAssertion<TBlockModel> blockModel,
+    public static TElementModel HaveComputedStyle<TElementModel>(
+        this ReferenceTypeAssertion<TElementModel> elementModel,
         string styleName,
         string expectedStyleValue,
         string? selector = null,
         string because = "no reason given",
         ElementHandleWaitForSelectorOptions? waitOptions = null)
-        where TBlockModel : IBlockModel
+        where TElementModel : IElementModel
     {
-        var block = blockModel.Value.Block;
+        var block = elementModel.Value.Element;
 
         if (selector is not null) block.WaitForSelector(selector, waitOptions);
         var element = selector is null ? block : block.QuerySelector(selector)!;
 
         element.Should().HaveComputedStyle(styleName, expectedStyleValue, because);
-        return blockModel.Value;
+        return elementModel.Value;
     }
 }

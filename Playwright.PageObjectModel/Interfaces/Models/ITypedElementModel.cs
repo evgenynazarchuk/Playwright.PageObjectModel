@@ -22,14 +22,10 @@
  * SOFTWARE.
  */
 
-using Microsoft.Playwright;
-using Playwright.PageObjectModel.Interfaces.ModelActions;
-
 namespace Playwright.PageObjectModel;
 
-public interface IPageModel
+public interface ITypedElementModel<TPageModel> : IElementModel
+    where TPageModel : PageModel
 {
-    IPage Page { get; }
-
-    IPageModelActions Actions { get; protected set; }
+    TPageModel PageModel { get; }
 }
