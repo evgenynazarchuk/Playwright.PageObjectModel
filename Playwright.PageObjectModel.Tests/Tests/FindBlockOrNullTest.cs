@@ -76,16 +76,16 @@ public class FindBlockOrNullTest : PageTest
 
         public Block1<PageTesting>? FindBlock1WhenNotNull()
         {
-            return this.GetBlockModel<Block1<PageTesting>>(".block1");
+            return this.GeTElementModel<Block1<PageTesting>>(".block1");
         }
 
         public Block1<PageTesting>? FindBlock1WhenNull()
         {
-            return this.GetBlockModelOrNull<Block1<PageTesting>>(".not_found_block");
+            return this.GeTElementModelOrNull<Block1<PageTesting>>(".not_found_block");
         }
     }
 
-    class Block1<TPageModel> : BlockModel<TPageModel>
+    class Block1<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -95,45 +95,45 @@ public class FindBlockOrNullTest : PageTest
 
         public Block2<PageTesting>? FindBlock2WhenNotNull()
         {
-            return this.GetBlockModelOrNull<Block2<PageTesting>>(".block2");
+            return this.GeTElementModelOrNull<Block2<PageTesting>>(".block2");
         }
 
         public Block2<PageTesting>? FindBlock2WhenNull()
         {
-            return this.GetBlockModelOrNull<Block2<PageTesting>>(".not_found_block");
+            return this.GeTElementModelOrNull<Block2<PageTesting>>(".not_found_block");
         }
 
         public string Text => this.InnerText();
     }
 
-    class Block2<TPageModel> : BlockModel<TPageModel>
+    class Block2<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
 
-        public Block2(BlockModel<TPageModel> parentBlockModel, string selector)
-            : base(parentBlockModel, selector) { }
+        public Block2(ElementModel<TPageModel> parenTElementModel, string selector)
+            : base(parenTElementModel, selector) { }
 
         public Block3<PageTesting>? FindBlock3WhenNotNull()
         {
-            return this.GetBlockModelOrNull<Block3<PageTesting>>(".block3");
+            return this.GeTElementModelOrNull<Block3<PageTesting>>(".block3");
         }
 
         public Block2<PageTesting>? FindBlock3WhenNull()
         {
-            return this.GetBlockModelOrNull<Block2<PageTesting>>(".not_found_block");
+            return this.GeTElementModelOrNull<Block2<PageTesting>>(".not_found_block");
         }
 
         public string Text => this.InnerText();
     }
 
-    class Block3<TPageModel> : BlockModel<TPageModel>
+    class Block3<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
 
-        public Block3(BlockModel<TPageModel> parentBlockModel, string selector)
-            : base(parentBlockModel, selector) { }
+        public Block3(ElementModel<TPageModel> parenTElementModel, string selector)
+            : base(parenTElementModel, selector) { }
 
         public string Text => this.InnerText();
     }

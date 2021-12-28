@@ -23,12 +23,13 @@
  */
 
 using Microsoft.Playwright;
-using Microsoft.Playwright;
 using Playwright.Synchronous;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Playwright.PageObjectModel.Interfaces.ModelActions;
+using Playwright.PageObjectModel.ModelActions;
 
 namespace Playwright.PageObjectModel;
 
@@ -41,24 +42,16 @@ public partial class PageModel : IPageModel
 
     public IPage Page { get; }
 
-    public virtual void Wait() { }
+    public IPageModelActions Actions { get; protected set; } = new PageModelActions();
 
-    protected virtual void WaitForLoad(PageWaitForLoadStateOptions? options = null)
+    protected virtual void Wait() { }
+
+    protected virtual void WaitForLoadState(LoadState loadState, PageWaitForLoadStateOptions? options = null)
     {
-        this.Page.WaitForLoadState(LoadState.Load, options);
+        this.Page.WaitForLoadState(loadState, options);
     }
 
-    protected virtual void WaitForNetworkIdle(PageWaitForLoadStateOptions? options = null)
-    {
-        this.Page.WaitForLoadState(LoadState.NetworkIdle, options);
-    }
-
-    protected virtual void WaitForDOM(PageWaitForLoadStateOptions? options = null)
-    {
-        this.Page.WaitForLoadState(LoadState.DOMContentLoaded, options);
-    }
-
-    private TPageModel CreatePageModel<TPageModel>()
+    protected TPageModel CreatePageModel<TPageModel>()
         where TPageModel : PageModel
     {
         var ctor = typeof(TPageModel).GetConstructor(new[] { typeof(IPage) });
@@ -69,8 +62,7 @@ public partial class PageModel : IPageModel
         return page;
     }
 
-    // TODO need test
-    private TBlockModel CreateBlockModel<TBlockModel>(string selector)
+    protected TBlockModel CreateBlockModel<TBlockModel>(string selector)
         where TBlockModel : class
     {
         var blockType = typeof(TBlockModel);
@@ -85,7 +77,7 @@ public partial class PageModel : IPageModel
         return (TBlockModel)block;
     }
 
-    private TBlockModel CreateBlockModel<TBlockModel>(IElementHandle element)
+    protected TBlockModel CreateBlockModel<TBlockModel>(IElementHandle element)
         where TBlockModel : class
     {
         var blockType = typeof(TBlockModel);
@@ -132,7 +124,7 @@ public partial class PageModel : IPageModel
         return page;
     }
 
-    protected virtual void Close(PageCloseOptions? options = null)
+    public virtual void Close(PageCloseOptions? options = null)
     {
         this.Page.ClosePage(options);
     }
@@ -159,7 +151,6 @@ public partial class PageModel : IPageModel
 
     protected virtual IReadOnlyCollection<IElementHandle> GetElements(string selector, PageWaitForSelectorOptions? waitOptions = null)
     {
-        this.Page.WaitForSelector(selector, waitOptions);
         var elements = this.Page.QuerySelectorAll(selector);
         return elements;
     }
@@ -167,7 +158,6 @@ public partial class PageModel : IPageModel
     protected virtual TBlockModel GetBlockModel<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
-        this.Page.WaitForSelector(selector, waitOptions);
         var block = this.CreateBlockModel<TBlockModel>(selector);
         return block;
     }
@@ -175,8 +165,6 @@ public partial class PageModel : IPageModel
     protected virtual IReadOnlyCollection<TBlockModel> GetBlockModels<TBlockModel>(string selector, PageWaitForSelectorOptions? waitOptions = null)
         where TBlockModel : class
     {
-        this.Page.WaitForSelector(selector, waitOptions);
-
         var elements = this.Page.QuerySelectorAll(selector);
         var blocks = new List<TBlockModel>();
 
@@ -194,14 +182,10 @@ public partial class PageModel : IPageModel
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? queryOptions = null)
     {
-        this.Page.WaitForSelector(selector, waitOptions);
         var element = this.Page.QuerySelector(selector, queryOptions);
         return element;
     }
 
-
-
-    // TODO need test
     protected virtual TBlockModel? GetBlockModelOrNull<TBlockModel>(string selector)
         where TBlockModel : class
     {
@@ -824,7 +808,6 @@ public partial class PageModel : IPageModel
         PageWaitForSelectorOptions? waitOptions = null,
         PageQuerySelectorOptions? queryOptions = null)
     {
-        this.Wait();
         var element = this.GetElement(selector, waitOptions, queryOptions);
         var styleValue = this.Page.Evaluate<string>($"e => getComputedStyle(e).{styleName}", element);
         return styleValue;

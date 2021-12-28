@@ -27,13 +27,13 @@ using Playwright.Synchronous;
 
 namespace Playwright.PageObjectModel;
 
-public static class BlockModelExtensions
+public static class ElementModelExtensions
 {
-    public static TBlockModel Screenshot<TBlockModel>(this TBlockModel blockModel, ElementHandleScreenshotOptions? options = null)
-        where TBlockModel : IBlockModel
+    public static TElementModel Screenshot<TElementModel>(this TElementModel elementModel, ElementHandleScreenshotOptions? options = null)
+        where TElementModel : IElementModel
     {
-        blockModel.Block.Screenshot(options);
+        elementModel.Element.Screenshot(options);
 
-        return blockModel;
+        return elementModel;
     }
 }

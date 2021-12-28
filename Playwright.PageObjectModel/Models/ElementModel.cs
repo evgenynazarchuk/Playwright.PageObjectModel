@@ -30,47 +30,47 @@ using System.Text.Json;
 
 namespace Playwright.PageObjectModel;
 
-public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPageModel>
+public partial class ElementModel<TPageModel> : IElementModel, ITypedElementModel<TPageModel>
     where TPageModel : PageModel
 {
-    public BlockModel(TPageModel pageModel, 
+    public ElementModel(TPageModel pageModel, 
         string selector, 
         PageWaitForSelectorOptions? waitOptions = null, 
         PageQuerySelectorOptions? queryOptions = null)
     {
         this.PageModel = pageModel;
         this.PageModel.Page.WaitForSelector(selector, waitOptions);
-        this.Block = this.PageModel.Page.QuerySelector(selector, queryOptions)!;
+        this.Element = this.PageModel.Page.QuerySelector(selector, queryOptions)!;
         this.PageModel = pageModel;
         this.Page = this.PageModel.Page;
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, 
+    public ElementModel(ElementModel<TPageModel> parenTElementModel, 
         string selector, 
         ElementHandleWaitForSelectorOptions? waitOptions = null)
     {
-        this.Block = parentBlockModel.GetElement(selector, waitOptions);
-        this.PageModel = parentBlockModel.PageModel;
+        this.Element = parenTElementModel.GetElement(selector, waitOptions);
+        this.PageModel = parenTElementModel.PageModel;
         this.Page = this.PageModel.Page;
     }
 
-    public BlockModel(TPageModel pageModel, IElementHandle element)
+    public ElementModel(TPageModel pageModel, IElementHandle element)
     {
         this.PageModel = pageModel;
-        this.Block = element;
+        this.Element = element;
         this.Page = this.PageModel.Page;
     }
 
-    public BlockModel(BlockModel<TPageModel> parentBlockModel, IElementHandle element)
+    public ElementModel(ElementModel<TPageModel> parenTElementModel, IElementHandle element)
     {
-        this.PageModel = parentBlockModel.PageModel;
-        this.Block = element;
+        this.PageModel = parenTElementModel.PageModel;
+        this.Element = element;
         this.Page = this.PageModel.Page;
     }
 
     public IPage Page { get; }
 
-    public IElementHandle Block { get; }
+    public IElementHandle Element { get; }
 
     public TPageModel PageModel { get; }
 
@@ -79,19 +79,9 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
         this.PageModel.Wait();
     }
 
-    protected virtual void WaitForLoad(PageWaitForLoadStateOptions? options = null)
+    protected virtual void WaitForLoad(LoadState loadState, PageWaitForLoadStateOptions? options = null)
     {
-        this.PageModel.WaitForLoad(options);
-    }
-
-    protected virtual void WaitForLoadNetworkIdle(PageWaitForLoadStateOptions? options = null)
-    {
-        this.PageModel.WaitForNetworkIdle(options);
-    }
-
-    protected virtual void WaitForLoadDOM(PageWaitForLoadStateOptions? options = null)
-    {
-        this.PageModel.WaitForDOM(options);
+        this.PageModel.WaitForLoadState(loadState, options);
     }
 
     public TPageModel UpToPage()
@@ -101,16 +91,16 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
 
     protected virtual IElementHandle GetElement(string selector, ElementHandleWaitForSelectorOptions? options = null)
     {
-        this.Block.WaitForSelector(selector, options);
-        var element = this.Block.QuerySelector(selector);
+        this.Element.WaitForSelector(selector, options);
+        var element = this.Element.QuerySelector(selector);
         return element!;
     }
 
-    protected virtual TBlockModel GetBlockModel<TBlockModel>(string selector)
-        where TBlockModel : class
+    protected virtual TElementModel GeTElementModel<TElementModel>(string selector)
+        where TElementModel : class
     {
-        var blockType = typeof(TBlockModel);
-        var ctorArgs = new[] { typeof(BlockModel<TPageModel>), typeof(string) };
+        var blockType = typeof(TElementModel);
+        var ctorArgs = new[] { typeof(ElementModel<TPageModel>), typeof(string) };
 
         var ctor = blockType.GetConstructor(ctorArgs);
         if (ctor is null) throw new ApplicationException("Block Model not found");
@@ -118,32 +108,32 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
         var block = ctor.Invoke(new[] { this, (object)selector });
         if (block is null) throw new ApplicationException("Block Model not created");
 
-        return (TBlockModel)block;
+        return (TElementModel)block;
     }
 
     protected virtual IReadOnlyList<IElementHandle> GetElements(string selector, ElementHandleWaitForSelectorOptions? options = null)
     {
-        this.Block.WaitForSelector(selector, options);
-        var elements = this.Block.QuerySelectorAll(selector);
+        this.Element.WaitForSelector(selector, options);
+        var elements = this.Element.QuerySelectorAll(selector);
         return elements;
     }
 
-    protected virtual IReadOnlyCollection<TBlockModel> GetBlocks<TBlockModel>(string selector)
-        where TBlockModel : class
+    protected virtual IReadOnlyCollection<TElementModel> GetBlocks<TElementModel>(string selector)
+        where TElementModel : class
     {
-        var elements = this.Block.QuerySelectorAll(selector);
-        var blocks = new List<TBlockModel>();
+        var elements = this.Element.QuerySelectorAll(selector);
+        var blocks = new List<TElementModel>();
 
         foreach (var element in elements)
         {
-            var blockType = typeof(TBlockModel);
+            var blockType = typeof(TElementModel);
             var ctorArgs = new[] { this.GetType(), typeof(string) };
             var ctor = blockType.GetConstructor(ctorArgs);
             if (ctor is null) throw new ApplicationException("Block Model not found");
 
             var block = ctor.Invoke(new[] { this, (object)selector });
 
-            blocks.Add((TBlockModel)block);
+            blocks.Add((TElementModel)block);
         }
 
         return blocks;
@@ -151,14 +141,14 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
 
     protected virtual IElementHandle? GetElementOrNull(string selector)
     {
-        var element = this.Block.QuerySelector(selector);
+        var element = this.Element.QuerySelector(selector);
         return element;
     }
 
-    protected virtual TBlockModel? GetBlockModelOrNull<TBlockModel>(string selector)
-        where TBlockModel : class
+    protected virtual TElementModel? GeTElementModelOrNull<TElementModel>(string selector)
+        where TElementModel : class
     {
-        var blockType = typeof(TBlockModel);
+        var blockType = typeof(TElementModel);
         var ctorArgs = new[] { this.GetType(), typeof(string) };
         var ctor = blockType.GetConstructor(ctorArgs);
         if (ctor is null) throw new ApplicationException("Block Model not found");
@@ -170,12 +160,12 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
         }
         catch { }
 
-        return (TBlockModel?)block;
+        return (TElementModel?)block;
     }
 
     protected virtual void Click(string? selector = null, ElementHandleClickOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Click(options);
     }
 
@@ -193,274 +183,263 @@ public partial class BlockModel<TPageModel> : IBlockModel, ITypedBlockModel<TPag
 
     protected virtual void DbClick(string? selector = null, ElementHandleDblClickOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.DblClick(options);
     }
 
     protected virtual void Hover(string? selector = null, ElementHandleHoverOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Hover(options);
     }
 
     protected virtual void ClearInput(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Evaluate("(element) => element.value =''", element);
     }
 
     protected virtual void Type(string? selector = null, string value = "", ElementHandleTypeOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Type(value, options);
     }
 
     protected virtual void Fill(string? selector = null, string value = "", ElementHandleFillOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Fill(value, options);
     }
 
     protected virtual void Check(string? selector = null, ElementHandleCheckOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Check(options);
     }
 
     protected virtual void Uncheck(string? selector = null, ElementHandleUncheckOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Uncheck(options);
     }
 
     protected virtual void Focus(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Focus();
     }
 
     protected virtual void Tap(string? selector = null, ElementHandleTapOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Tap(options);
     }
 
     protected virtual void Press(string key, string? selector = null, ElementHandlePressOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Press(key, options);
     }
 
     protected virtual void SelectText(string? selector = null, ElementHandleSelectTextOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.SelectText(options);
     }
 
     protected virtual void SetChecked(bool checkedState, string? selector = null, ElementHandleSetCheckedOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.SetChecked(checkedState);
     }
 
     protected virtual void SetInputFiles(string files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.SetInputFiles(files, options);
     }
 
     protected virtual void SetInputFiles(FilePayload files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.SetInputFiles(files, options);
     }
 
     protected virtual void SetInputFiles(IEnumerable<string> files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.SetInputFiles(files, options);
     }
 
     protected virtual void SetInputFiles(IEnumerable<FilePayload> files, string? selector = null, ElementHandleSetInputFilesOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.SetInputFiles(files, options);
     }
 
     protected virtual IReadOnlyList<string> SelectOption(string values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         var result = element.SelectOption(values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(IElementHandle values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         var result = element.SelectOption(values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(IEnumerable<string> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         var result = element.SelectOption(values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(SelectOptionValue values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         var result = element.SelectOption(values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(IEnumerable<IElementHandle> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         var result = element.SelectOption(values, options);
         return result;
     }
 
     protected virtual IReadOnlyList<string> SelectOption(IEnumerable<SelectOptionValue> values, string? selector = null, ElementHandleSelectOptionOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         var result = element.SelectOption(values, options);
         return result;
     }
 
     protected virtual void ScrollIntoViewIfNeeded(string? selector = null, ElementHandleScrollIntoViewIfNeededOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.ScrollIntoViewIfNeeded(options);
     }
 
     protected virtual void Screenshot(string? selector = null, ElementHandleScreenshotOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.Screenshot(options);
     }
 
     protected virtual string TextContent(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.TextContent() ?? "";
     }
 
     protected virtual string InnerText(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.InnerText();
     }
 
     protected virtual string InnerHTML(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.InnerHTML();
     }
 
     protected virtual string InputValue(string? selector = null, ElementHandleInputValueOptions? options = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.InputValue(options);
     }
 
     protected virtual bool IsChecked(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.IsChecked();
     }
 
     protected virtual bool IsDisabled(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.IsDisabled();
     }
 
     protected virtual bool IsEditable(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.IsEditable();
     }
 
     protected virtual bool IsEnabled(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.IsEnabled();
     }
 
     protected virtual bool IsHidden(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.IsHidden();
     }
 
     protected virtual bool IsVisible(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.IsVisible();
     }
 
     protected virtual ElementHandleBoundingBoxResult? BoundingBox(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.BoundingBox();
     }
 
     protected virtual IFrame? ContentFrame(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.ContentFrame();
     }
 
     protected virtual void DispatchEvent(string type, string? selector = null, object? eventInit = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         element.DispatchEvent(type);
     }
 
     protected virtual T EvalOnSelector<T>(string selector, string expression, object? arg = null)
     {
-        return this.Block.EvalOnSelector<T>(selector, expression, arg);
+        return this.Element.EvalOnSelector<T>(selector, expression, arg);
     }
 
     protected virtual T EvalOnSelectorAll<T>(string selector, string expression, object? arg = null)
     {
-        return this.Block.EvalOnSelectorAll<T>(selector, expression, arg);
+        return this.Element.EvalOnSelectorAll<T>(selector, expression, arg);
     }
 
     protected virtual JsonElement? EvalOnSelector(string selector, string expression, object? arg = null)
     {
-        return this.Block.EvalOnSelector(selector, expression, arg);
+        return this.Element.EvalOnSelector(selector, expression, arg);
     }
 
     protected string? GetAttributeValue(string name, string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.GetAttribute(name);
     }
 
     protected string GetComputedStyle(string name, string? selector = null)
     {
-        var element = selector is null ? this.Block : GetElement(selector);
-        var value = Block.Evaluate<string>($"e => getComputedStyle(e).{name}", element);
+        var element = selector is null ? this.Element : GetElement(selector);
+        var value = Element.Evaluate<string>($"e => getComputedStyle(e).{name}", element);
         return value;
     }
 
     protected virtual IFrame? OwnerFrame(string? selector = null)
     {
-        var element = selector is null ? this.Block : this.GetElement(selector);
+        var element = selector is null ? this.Element : this.GetElement(selector);
         return element.OwnerFrame();
     }
-
-    //protected virtual void WaitForElementState(ElementState state, string? selector = null, ElementHandleWaitForElementStateOptions? options = null)
-    //{
-    //    var element = selector is null ? this.Block : this.GetElement(selector);
-    //    element.WaitForElementState(state);
-    //}
-    //
-    //protected virtual IElementHandle? WaitForSelector(string selector, ElementHandleWaitForSelectorOptions? options = null)
-    //{
-    //    return Block.WaitForSelector(selector, options);
-    //}
 }

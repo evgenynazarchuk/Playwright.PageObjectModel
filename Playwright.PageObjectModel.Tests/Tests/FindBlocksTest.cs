@@ -46,12 +46,12 @@ public class FindBlocksTest : PageTest
 
         public PageTesting(IPage page) : base(page) { }
 
-        public IReadOnlyCollection<Block<PageTesting>> FindBlocks() => this.GetBlockModels<Block<PageTesting>>("body>.block");
+        public IReadOnlyCollection<Block<PageTesting>> FindBlocks() => this.GeTElementModels<Block<PageTesting>>("body>.block");
 
-        public BlocksCollection<PageTesting> FindBlockCollection() => this.GetBlockModel<BlocksCollection<PageTesting>>(".blocksCollection");
+        public BlocksCollection<PageTesting> FindBlockCollection() => this.GeTElementModel<BlocksCollection<PageTesting>>(".blocksCollection");
     }
 
-    class Block<TPageModel> : BlockModel<TPageModel>
+    class Block<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -59,14 +59,14 @@ public class FindBlocksTest : PageTest
         public Block(TPageModel pageModel, string selector)
             : base(pageModel, selector) { }
 
-        public Block(BlockModel<TPageModel> parentBlock, string selector) 
+        public Block(ElementModel<TPageModel> parentBlock, string selector) 
             : base(parentBlock, selector) { }
 
         public Block(TPageModel pageModel, IElementHandle element) 
             : base(pageModel, element) { }
     }
 
-    class BlocksCollection<TPageModel> : BlockModel<TPageModel>
+    class BlocksCollection<TPageModel> : ElementModel<TPageModel>
         where TPageModel : PageModel
     {
         public void Open(string url) => Page.GotoAsync(url).Wait();
@@ -74,7 +74,7 @@ public class FindBlocksTest : PageTest
         public BlocksCollection(TPageModel page, string selector)
             : base(page, selector) { }
 
-        public BlocksCollection(BlockModel<TPageModel> parentBlock, string selector)
+        public BlocksCollection(ElementModel<TPageModel> parentBlock, string selector)
             : base(parentBlock, selector) { }
 
         public IReadOnlyCollection<Block<PageTesting>> FindBlocks() => this.GetBlocks<Block<PageTesting>>(".block");
